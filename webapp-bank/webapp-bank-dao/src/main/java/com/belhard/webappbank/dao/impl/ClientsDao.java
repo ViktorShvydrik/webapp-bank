@@ -13,7 +13,7 @@ import com.belhard.webappbank.dao.exceptions.DaoException;
 import com.belhard.webappbank.entity.Clients;
 
 
-public class DaoClients implements DaoGlobal<Clients>{
+public class ClientsDao implements DaoGlobal<Clients>{
 	
 	
 	@Override

@@ -13,7 +13,7 @@ import com.belhard.webappbank.dao.exceptions.DaoException;
 import com.belhard.webappbank.entity.Client_inf;
 
 
-public class DaoClient_inf implements DaoGlobal<Client_inf>{
+public class Client_infDao implements DaoGlobal<Client_inf>{
 
 	
 	

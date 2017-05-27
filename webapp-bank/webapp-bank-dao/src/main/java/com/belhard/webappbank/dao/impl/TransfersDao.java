@@ -13,7 +13,7 @@ import com.belhard.webappbank.dao.exceptions.DaoException;
 import com.belhard.webappbank.entity.Transfers;
 
 
-public class DaoTransfers implements DaoGlobal<Transfers> {
+public class TransfersDao implements DaoGlobal<Transfers> {
 
 
 	@Override
