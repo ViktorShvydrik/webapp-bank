@@ -3,6 +3,7 @@ package com.belhard.webappbank.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.belhard.webappbank.dao.DaoGlobal;
 import com.belhard.webappbank.dao.dbUtils.ConnectionManager;
@@ -80,6 +81,12 @@ public class DaoClients implements DaoGlobal<Clients>{
 			manager.closeDbResources(connection, statement);			
 		}
 		
+	}
+
+	@Override
+	public List<Clients> getAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

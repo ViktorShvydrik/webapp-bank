@@ -51,8 +51,6 @@
     <module>webapp-bank-web</module>
     <module>webapp-bank-entity</module>
     <module>webapp-bank-dao</module>
-    <module>webapp-bank-beans</module>
-    <module>webapp-bank-jdbc</module>
     <module>webapp-bank-servise</module>
   </modules>
 </project>

@@ -87,6 +87,8 @@ public class CardsDao implements DaoGlobal<Cards>{
 
 	@Override
 	public List<Cards> getAll() {
+		
+		
 		// TODO Auto-generated method stub
 		return null;
 	}
