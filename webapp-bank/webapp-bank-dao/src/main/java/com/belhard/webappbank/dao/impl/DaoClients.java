@@ -2,7 +2,9 @@ package com.belhard.webappbank.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.belhard.webappbank.dao.DaoGlobal;
@@ -85,8 +87,34 @@ public class DaoClients implements DaoGlobal<Clients>{
 
 	@Override
 	public List<Clients> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Clients> list = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+		
+		ConnectionManager manager = ConnectionManager.getManager();
+		try {
+			connection = ConnectionManager.getManager().getConnection();
+			statement = connection.prepareStatement("SELECT * FROM Clients");
+			resultset = statement.executeQuery();
+			
+			while (resultset.next()){
+				Integer idClient = resultset.getInt("id_client");
+				String login = resultset.getString("login");
+				String pass = resultset.getString("pass");
+				Integer status = resultset.getInt("status");
+				Integer access = resultset.getInt("access");
+				
+				
+				Clients clients = new Clients(idClient, login, pass, status, access);
+				list.add(clients);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}finally {
+			manager.closeDbResources(connection, statement);			
+		}
+		return list;
 	}
 
 }
