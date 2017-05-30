@@ -34,4 +34,10 @@
         <property name="cookieName" value="myAppLocaleCookie" />
         <property name="cookieMaxAge" value="3600" />
     </bean>
+    
+     <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="language" />
+        </bean>
+    </mvc:interceptors>
 </beans>

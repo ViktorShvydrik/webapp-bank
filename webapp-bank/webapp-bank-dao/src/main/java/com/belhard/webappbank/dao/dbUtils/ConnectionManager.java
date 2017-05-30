@@ -11,8 +11,24 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class ConnectionManager {
+	
+	private static final String DS_NAME = "jdbc/bank";
+	
+	private static final ConnectionManager manager;
+	
+	static {
+		try {
+			manager = new ConnectionManager();
+		} catch (NamingException e) {
+			throw new RuntimeException("Some errors occurred during DB initialization! Application will not work corrctly!", e);
+		}
+	}
 
-	private static final ConnectionManager manager = new ConnectionManager();
+	private ConnectionManager() throws NamingException {
+		Context context = new InitialContext();
+		Context root = (Context) context.lookup("java:/comp/env");
+		dataSource = (DataSource) root.lookup(DS_NAME);
+	}
 
 	public static ConnectionManager getManager() {
 		return manager;
@@ -20,15 +36,6 @@ public class ConnectionManager {
 
 	private DataSource dataSource;
 
-	private ConnectionManager() {
-		try {
-			Context initContext = new InitialContext();
-			Context rootContext = (Context) initContext.lookup("java:comp/env");
-			dataSource = (DataSource) rootContext.lookup("jdbc/personnel_department_db_link");
-		} catch (NamingException e) {
-			throw new RuntimeException("Some errors occurred during DataSource lookup!", e);
-		}
-	}
 
 	public Connection getConnection() {
 		try {

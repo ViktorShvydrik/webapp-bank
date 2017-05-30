@@ -4,40 +4,49 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.belhard.webappbank.dao.DaoGlobal;
+import com.belhard.webappbank.dao.ClientsDao;
 import com.belhard.webappbank.dao.dbUtils.ConnectionManager;
 import com.belhard.webappbank.dao.exceptions.DaoException;
 import com.belhard.webappbank.entity.Clients;
 
 
-public class ClientsDao implements DaoGlobal<Clients>{
+public class ClientsDaoImpl implements ClientsDao{
 	
+	private static final String SQL_ADD = "INSERT INTO Clients VALUES(?,?,?,?)";
+	
+	private static final String SQL_LOGIN = "SELECT * FROM clients WHERE login=? AND  pass=?";
+	
+	private static final Integer NO_ACCESS = 9;
 	
 	@Override
-	public void add(Clients ob) {
+	public Integer add(Clients ob) {
 		Connection connection = null;
 		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
 		
 		ConnectionManager manager = ConnectionManager.getManager();
 		try {
 			connection = manager.getConnection();
-			statement = connection.prepareStatement("INSERT INTO " + ob.getClass().getSimpleName()+ " VALUES(?,?,?,?,?)");
-			statement.setInt(1, ob.getId_client());
-			statement.setString(2, ob.getLogin());
-			statement.setString(3, ob.getPass());
-			statement.setInt(4, ob.getStatus());
-			statement.setInt(5, ob.getAccess());
+			statement = connection.prepareStatement(SQL_ADD, Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, ob.getLogin());
+			statement.setString(2, ob.getPass());
+			statement.setInt(3, ob.getStatus());
+			statement.setInt(4, ob.getAccess());
 			statement.execute();
-		
+			
+			resultSet = statement.getGeneratedKeys();
+			return resultSet.getInt(1);
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
 			manager.closeDbResources(connection, statement);			
 		}
+		
 		
 	}
 
@@ -94,7 +103,7 @@ public class ClientsDao implements DaoGlobal<Clients>{
 		
 		ConnectionManager manager = ConnectionManager.getManager();
 		try {
-			connection = ConnectionManager.getManager().getConnection();
+			connection = manager.getConnection();
 			statement = connection.prepareStatement("SELECT * FROM Clients");
 			resultset = statement.executeQuery();
 			
@@ -115,6 +124,43 @@ public class ClientsDao implements DaoGlobal<Clients>{
 			manager.closeDbResources(connection, statement);			
 		}
 		return list;
+	}
+	@Override
+	public Clients getByID(int id) {
+		// NOOP
+		return null;
+	}
+
+	@Override
+	public Clients login(Clients clients) {
+		
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+		
+		ConnectionManager manager = ConnectionManager.getManager();
+		try {
+			connection = manager.getConnection();
+			statement = connection.prepareStatement(SQL_LOGIN);
+			statement.setString(1, clients.getLogin());
+			statement.setString(2, clients.getPass());
+			resultset = statement.executeQuery();
+			if(resultset.next()){
+				clients.setId_client(resultset.getInt("id_client"));
+				clients.setAccess(resultset.getInt("access"));
+				clients.setStatus(resultset.getInt("status"));
+			}else{
+				clients.setAccess(NO_ACCESS);
+			}
+			
+			return clients;
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}finally {
+			manager.closeDbResources(connection, statement);			
+		}
+	
+		
 	}
 
 }

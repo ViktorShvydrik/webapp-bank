@@ -6,37 +6,40 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.belhard.webappbank.dao.DaoGlobal;
+import com.belhard.webappbank.dao.CardsDao;
 import com.belhard.webappbank.dao.dbUtils.ConnectionManager;
 import com.belhard.webappbank.dao.exceptions.DaoException;
 import com.belhard.webappbank.entity.Cards;
 
 
 
-public class CardsDao implements DaoGlobal<Cards>{
+public class CardsDaoImpl implements CardsDao{
 
+	private static final String SQL_ADD = "INSERT INTO Cards VALUES(?,?,?)";
 	
 	@Override
-	public void add(Cards ob) {
+	public Integer add(Cards ob) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		
+		ResultSet resultSet = null;
 		
 		ConnectionManager manager = ConnectionManager.getManager();
 		
 		try {
 			connection = manager.getConnection();
-			statement = connection.prepareStatement("INSERT INTO " + ob.getClass().getSimpleName()+ " VALUES(?,?,?,?)");
-			statement.setInt(1, ob.getId_card());
-			statement.setInt(2, ob.getId_account());
-			statement.setInt(3, ob.getNumber_card());
-			statement.setInt(4, ob.getStatus());
+			statement = connection.prepareStatement(SQL_ADD, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, ob.getId_account());
+			statement.setInt(2, ob.getNumber_card());
+			statement.setInt(3, ob.getStatus());
 			
 			statement.execute();
 			
+			resultSet=statement.getGeneratedKeys();
+			return resultSet.getInt(1);
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
@@ -116,6 +119,14 @@ public class CardsDao implements DaoGlobal<Cards>{
 		}finally {
 			manager.closeDbResources(connection, statement);			
 		}
+		return null;
+	}
+
+
+
+	@Override
+	public Cards getByID(int id) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

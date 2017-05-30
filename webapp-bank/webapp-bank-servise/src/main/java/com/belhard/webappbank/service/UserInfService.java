@@ -1,4 +1,4 @@
-package com.belhard.webappbank.servise;
+package com.belhard.webappbank.service;
 
 public interface UserInfService {
 

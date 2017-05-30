@@ -9,9 +9,18 @@
   </parent>
 
 
-  <artifactId>webapp-bank-servise</artifactId>
+  <artifactId>webapp-bank-service</artifactId>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+  <dependencies>
+		
+			<dependency>
+			<artifactId>webapp-bank-dao</artifactId>
+			<groupId>com.belhard</groupId>
+			<version>${app.version}</version>
+		</dependency>
+  </dependencies>
 </project>

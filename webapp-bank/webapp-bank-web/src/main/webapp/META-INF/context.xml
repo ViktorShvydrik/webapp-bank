@@ -32,5 +32,5 @@
                username="root" password="root" driverClassName="com.mysql.jdbc.Driver"
                url="jdbc:mysql://localhost:3306/users_db"/> -->
 
-	<ResourceLink name="jdbc/users_db" global="jdbc/users_db" type="javax.sql.DataSource"/>
+	<ResourceLink name="jdbc/bank" global="jdbc/bank" type="javax.sql.DataSource"/>
 </Context>
