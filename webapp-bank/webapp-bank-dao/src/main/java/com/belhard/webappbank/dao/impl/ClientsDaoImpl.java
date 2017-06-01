@@ -16,11 +16,11 @@ import com.belhard.webappbank.entity.Clients;
 
 public class ClientsDaoImpl implements ClientsDao{
 	
-	private static final String SQL_ADD = "INSERT INTO Clients VALUES(?,?,?,?)";
+	private static final String SQL_ADD = "INSERT INTO Clients (login, pass, status) VALUES(?,?,?)";
 	
 	private static final String SQL_LOGIN = "SELECT * FROM clients WHERE login=? AND  pass=?";
 	
-	private static final Integer NO_ACCESS = 9;
+	private static final Integer NO_ENTRY = 9;
 	
 	@Override
 	public Integer add(Clients ob) {
@@ -36,11 +36,13 @@ public class ClientsDaoImpl implements ClientsDao{
 			statement.setString(1, ob.getLogin());
 			statement.setString(2, ob.getPass());
 			statement.setInt(3, ob.getStatus());
-			statement.setInt(4, ob.getAccess());
-			statement.execute();
+			statement.executeUpdate();
 			
 			resultSet = statement.getGeneratedKeys();
+			resultSet.next();
+			
 			return resultSet.getInt(1);
+			
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
@@ -150,7 +152,7 @@ public class ClientsDaoImpl implements ClientsDao{
 				clients.setAccess(resultset.getInt("access"));
 				clients.setStatus(resultset.getInt("status"));
 			}else{
-				clients.setAccess(NO_ACCESS);
+				clients.setAccess(NO_ENTRY);
 			}
 			
 			return clients;

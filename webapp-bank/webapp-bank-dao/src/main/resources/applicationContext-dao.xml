@@ -8,7 +8,7 @@
 	<bean id="cardsDao" class="com.belhard.webappbank.dao.impl.CardsDaoImpl" />
 	<bean id="clientInfDao" class="com.belhard.webappbank.dao.impl.ClientInfDaoImpl" /> -->
 	<bean id="clientsDao" class="com.belhard.webappbank.dao.impl.ClientsDaoImpl" />
-	<!-- <bean id="transfersDao" class="com.belhard.webappbank.dao.impl.TransfersDao" />
-	 -->
+	<bean id="clientInfDao" class="com.belhard.webappbank.dao.impl.ClientInfDaoImpl" />
+	 
 </beans>
 

@@ -10,6 +10,8 @@ public interface ClientsService {
 	
 	Clients login(Clients clients);
 	
+	Integer add(Clients clients);
+	
 	
 	
 	

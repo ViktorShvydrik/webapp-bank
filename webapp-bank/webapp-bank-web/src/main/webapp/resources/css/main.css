@@ -1,0 +1,54 @@
+.errorText {
+  color: red;
+}
+
+.dataFrame {
+  border: 3px solid black;
+  margin: 20px;
+  padding: 20px;
+  padding-top: 5px;
+  
+}
+
+
+
+
+   ul.nav{
+                margin-left: 0px;
+                padding-left: 200px;
+                list-style: none;
+            }
+            .nav li { 
+                display: inline; 
+            }
+            ul.nav a {
+                display: inline-block;
+                width: 7em;
+                padding:10px;
+                background-color: #f4f4f4;
+                border: 1px dashed #333;
+                text-decoration: none;
+                color: #333;
+                text-align: center;
+            }
+            ul.nav a:hover{
+                background-color: #333;
+                color: #f4f4f4;
+            }
+
+.largeFrame {
+  width: 850px;
+}
+
+.shortFrame {
+  width: 400px;
+}
+
+
+.actionsColl {
+  text-align: center;
+}
+
+td {
+  width: 200px;
+}

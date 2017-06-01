@@ -8,6 +8,8 @@ import com.belhard.webappbank.service.ClientsService;
 
 public class ClientsServiceImpl implements ClientsService{
 
+	
+	private static final int NO_ENTRY = 9;
 	private ClientsDao clientsDao;
 	
 	
@@ -24,5 +26,17 @@ public class ClientsServiceImpl implements ClientsService{
 	public Clients login(Clients clients) {
 		return clientsDao.login(clients);
 	}
+
+	@Override
+	public Integer add(Clients clients) {
+		clients = login(clients);
+		if (clients.getAccess() == NO_ENTRY ) {
+			clients.setAccess(0);
+			return clientsDao.add(clients);
+		}
+		return null;
+	}
+	
+	
 
 }
