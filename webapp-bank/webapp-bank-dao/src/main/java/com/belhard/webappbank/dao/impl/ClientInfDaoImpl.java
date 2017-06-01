@@ -17,17 +17,17 @@ import com.belhard.webappbank.entity.ClientInfTabl;
 
 public class ClientInfDaoImpl implements ClientInfDao{
 
-	private static final String SQL_ADD = "INSERT INTO clientInf VALUES(?,?,?,?,?)";
+	private static final String SQL_ADD = "INSERT INTO clientInf (id_client_inf, name, secondName, email) VALUES(?,?,?,?)";
 	private static final String SQL_GET_CLIENTINF = "SELECT * FROM clientInf";
 	private static final String SQL_GET_CLIENTINF_ALL= "SELECT * FROM clients c, clientInf ci WHERE c.id_client=ci.id_client_inf";
 	private static final String SQL_GET_CLIENTINF_ALL_BY_ID = "SELECT * FROM clients c, clientInf ci WHERE c.id_client=ci.id_client_inf AND id_client=?";
 			
 			
 	@Override
-	public Integer add(ClientInf ob) {
+	public void insert(ClientInf ob) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet resultSet = null;
+		
 		
 		ConnectionManager manager = ConnectionManager.getManager();
 		try {
@@ -37,14 +37,10 @@ public class ClientInfDaoImpl implements ClientInfDao{
 			statement.setString(2, ob.getName());
 			statement.setString(3, ob.getSecondName());
 			statement.setString(4, ob.getEmail());
-			statement.setInt(5, ob.getId_account());
+		//	statement.setInt(5, ob.getId_account());
 			
 			statement.executeUpdate();
-			
-			resultSet = statement.getGeneratedKeys();
-			resultSet.next();
-			
-			return resultSet.getInt(1);
+
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
@@ -195,6 +191,12 @@ public class ClientInfDaoImpl implements ClientInfDao{
 	@Override
 	public ClientInf getByID(int id) {
 		// NOOP
+		return null;
+	}
+
+	@Override
+	public Integer add(ClientInf ob) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

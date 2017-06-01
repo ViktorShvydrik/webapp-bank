@@ -27,10 +27,10 @@
     <!-- url: The JDBC connection url for connecting to your MySQL dB. -->
 
 	<!--  Insert below configuration in the server.xml file -->
-	<!-- <Resource name="jdbc/users_db" auth="Container" type="javax.sql.DataSource"
+	<!-- <Resource name="jdbc/bank" auth="Container" type="javax.sql.DataSource"
                maxActive="100" maxIdle="30" maxWait="10000"
                username="root" password="root" driverClassName="com.mysql.jdbc.Driver"
-               url="jdbc:mysql://localhost:3306/users_db"/> -->
+               url="jdbc:mysql://localhost:3306/bank"/> -->
 
 	<ResourceLink name="jdbc/bank" global="jdbc/bank" type="javax.sql.DataSource"/>
 </Context>

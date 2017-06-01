@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,16 +34,14 @@ public class Controllers{
 	}
 
 	@RequestMapping (value="/login.html",  method= RequestMethod.POST)
-	public ModelAndView loginController (ModelAndView model, HttpSession httpSession, Clients clients){
+	public String loginController (ModelAndView model, HttpSession httpSession, Clients clients){
 		
 		ClientsService clientsService = (ClientsService) getBean("clientsService");
 		clients = clientsService.login(clients);
 		ClientInfService clientInfService = (ClientInfService) getBean("clientInfService");
 		ClientInfTabl clientInfTabl = clientInfService.getAllInfById(clients.getId_client());
 		if(clients.getId_client() != clientInfTabl.getIdClient()){
-			model.setViewName("reg");
-			model.addObject("clients", clients);
-			return model;
+			return "reg";
 		}
 		switch (clients.getAccess()) {
 		
@@ -51,14 +50,14 @@ public class Controllers{
 		case OPERATOR_ACCESS:
 			//break;	
 		case USER_ACCESS: 
-			httpSession.setAttribute("user", clientInfTabl);
+			httpSession.setAttribute("user", clients);
 			model.setViewName("redirect:userPage");
-			return model;
+			return "redirect:userPage";
 		case NO_ENTRY: //пользователя нет в базе, ошибки, отправка на индекс
 			break;
 		} 
-		model.setViewName("index");		
-		return model;
+			
+		return "index";
 	}
 	@RequestMapping (value="/reg.html",  method=RequestMethod.POST)
 	public ModelAndView regController (Clients clients,ClientInf clientsInf){
@@ -93,6 +92,15 @@ public class Controllers{
 		
 	}
 	
+	@ModelAttribute
+	private ClientInf addinf(){
+		return new ClientInf();
+	}
+	@ModelAttribute
+	private Clients addCl(){
+		return new Clients();
+		
+	}
 	
 	
 	private Object getBean(String beanName) {

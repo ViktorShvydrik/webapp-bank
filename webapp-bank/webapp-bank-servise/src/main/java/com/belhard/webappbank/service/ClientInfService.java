@@ -7,7 +7,7 @@ import com.belhard.webappbank.entity.ClientInfTabl;
 
 public interface ClientInfService {
 
-	Integer add(ClientInf clientsInf);
+	void add(ClientInf clientsInf);
 	
 	
 	

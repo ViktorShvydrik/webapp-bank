@@ -16,9 +16,9 @@ public class ClientInfServiceImpl implements ClientInfService{
 	}
 
 	@Override
-	public Integer add(ClientInf clientsInf) {
-	
-		return clientInfDao.add(clientsInf);
+	public void add(ClientInf clientsInf) {
+		clientInfDao.insert(clientsInf);
+		
 	}
 
 	@Override

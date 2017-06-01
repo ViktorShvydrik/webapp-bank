@@ -10,4 +10,7 @@ public interface ClientInfDao extends DaoGlobal<ClientInf>{
 	List<ClientInfTabl> getAllInf();
 	
 	ClientInfTabl getAllByID(int id);
+	
+
+	void insert(ClientInf clientsInf);
 }
