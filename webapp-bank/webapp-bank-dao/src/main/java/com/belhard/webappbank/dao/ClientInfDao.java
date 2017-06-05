@@ -8,9 +8,8 @@ import com.belhard.webappbank.entity.ClientInfTabl;
 public interface ClientInfDao extends DaoGlobal<ClientInf>{
 
 	List<ClientInfTabl> getAllInf();
-	
-	ClientInfTabl getAllByID(int id);
-	
 
-	void insert(ClientInf clientsInf);
+	ClientInfTabl getAllInfByID(int id);
+	
+	
 }

@@ -16,10 +16,13 @@ import com.belhard.webappbank.entity.Accounts;
 
 public class AccountsDaoImpl implements AccountsDao {
 	
-	private static final String SQL_ADD = "INSERT INTO Accounts VALUES(?,?,?,?)";
+	private static final String SQL_ADD = "INSERT INTO Accounts VALUES(?,?,?,?,?)";
 	private static final String SQL_UPDATE = "UPDATE Accounts SET  status=?, account=?, money=?, cards=? WHERE id_account=?)";
 	private static final String SQL_DELETE = "UPDATE Accounts SET status=? WHERE id_account=? ";
 	private static final String SQL_SELECT = "SELECT * FROM Accounts";
+	private static final String SQL_SELECT_BY_IDCLIENT = "SELECT * FROM Accounts WHERE id_client=?";
+	
+	private static final Integer DELETE = 1;
 	
 
 	@Override
@@ -61,7 +64,7 @@ public class AccountsDaoImpl implements AccountsDao {
 			statement.setInt(2, ob.getAccount());
 			statement.setInt(3, ob.getMoney());
 			statement.setInt(4, ob.getCards());
-			statement.setInt(5, ob.getId_account());
+			statement.setInt(5, ob.getIdAccount());
 			
 			statement.execute();
 		} catch (SQLException e) {
@@ -82,7 +85,7 @@ public class AccountsDaoImpl implements AccountsDao {
 			connection = ConnectionManager.getManager().getConnection();
 			statement = connection.prepareStatement(SQL_DELETE);
 			statement.setInt(1, ob.getStatus());
-			statement.setInt(2, ob.getId_account());
+			statement.setInt(2, ob.getIdAccount());
 			
 			statement.execute();
 		} catch (SQLException e) {
@@ -108,12 +111,14 @@ public class AccountsDaoImpl implements AccountsDao {
 			
 			while (resultset.next()){
 				Integer idAcc= resultset.getInt("id_account");
+				Integer idClient= resultset.getInt("id_client");
 				Integer status = resultset.getInt("status");
 				Integer account = resultset.getInt("account");
 				Integer money = resultset.getInt("money");
+				Integer cards = resultset.getInt("cards");
 				
 				
-				Accounts accounts = new Accounts(idAcc, status, account, money);
+				Accounts accounts = new Accounts(idAcc,idClient, status, account, money, cards);
 				list.add(accounts);
 			}
 		} catch (SQLException e) {
@@ -123,7 +128,42 @@ public class AccountsDaoImpl implements AccountsDao {
 		}
 		return list;
 	}
-
+	
+	@Override
+	public List<Accounts> getAllByIdClient (int id){
+		List<Accounts> list = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+		
+		ConnectionManager manager = ConnectionManager.getManager();
+		try {
+			connection = ConnectionManager.getManager().getConnection();
+			statement = connection.prepareStatement(SQL_SELECT_BY_IDCLIENT);
+			statement.setInt(1, id);
+			resultset = statement.executeQuery();
+			
+			while (resultset.next()){
+				Integer idAcc= resultset.getInt("id_account");
+				Integer status = resultset.getInt("status");
+				Integer account = resultset.getInt("account");
+				Integer money = resultset.getInt("money");
+				Integer cards = resultset.getInt("cards");
+				
+				
+				Accounts accounts = new Accounts(idAcc,id, status, account, money, cards);
+				list.add(accounts);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}finally {
+			manager.closeDbResources(connection, statement);			
+		}
+		return list;
+	
+		
+	}
+	
 	@Override
 	public Accounts getByID(int id) {
 		// NOOP

@@ -5,10 +5,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
 	<!-- <bean id="accountsDao" class="com.belhard.webappbank.dao.impl.AccountsDaoImpl" />
-	<bean id="cardsDao" class="com.belhard.webappbank.dao.impl.CardsDaoImpl" />
-	<bean id="clientInfDao" class="com.belhard.webappbank.dao.impl.ClientInfDaoImpl" /> -->
+	<bean id="cardsDao" class="com.belhard.webappbank.dao.impl.CardsDaoImpl" />  -->
+	
 	<bean id="clientsDao" class="com.belhard.webappbank.dao.impl.ClientsDaoImpl" />
 	<bean id="clientInfDao" class="com.belhard.webappbank.dao.impl.ClientInfDaoImpl" />
-	 
+	<bean id="accountsDao" class="com.belhard.webappbank.dao.impl.AccountsDaoImpl" />
 </beans>
 

@@ -34,7 +34,14 @@
             ul.nav a:hover{
                 background-color: #333;
                 color: #f4f4f4;
-            }
+            }    
+            ul.nav a.active {
+   				background-color: #333; 
+  				color: #f4f4f4;
+   			}
+         }
+            
+
 
 .largeFrame {
   width: 850px;

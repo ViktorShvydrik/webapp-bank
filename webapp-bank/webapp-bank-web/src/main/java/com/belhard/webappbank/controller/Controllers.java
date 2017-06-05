@@ -1,6 +1,8 @@
 package com.belhard.webappbank.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.support.AbstractApplicationContext;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.belhard.webappbank.entity.Accounts;
 import com.belhard.webappbank.entity.ClientInf;
 import com.belhard.webappbank.entity.ClientInfTabl;
 import com.belhard.webappbank.entity.Clients;
+import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.ClientInfService;
 import com.belhard.webappbank.service.ClientsService;
 
@@ -50,7 +54,7 @@ public class Controllers{
 		case OPERATOR_ACCESS:
 			//break;	
 		case USER_ACCESS: 
-			httpSession.setAttribute("user", clients);
+			httpSession.setAttribute("user",  clientInfTabl);
 			model.setViewName("redirect:userPage");
 			return "redirect:userPage";
 		case NO_ENTRY: //пользователя нет в базе, ошибки, отправка на индекс
@@ -84,11 +88,35 @@ public class Controllers{
 	
 	@RequestMapping ("/userPage")
 	public String userController (HttpSession httpSession){
-		Clients clients = (Clients) httpSession.getAttribute("user");
-		if (clients != null){
+		ClientInfTabl clientInfTabl = (ClientInfTabl) httpSession.getAttribute("user");
+		if (clientInfTabl != null){
 			return "userPage";
 		}
 		return "index";
+		
+	}
+	
+	@RequestMapping ("/accounts")
+	public ModelAndView userAccountsController(HttpSession httpSession){
+		ClientInfTabl clientInfTabl = (ClientInfTabl) httpSession.getAttribute("user");
+		if (clientInfTabl != null){
+			int id = clientInfTabl.getIdClient();
+			AccountsService accountsService  = (AccountsService) getBean("accountsService");
+			List<Accounts> list = accountsService.getAllByIdClient(id);
+		//	httpSession.setAttribute("user_accounts", list);
+			return new ModelAndView("accounts", "user_accounts",  list);
+		}
+		
+		return new ModelAndView("index");
+	}
+	
+	@RequestMapping ("/newAccountUser.html")
+	public String newAccountUser(HttpSession httpSession){
+		ClientInfTabl clientInfTabl = (ClientInfTabl) httpSession.getAttribute("user");
+		AccountsService accountsService  = (AccountsService) getBean("accountsService");
+		int id = accountsService.createByIdClient(clientInfTabl.getIdClient());
+		
+		return null;
 		
 	}
 	

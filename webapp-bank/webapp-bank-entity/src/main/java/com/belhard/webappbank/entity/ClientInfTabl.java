@@ -9,6 +9,8 @@ public class ClientInfTabl {
 	private String secondName;
 	private String email;
 	private int idAccount;
+	private int accounts;
+	private int money;
 	private int status;
 	private int access;
 	
@@ -18,8 +20,25 @@ public class ClientInfTabl {
 	}
 
 
+
 	public ClientInfTabl(int idClient, String login, String pass, String name, String secondName, String email,
-			int idAccount, int status, int access) {
+			int accounts, int status, int access) {
+		super();
+		this.idClient = idClient;
+		this.login = login;
+		this.pass = pass;
+		this.name = name;
+		this.secondName = secondName;
+		this.email = email;
+		this.accounts = accounts;
+		this.status = status;
+		this.access = access;
+	}
+
+
+
+	public ClientInfTabl(int idClient, String login, String pass, String name, String secondName, String email,
+			int idAccount, int accounts, int money, int status, int access) {
 		super();
 		this.idClient = idClient;
 		this.login = login;
@@ -28,9 +47,13 @@ public class ClientInfTabl {
 		this.secondName = secondName;
 		this.email = email;
 		this.idAccount = idAccount;
+		this.accounts = accounts;
+		this.money = money;
 		this.status = status;
 		this.access = access;
 	}
+
+
 
 
 	public int getIdClient() {
@@ -38,9 +61,11 @@ public class ClientInfTabl {
 	}
 
 
-	public void setId_client(int idClient) {
+	public void setIdClient(int idClient) {
 		this.idClient = idClient;
 	}
+
+
 
 
 	public String getLogin() {
@@ -103,6 +128,26 @@ public class ClientInfTabl {
 	}
 
 
+	public int getAccounts() {
+		return accounts;
+	}
+
+
+	public void setAccounts(int accounts) {
+		this.accounts = accounts;
+	}
+
+
+	public int getMoney() {
+		return money;
+	}
+
+
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+
 	public int getStatus() {
 		return status;
 	}
@@ -128,10 +173,12 @@ public class ClientInfTabl {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + access;
+		result = prime * result + accounts;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + idAccount;
 		result = prime * result + idClient;
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + money;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((pass == null) ? 0 : pass.hashCode());
 		result = prime * result + ((secondName == null) ? 0 : secondName.hashCode());
@@ -151,6 +198,8 @@ public class ClientInfTabl {
 		ClientInfTabl other = (ClientInfTabl) obj;
 		if (access != other.access)
 			return false;
+		if (accounts != other.accounts)
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -164,6 +213,8 @@ public class ClientInfTabl {
 			if (other.login != null)
 				return false;
 		} else if (!login.equals(other.login))
+			return false;
+		if (money != other.money)
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -188,10 +239,14 @@ public class ClientInfTabl {
 
 	@Override
 	public String toString() {
-		return "ClientsInfTabl [idClient=" + idClient + ", login=" + login + ", pass=" + pass + ", name=" + name
-				+ ", secondName=" + secondName + ", email=" + email + ", idAccount=" + idAccount + ", status="
-				+ status + ", access=" + access + "]";
+		return "ClientInfTabl [idClient=" + idClient + ", login=" + login + ", pass=" + pass + ", name=" + name
+				+ ", secondName=" + secondName + ", email=" + email + ", idAccount=" + idAccount + ", accounts="
+				+ accounts + ", money=" + money + ", status=" + status + ", access=" + access + "]";
 	}
 
+
+	
+
+	
 	
 }

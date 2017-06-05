@@ -2,11 +2,11 @@ package com.belhard.webappbank.entity;
 
 public class ClientInf {
 	
-	private int id_client;
+	private int idClient;
 	private String name;
 	private String secondName;
 	private String email;
-	private int id_account;
+	private int accounts;
 	
 	
 	
@@ -16,17 +16,17 @@ public class ClientInf {
 	}
 	
 	
-	public ClientInf(int id_client) {
+	public ClientInf(int idClient) {
 		super();
-		this.id_client = id_client;
+		this.idClient = idClient;
 	}
 
 
-	public ClientInf(int id_client, String name, int id_account) {
+	public ClientInf(int idClient, String name, int accounts) {
 		super();
-		this.id_client = id_client;
+		this.idClient = idClient;
 		this.name = name;
-		this.id_account = id_account;
+		this.accounts = accounts;
 	}
 
 
@@ -39,35 +39,35 @@ public class ClientInf {
 	}
 
 
-	public ClientInf(int id_client, String name) {
+	public ClientInf(int idClient, String name) {
 		super();
-		this.id_client = id_client;
+		this.idClient = idClient;
 		this.name = name;
 	}
-	public ClientInf(String name, int id_account) {
+	public ClientInf(String name, int accounts) {
 		super();
-		this.id_account = id_account;
+		this.accounts = accounts;
 		this.name = name;
 	}
 	
 	
 
-	public ClientInf(int id_client, String name, String email, int id_account) {
+	public ClientInf(int idClient, String name, String email, int accounts) {
 		super();
-		this.id_client = id_client;
+		this.idClient = idClient;
 		this.name = name;
 		this.email = email;
-		this.id_account = id_account;
+		this.accounts = accounts;
 	}
 
 
-	public ClientInf(int id_client, String name, String secondName, String email, int id_account) {
+	public ClientInf(int idClient, String name, String secondName, String email, int accounts) {
 		super();
-		this.id_client = id_client;
+		this.idClient = idClient;
 		this.name = name;
 		this.secondName = secondName;
 		this.email = email;
-		this.id_account = id_account;
+		this.accounts = accounts;
 
 	}
 
@@ -76,13 +76,13 @@ public class ClientInf {
 
 	
 
-	public int getId_client() {
-		return id_client;
+	public int getIdClient() {
+		return idClient;
 	}
 
 
-	public void setId_client(int id_client) {
-		this.id_client = id_client;
+	public void setId_client(int idClient) {
+		this.idClient = idClient;
 	}
 
 
@@ -116,13 +116,13 @@ public class ClientInf {
 	}
 
 
-	public int getId_account() {
-		return id_account;
+	public int getIdAccounts() {
+		return accounts;
 	}
 
 
-	public void setId_account(int id_account) {
-		this.id_account = id_account;
+	public void setIdAccounts(int accounts) {
+		this.accounts = accounts;
 	}
 
 	@Override
@@ -130,8 +130,8 @@ public class ClientInf {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id_account;
-		result = prime * result + id_client;
+		result = prime * result + accounts;
+		result = prime * result + idClient;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((secondName == null) ? 0 : secondName.hashCode());
 		return result;
@@ -152,9 +152,9 @@ public class ClientInf {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (id_account != other.id_account)
+		if (accounts != other.accounts)
 			return false;
-		if (id_client != other.id_client)
+		if (idClient != other.idClient)
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -172,9 +172,10 @@ public class ClientInf {
 
 	@Override
 	public String toString() {
-		return "ClientInf [id_client=" + id_client + ", name=" + name + ", secondName=" + secondName + ", email="
-				+ email + ", id_account=" + id_account + "]";
+		return "ClientInf [idClient=" + idClient + ", name=" + name + ", secondName=" + secondName + ", email="
+				+ email + ", accounts=" + accounts + "]";
 	}
+
 
 
 

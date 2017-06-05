@@ -16,8 +16,8 @@
 
 
 
-	<!-- <bean id="groupService" class="com.skillsimprover.usersdb.service.impl.GroupServiceImpl"> 
-		<property name="groupDao" ref="groupDao" /> </bean> -->
+	 <bean id="accountsService" class="com.belhard.webappbank.service.impl.AccountsServiceImpl"> 
+		<property name="accountsDao" ref="accountsDao" /> </bean> 
 
 
 </beans>

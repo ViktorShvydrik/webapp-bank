@@ -17,7 +17,7 @@ public class ClientInfServiceImpl implements ClientInfService{
 
 	@Override
 	public void add(ClientInf clientsInf) {
-		clientInfDao.insert(clientsInf);
+		clientInfDao.add(clientsInf);
 		
 	}
 
@@ -36,7 +36,7 @@ public class ClientInfServiceImpl implements ClientInfService{
 	@Override
 	public ClientInfTabl getAllInfById(int id) {
 		
-		return clientInfDao.getAllByID(id);
+		return clientInfDao.getAllInfByID(id);
 	}
 
 }

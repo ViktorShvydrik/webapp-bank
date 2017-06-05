@@ -14,7 +14,7 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>com.belhard</groupId>
 			<artifactId>webapp-bank-service</artifactId>
@@ -53,6 +53,11 @@
 			<version>${jsp.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-extras</artifactId>
+			<version>${tiles.version}</version>
+		</dependency>
 
 
 	</dependencies>
