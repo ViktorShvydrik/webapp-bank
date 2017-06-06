@@ -19,7 +19,13 @@ import com.belhard.webappbank.entity.Cards;
 
 public class CardsDaoImpl implements CardsDao{
 
-	private static final String SQL_ADD = "INSERT INTO Cards VALUES(?,?,?)";
+	private static final String SQL_ADD = "INSERT INTO Cards VALUES(?,?,?)"; //переделать
+	
+	private static final String SQL_GETALL_BY_IDCLIENT = "SELECT * FROM Cards WHERE id_client=?";
+	private static final String SQL_BLOCK = "UPDATE Cards SET status=? WHERE id_card=?";
+	
+	private static final int BLOCK = 1;
+	
 	
 	@Override
 	public Integer add(Cards ob) {
@@ -32,18 +38,23 @@ public class CardsDaoImpl implements CardsDao{
 		try {
 			connection = manager.getConnection();
 			statement = connection.prepareStatement(SQL_ADD, Statement.RETURN_GENERATED_KEYS);
-			statement.setInt(1, ob.getId_account());
-			statement.setInt(2, ob.getNumber_card());
+			statement.setInt(1, ob.getIdAccount());
+			statement.setInt(2, ob.getNumberCard());
 			statement.setInt(3, ob.getStatus());
 			
-			statement.execute();
+			statement.executeUpdate();
+			
 			
 			resultSet=statement.getGeneratedKeys();
-			return resultSet.getInt(1);
+			int generatedKey = 0;
+			if(resultSet.next()){
+				generatedKey = resultSet.getInt(1);
+			}
+			return generatedKey;
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
-			manager.closeDbResources(connection, statement);			
+			manager.closeDbResources(connection, statement, resultSet);			
 		}
 	}
 
@@ -57,11 +68,11 @@ public class CardsDaoImpl implements CardsDao{
 		
 		try {
 			connection = manager.getConnection();
-			statement = connection.prepareStatement("UPDATE " +  ob.getClass().getSimpleName()+" SET  id_account=?, number_card=?, status=? WHERE id_card=" + ob.getId_card());
-			statement.setInt(1, ob.getId_account());
-			statement.setInt(2, ob.getNumber_card());
+			statement = connection.prepareStatement("UPDATE Cards SET  id_account=?, number_card=?, status=? WHERE id_card=" + ob.getIdCard());
+			statement.setInt(1, ob.getIdAccount());
+			statement.setInt(2, ob.getNumberCard());
 			statement.setInt(3, ob.getStatus());
-			statement.execute();
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
@@ -79,9 +90,9 @@ public class CardsDaoImpl implements CardsDao{
 	
 		try {
 			connection = manager.getConnection();
-			statement = connection.prepareStatement("UPDATE " + ob.getClass().getSimpleName()+ " SET status=? WHERE Id_account=" + ob.getId_account());
+			statement = connection.prepareStatement("UPDATE " + ob.getClass().getSimpleName()+ " SET status=? WHERE Id_account=" + ob.getIdAccount());
 			statement.setInt(1, ob.getStatus());
-			statement.execute();
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
@@ -106,28 +117,87 @@ public class CardsDaoImpl implements CardsDao{
 			while (resultset.next()){
 				Integer idCard = resultset.getInt("id_card");
 				Integer idAcc = resultset.getInt("id_account");
+				Integer idClient = resultset.getInt("id_client");
 				Integer numberCard = resultset.getInt("number_card");
 				Integer status = resultset.getInt("status");
 				
 				
 				
-				Cards cards = new Cards(idCard, idAcc, numberCard, status);
+				Cards cards = new Cards(idCard, idAcc, idClient, numberCard, status);
 				list.add(cards);
 			}
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
-			manager.closeDbResources(connection, statement);			
+			manager.closeDbResources(connection, statement, resultset);			
 		}
-		return null;
+		return list;
 	}
 
 
 
 	@Override
 	public Cards getByID(int id) {
-		// TODO Auto-generated method stub
+		// NOOP
 		return null;
 	}
 
+	@Override
+	public List<Cards> getAllByIdClient(int id) {
+		List<Cards> list = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+		
+		ConnectionManager manager = ConnectionManager.getManager();
+		try {
+			connection = ConnectionManager.getManager().getConnection();
+			statement = connection.prepareStatement(SQL_GETALL_BY_IDCLIENT);
+			statement.setInt(1, id);
+			resultset = statement.executeQuery();
+			
+			while (resultset.next()){
+				Integer idCard = resultset.getInt("id_card");
+				Integer idAcc = resultset.getInt("id_account");
+				Integer idClient = resultset.getInt("id_client");
+				Integer numberCard = resultset.getInt("number_card");
+				Integer status = resultset.getInt("status");  
+				
+				
+				
+				Cards cards = new Cards(idCard, idAcc, idClient, numberCard, status);
+				list.add(cards);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}finally {
+			manager.closeDbResources(connection, statement, resultset);			
+		}
+		return list;
+	}
+
+	@Override
+	public void block(int id) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		
+		ConnectionManager manager = ConnectionManager.getManager();
+		
+		try {
+			connection = manager.getConnection();
+			statement = connection.prepareStatement(SQL_BLOCK);
+			statement.setInt(1, BLOCK);
+			statement.setInt(2, id);
+			
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}finally {
+			manager.closeDbResources(connection, statement);	
+		
+		}
+
+	}
+	
 }

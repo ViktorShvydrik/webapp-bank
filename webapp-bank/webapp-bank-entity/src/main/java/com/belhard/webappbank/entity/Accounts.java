@@ -122,7 +122,7 @@ public class Accounts {
 
 	@Override
 	public String toString() {
-		return "Accounts [idAccount=" + idAccount + ", id_client=" + idClient + ", status=" + status + ", account="
+		return "Accounts [idAccount=" + idAccount + ", idClient=" + idClient + ", status=" + status + ", account="
 				+ account + ", money=" + money + ", cards=" + cards + "]";
 	}
 

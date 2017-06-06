@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -9,22 +10,22 @@
 <head>
 <link rel="stylesheet" href="resources/css/main.css" type="text/css">
 <meta charset="utf-8">
-<title> Управление счетами</title>
+<title> Пластиковые карты</title>
 </head>
 <body>
 
 		<ul class="nav">
             <li><a href="index.html">Логин</a></li>
             <li><a href="userPage.html" >Главная</a></li>
-            <li><a href="#" class = "active">Счета</a></li>
-            <li><a href="cards.html">Карточки</a></li>
+            <li><a href="accounts.html">Счета</a></li>
+            <li><a href="#" class = "active">Карты</a></li>
             <li><a href="#">Переводы</a></li>
             <li><a href="refill.html">Пополнение счета</a></li>
             <li><a href="#">Настроки</a></li>
         </ul>
         
         <table border="1">
-				<tr>
+			<tr>
 				<th>имя </th>
 				<th>фамилия</th>
 				<th>логин</th>
@@ -44,38 +45,42 @@
 					<td>${user.cards}</td>
 				</tr>
 		
-		</table>
+		</table >
 		<br />
 		<br />
 		<br />
-	<c:if test="${user.accounts > 0}">
-		<h2>Ваши счета:</h2>
-				<table border="1">
+		<h2>Ваши карточки</h2>
+		<c:if test="${user.cards > 0}">
+		<table border="1">
 		<tr>
-			<th>
-					Счет
+				<th>
+					Номер карточки 
 				</th>
 				<th>
-					Баланс
-				</th>	
+					Статус 
+				</th>
 				<th>
-					Действия
-				</th>	
-
-			</tr>
-			<c:forEach items="${user_accounts}" var="acc">
+					Действия  
+				</th>
+				</tr>
+		<c:forEach items="${user_cards}" var="card">
 			<tr>
-			<td>${acc.account }  </td>
-			<td>${acc.money }</td>	
-			<td></td>
-			</tr>
-			</c:forEach>
-		
+			<td>
+						${card.numberCard}
+						
+					</td>
+					<td>
+						<c:if test="${card.status == 1}">Заблокированна</c:if>
+						<c:if test="${card.status == 0}">Доступна</c:if>
+					</td>
+					<td>
+						<a href="cardsblock.html?id=${card.idCard}">Заблокировать</a>
+						
+					</td>
+		</tr>
+		</c:forEach>
 		</table>
-	</c:if>
-	<c:if test="${user.accounts == 0}">У Вас нет открытых счетов.  </c:if> 
-	<br />
-	<a href="newAccountUser.html">Открыть новый счет</a>
-	
+		</c:if>
+
 </body>
 </html>

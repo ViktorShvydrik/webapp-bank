@@ -18,10 +18,17 @@ public class ClientInfDaoImpl implements ClientInfDao {
 
 	private static final String SQL_ADD = "INSERT INTO clientInf (id_client, name, secondName, email) VALUES(?,?,?,?)";
 	private static final String SQL_GET_CLIENTINF = "SELECT * FROM clientInf";
-	private static final String SQL_GET_CLIENTINF_ALL = "SELECT * FROM clients c, clientInf ci, accounts a WHERE c.id_client=ci.id_client and a.id_client= c.id_client";
-	private static final String SQL_GET_CLIENTINF_ALL_BY_ID = "SELECT * FROM clients c, clientInf ci, accounts a WHERE c.id_client=ci.id_client and a.id_client= c.id_client and c.id_client=?";
+	
+	private static final String SQL_GET_CLIENTINF_ALL = "SELECT c.*, name, secondName, email, COUNT(*) as accounts, sum(a.money), sum(a.cards) "
+														+ "FROM clients c LEFT outer JOIN clientInf ci ON c.id_client=ci.id_client "
+														+ "LEFT outer JOIN   accounts a ON a.id_client= c.id_client GROUP BY id_client";
+	
+	private static final String SQL_GET_CLIENTINF_ALL_BY_ID = "SELECT c.*, name, secondName, email, COUNT(*) as accounts, sum(a.money), sum(a.cards) "
+															+ "FROM clients c, clientInf ci, accounts a "
+															+ "WHERE c.id_client=ci.id_client and a.id_client= c.id_client and c.id_client=?";
+	
 	private static final String SQL_GET_CLIENTINF_BY_ID = "SELECT * FROM clientInf WHERE id_client=?";
-	private static final String SQL_UPDETE = "UPDATE clientInf SET  name=?, secondName=?, email=? accounts=?  WHERE id_client=?";
+	private static final String SQL_UPDETE = "UPDATE clientInf SET  name=?, secondName=?, email=?, accounts=?  WHERE id_client=?";
 	private static final Integer STUB = 0;
 
 	
@@ -65,10 +72,10 @@ public class ClientInfDaoImpl implements ClientInfDao {
 			statement.setString(1, ob.getName());
 			statement.setString(2, ob.getSecondName());
 			statement.setString(3, ob.getEmail());
-			statement.setInt(4, ob.getIdAccounts());
+			statement.setInt(4, ob.getAccounts());
 			statement.setInt(5, ob.getIdClient());
 			
-			statement.execute();
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} finally {
@@ -129,12 +136,13 @@ public class ClientInfDaoImpl implements ClientInfDao {
 				String secondName = resultset.getString("secondName");
 				String email = resultset.getString("email");
 				int accounts = resultset.getInt("accounts");
+				int money =resultset.getInt("sum(a.money)");
+				int cards = resultset.getInt ("sum(a.cards)");
 				int status = resultset.getInt("status");
 				int access = resultset.getInt("access");
 
-				ClientInfTabl clientsInfTabl = new ClientInfTabl(idClient, login, pass, name, secondName, email,
-						accounts, status, access);
-				list.add(clientsInfTabl);
+				ClientInfTabl clientInfTabl = new ClientInfTabl(idClient, login, pass, name, secondName, email, accounts, money, cards, status, access);
+				list.add(clientInfTabl);
 			}
 
 		} catch (SQLException e) {
@@ -168,14 +176,13 @@ public class ClientInfDaoImpl implements ClientInfDao {
 				String name = resultset.getString("name");
 				String secondName = resultset.getString("secondName");
 				String email = resultset.getString("email");
-
+				int money =resultset.getInt("sum(a.money)");
 				int accounts = resultset.getInt("accounts");
-
+				int cards = resultset.getInt ("sum(a.cards)");
 				int status = resultset.getInt("status");
 				int access = resultset.getInt("access");
 
-				clientInfTabl = new ClientInfTabl(idClient, login, pass, name, secondName, email, accounts, status,
-						access);
+				clientInfTabl = new ClientInfTabl(idClient, login, pass, name, secondName, email, accounts, money, cards, status, access);
 
 			}
 

@@ -39,9 +39,11 @@ public class ClientsDaoImpl implements ClientsDao{
 			statement.executeUpdate();
 			
 			resultSet = statement.getGeneratedKeys();
-			resultSet.next();
-			
-			return resultSet.getInt(1);
+			int generatedKey = 0;
+			if(resultSet.next()){
+				generatedKey = resultSet.getInt(1);
+			}
+			return generatedKey;
 			
 		} catch (SQLException e) {
 			throw new DaoException(e);

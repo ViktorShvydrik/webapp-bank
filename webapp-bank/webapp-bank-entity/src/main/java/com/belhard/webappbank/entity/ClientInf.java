@@ -81,7 +81,7 @@ public class ClientInf {
 	}
 
 
-	public void setId_client(int idClient) {
+	public void setIdСlient(int idClient) {
 		this.idClient = idClient;
 	}
 
@@ -116,12 +116,12 @@ public class ClientInf {
 	}
 
 
-	public int getIdAccounts() {
+	public int getAccounts() {
 		return accounts;
 	}
 
 
-	public void setIdAccounts(int accounts) {
+	public void setAccounts(int accounts) {
 		this.accounts = accounts;
 	}
 

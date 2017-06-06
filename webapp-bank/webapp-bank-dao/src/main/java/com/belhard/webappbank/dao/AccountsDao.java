@@ -8,4 +8,8 @@ public interface AccountsDao extends DaoGlobal<Accounts>{
 
 	List<Accounts> getAllByIdClient(int id);
 
+	Integer create(int id);
+	
+	Integer countAccounts(int id);
+
 }

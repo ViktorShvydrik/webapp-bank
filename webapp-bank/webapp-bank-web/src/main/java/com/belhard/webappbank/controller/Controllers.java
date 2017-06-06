@@ -3,6 +3,7 @@ package com.belhard.webappbank.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.support.AbstractApplicationContext;
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.belhard.webappbank.entity.Accounts;
+import com.belhard.webappbank.entity.Cards;
 import com.belhard.webappbank.entity.ClientInf;
 import com.belhard.webappbank.entity.ClientInfTabl;
 import com.belhard.webappbank.entity.Clients;
+import com.belhard.webappbank.entity.Refill;
 import com.belhard.webappbank.service.AccountsService;
+import com.belhard.webappbank.service.CardsService;
 import com.belhard.webappbank.service.ClientInfService;
 import com.belhard.webappbank.service.ClientsService;
 
@@ -68,7 +72,7 @@ public class Controllers{
 		ClientsService clientsService = (ClientsService) getBean("clientsService");
 			
 		Integer id = clientsService.add(clients);
-		clientsInf.setId_client(id); 		
+		clientsInf.setIdСlient(id); 		
 		
 		ModelAndView model = new ModelAndView("reg", "clientsInf", clientsInf);
 		
@@ -97,26 +101,89 @@ public class Controllers{
 	}
 	
 	@RequestMapping ("/accounts")
-	public ModelAndView userAccountsController(HttpSession httpSession){
+	public String userAccountsController(HttpSession httpSession){
 		ClientInfTabl clientInfTabl = (ClientInfTabl) httpSession.getAttribute("user");
 		if (clientInfTabl != null){
 			int id = clientInfTabl.getIdClient();
 			AccountsService accountsService  = (AccountsService) getBean("accountsService");
+			
 			List<Accounts> list = accountsService.getAllByIdClient(id);
-		//	httpSession.setAttribute("user_accounts", list);
-			return new ModelAndView("accounts", "user_accounts",  list);
+			httpSession.setAttribute("user_accounts", list);
+			
+			return "accounts";
 		}
 		
-		return new ModelAndView("index");
+		return "index";
 	}
 	
 	@RequestMapping ("/newAccountUser.html")
 	public String newAccountUser(HttpSession httpSession){
 		ClientInfTabl clientInfTabl = (ClientInfTabl) httpSession.getAttribute("user");
+		if (clientInfTabl != null){
 		AccountsService accountsService  = (AccountsService) getBean("accountsService");
-		int id = accountsService.createByIdClient(clientInfTabl.getIdClient());
+		clientInfTabl = accountsService.createByClient(clientInfTabl);
+		httpSession.setAttribute("user",  clientInfTabl);
+		return "redirect:accounts";
+		}
+		return "index";
 		
-		return null;
+	}
+	
+	@RequestMapping ("/cards")
+	public String userCards(HttpSession httpSession){
+		ClientInfTabl clientInfTabl = (ClientInfTabl) httpSession.getAttribute("user");
+		if (clientInfTabl != null){
+			CardsService cardsService  = (CardsService) getBean("cardsService");
+			List<Cards> list = cardsService.getAllByClientId(clientInfTabl.getIdClient());
+			httpSession.setAttribute("user_cards", list);
+			
+			return "cards";
+		}
+		return "index";
+	}
+	
+	@RequestMapping("/cardsblock.html")
+	public String blockCard(HttpServletRequest request){
+		Integer id = Integer.valueOf(request.getParameter("id"));
+		CardsService cardsService  = (CardsService) getBean("cardsService");
+		cardsService.block(id);
+		return "redirect:cards";
+		
+	}
+	
+	@RequestMapping ("/refill.html")
+	public String refill(HttpSession httpSession, Refill refill){
+		ClientInfTabl clientInfTabl = (ClientInfTabl) httpSession.getAttribute("user");
+		if (clientInfTabl != null){
+			int id = clientInfTabl.getIdClient();
+			
+			AccountsService accountsService  = (AccountsService) getBean("accountsService");
+			
+			List<Accounts> list = accountsService.getAllByIdClient(id);
+			httpSession.setAttribute("user_accounts", list);
+			return "refill";
+		}
+		
+		return "index";
+		
+	}
+	
+	@RequestMapping  ("/refillmoney.html")
+	public String refillMoney(HttpSession httpSession,  Refill refill ){
+		AccountsService accountsService  = (AccountsService) getBean("accountsService");
+		accountsService.refill(refill);
+		reloadInf(httpSession);
+		
+		return "redirect:refill.html";
+		
+	}
+	
+	private void reloadInf (HttpSession httpSession){
+		ClientInfService clientInfService = (ClientInfService) getBean("clientInfService");
+		ClientInfTabl clientInfTabl = (ClientInfTabl) httpSession.getAttribute("user");
+		int id = clientInfTabl.getIdClient();
+		clientInfTabl= clientInfService.getAllInfById(id);
+		httpSession.setAttribute("user",  clientInfTabl);
 		
 	}
 	
@@ -127,6 +194,10 @@ public class Controllers{
 	@ModelAttribute
 	private Clients addCl(){
 		return new Clients();
+	}
+	@ModelAttribute
+	private Refill addRefill(){
+		return new Refill();
 		
 	}
 	

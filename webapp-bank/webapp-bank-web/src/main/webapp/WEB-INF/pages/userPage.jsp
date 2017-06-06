@@ -18,62 +18,41 @@
             <li><a href="index.html">Логин</a></li>
             <li><a href="#" class = "active">Главная</a></li>
             <li><a href="accounts.html">Счета</a></li>
-            <li><a href="groupList.html">Карточки</a></li>
-            <li><a href="groupList.html">Переводы</a></li>
-            <li><a href="groupList.html">Пополнеение счета</a></li>
-            <li><a href="groupList.html">Настроки</a></li>
+            <li><a href="cards.html">Карточки</a></li>
+            <li><a href="#">Переводы</a></li>
+            <li><a href="refill.html">Пополнение счета</a></li>
+            <li><a href="#">Настроки</a></li>
         </ul>
         
-        <div class="dataFrame largeFrame">
-		<h1>
-		</h1>
+       
+		
 
 		<table border="1">
-			<tr>
-				<th>
-					имя  
-				</th>
-				<th>
-					фамилия
-				</th>
-				<th>
-					логин
-				</th>
-				<th>
-					Емейл
-				</th>
-				<th>
-					Открыто счетов
-				</th>
-
+				<tr>
+				<th>имя </th>
+				<th>фамилия</th>
+				<th>логин</th>
+				<th>Емейл</th>
+				<th>Открыто счетов</th>
+				<th>Деньги на счетах</th>
+				<th>Пластиковые карточки</th>
 			</tr>
 
 				<tr>
-					<td>
-						<c:out value="${user.name}" />
-					</td>
-					<td>
-						<c:out value="${user.secondName}" />
-					</td>
-					<td>
-						<c:out value="${user.login}" />
-					</td>
-					<td>
-						<c:out value="${user.email}" />
-					</td>
-					<td>
-						<c:out value="${user.accounts}" />
-						
-					</td>
-					
+					<td>${user.name}</td>
+					<td>${user.secondName}</td>
+					<td>${user.login}</td>
+					<td>${user.email}</td>
+					<td>${user.accounts}</td>
+					<td>${user.money}</td>
+					<td>${user.cards}</td>
 				</tr>
 		
 		</table>
 		
 
 		<br />
-		<hr />
-		<br />
+		
 		
 		
 
@@ -122,8 +101,6 @@
 				<br />
 				<input type="submit" name="login_btn" value="<fmt:message key='save.button' bundle='${msgs}' />" /> 
 				</form>--%>
-			
-		</div>
 	
 </body>
 </html>

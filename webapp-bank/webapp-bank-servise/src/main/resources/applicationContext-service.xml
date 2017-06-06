@@ -7,17 +7,22 @@
 
 	<bean id="clientsService" class="com.belhard.webappbank.service.impl.ClientsServiceImpl">
 		<property name="clientsDao" ref="clientsDao" />
-
 	</bean>
 
-	<bean id="clientInfService" class="com.belhard.webappbank.service.impl.ClientInfServiceImpl">
+	<bean id="clientInfService"
+		class="com.belhard.webappbank.service.impl.ClientInfServiceImpl">
 		<property name="clientInfDao" ref="clientInfDao" />
 	</bean>
 
+	<bean id="accountsService" class="com.belhard.webappbank.service.impl.AccountsServiceImpl">
+		<property name="accountsDao" ref="accountsDao" />
+		<property name="clientInfDao" ref="clientInfDao" />
+	</bean>
 
+	<bean id="cardsService" class="com.belhard.webappbank.service.impl.CardsServiceImpl">
+		<property name="cardsDao" ref="cardsDao" />
+		</bean>
 
-	 <bean id="accountsService" class="com.belhard.webappbank.service.impl.AccountsServiceImpl"> 
-		<property name="accountsDao" ref="accountsDao" /> </bean> 
 
 
 </beans>
