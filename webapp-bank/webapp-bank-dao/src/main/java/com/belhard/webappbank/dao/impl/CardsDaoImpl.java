@@ -20,7 +20,7 @@ import com.belhard.webappbank.entity.Cards;
 public class CardsDaoImpl implements CardsDao{
 
 	private static final String SQL_ADD = "INSERT INTO Cards VALUES(?,?,?)"; //переделать
-	
+	private static final String SQL_GET_BY_ID = "SELECT * FROM Cards WHERE id_card=?";
 	private static final String SQL_GETALL_BY_IDCLIENT = "SELECT * FROM Cards WHERE id_client=?";
 	private static final String SQL_BLOCK = "UPDATE Cards SET status=? WHERE id_card=?";
 	
@@ -138,8 +138,35 @@ public class CardsDaoImpl implements CardsDao{
 
 	@Override
 	public Cards getByID(int id) {
-		// NOOP
-		return null;
+		Cards cards = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+		
+		ConnectionManager manager = ConnectionManager.getManager();
+		try {
+			connection = ConnectionManager.getManager().getConnection();
+			statement = connection.prepareStatement(SQL_GET_BY_ID);
+			statement.setInt(1, id);
+			resultset = statement.executeQuery();
+			
+			while (resultset.next()){
+				Integer idCard = resultset.getInt("id_card");
+				Integer idAcc = resultset.getInt("id_account");
+				Integer idClient = resultset.getInt("id_client");
+				Integer numberCard = resultset.getInt("number_card");
+				Integer status = resultset.getInt("status");  
+				
+				
+				
+				cards = new Cards(idCard, idAcc, idClient, numberCard, status);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}finally {
+			manager.closeDbResources(connection, statement, resultset);			
+		}
+		return cards;
 	}
 
 	@Override

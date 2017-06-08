@@ -8,6 +8,9 @@ import com.belhard.webappbank.service.CardsService;
 
 public class CardsServiceImpl implements CardsService {
 	
+	private static final int BLOCK = 1;
+	private static final int UNBLOCK = 0;
+	
 	private CardsDao cardsDao;
 
 	public void setCardsDao(CardsDao cardsDao) {
@@ -22,10 +25,19 @@ public class CardsServiceImpl implements CardsService {
 
 	@Override
 	public void block(int id) {
-		cardsDao.block(id); 
+			Cards cards = cardsDao.getByID(id); 
+			cards.setStatus(BLOCK);
+			cardsDao.update(cards);
 		
 	}
 
-	
+	@Override
+	public void unBlock(int id) {
+		Cards cards = cardsDao.getByID(id); 
+		cards.setStatus(UNBLOCK);
+		cardsDao.update(cards);
+		
+		
+	}
 	
 }

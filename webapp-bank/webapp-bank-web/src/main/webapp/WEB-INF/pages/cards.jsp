@@ -75,7 +75,7 @@
 					</td>
 					<td>
 						<a href="cardsblock.html?id=${card.idCard}">Заблокировать</a>
-						
+						<a href="cardsunblock.html?id=${card.idCard}">Разблокировать</a>
 					</td>
 		</tr>
 		</c:forEach>

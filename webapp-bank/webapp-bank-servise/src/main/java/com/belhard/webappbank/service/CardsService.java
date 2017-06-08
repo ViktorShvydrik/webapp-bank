@@ -9,6 +9,8 @@ public interface CardsService {
 	List<Cards> getAllByClientId (int id);
 	
 	void block (int id);
+
+	void unBlock(int id);
 	
 	
 

@@ -148,7 +148,14 @@ public class Controllers{
 		CardsService cardsService  = (CardsService) getBean("cardsService");
 		cardsService.block(id);
 		return "redirect:cards";
-		
+	}
+
+	@RequestMapping("/cardsunblock.html")
+	public String unBlockCard(HttpServletRequest request){
+		Integer id = Integer.valueOf(request.getParameter("id"));
+		CardsService cardsService  = (CardsService) getBean("cardsService");
+		cardsService.unBlock(id);
+		return "redirect:cards";
 	}
 	
 	@RequestMapping ("/refill.html")
