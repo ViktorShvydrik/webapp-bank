@@ -73,9 +73,7 @@ public class ClientInfServiceImpl implements ClientInfService{
 		ClientAllInfBean allInfBean = new ClientAllInfBean();
 		allInfBean.setClient(clientBean);
 		ClientInf clientInf = clientInfDao.findOne(id);
-		ClientInfBean clientInfBean = converter.convertToBean(clientInf, ClientInfBean.class);
 		Clients clients = converter.convertToEntity(clientBean, Clients.class);
-		allInfBean.setClientInf(clientInfBean);
 		//int money = accountsDao.moneyByClient(clients);
 		//allInfBean.setTotalMoney(money);
 		//int count = accountsDao.countByClient(clients);
