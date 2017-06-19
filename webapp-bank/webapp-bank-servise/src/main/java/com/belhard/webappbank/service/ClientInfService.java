@@ -2,19 +2,18 @@ package com.belhard.webappbank.service;
 
 import java.util.List;
 
-import com.belhard.webappbank.entity.ClientInf;
-import com.belhard.webappbank.entity.ClientInfTabl;
+import com.belhard.webappbank.beans.ClientInfBean;
+import com.belhard.webappbank.beans.ClientAllInfBean;
+import com.belhard.webappbank.beans.ClientBean;
 
 public interface ClientInfService {
 
-	void add(ClientInf clientsInf);
+	void add(ClientInfBean clientsInfBean);
+		
+	List<ClientInfBean> getAll();
 	
+	List<ClientAllInfBean> getAllInfToTable();
 	
-	
-	List<ClientInf> getAll();
-	
-	List<ClientInfTabl> getAllInfToTable();
-	
-	ClientInfTabl getAllInfById(int id);
+	ClientAllInfBean getAllInfById(ClientBean clientBean);
 	
 }

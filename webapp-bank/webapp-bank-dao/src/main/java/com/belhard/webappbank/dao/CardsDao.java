@@ -1,14 +1,14 @@
 package com.belhard.webappbank.dao;
 
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
 
 import com.belhard.webappbank.entity.Cards;
 
-public interface CardsDao extends DaoGlobal<Cards>{
+public interface CardsDao extends CrudRepository<Cards, Integer>{
 	
-	List<Cards> getAllByIdClient(int id);
+	//List<Cards> getAllByIdClient(int id);
 	
-	void block (int id);
+	//void block (int id);
 	
 	
 

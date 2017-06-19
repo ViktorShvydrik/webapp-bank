@@ -1,16 +1,17 @@
 package com.belhard.webappbank.service;
 
-import java.util.List;
-
+import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.entity.Clients;
 
 public interface ClientsService {
 	
-	List<Clients> getAllClients();
+	Iterable<Clients> getAllClients();
 	
-	Clients login(Clients clients);
+	ClientBean login(ClientBean clientBean);
 	
-	Integer add(Clients clients);
+	int add(ClientBean clientBean);
+	
+	
 	
 	
 	

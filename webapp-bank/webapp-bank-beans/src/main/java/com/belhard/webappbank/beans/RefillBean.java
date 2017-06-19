@@ -1,12 +1,12 @@
-package com.belhard.webappbank.entity;
+package com.belhard.webappbank.beans;
 
-public class Refill {
+public class RefillBean {
 	
 	private int idAccount;
 	private int money;
 	
 	
-	public Refill() {
+	public RefillBean() {
 		super();
 	}
 
@@ -49,7 +49,7 @@ public class Refill {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Refill other = (Refill) obj;
+		RefillBean other = (RefillBean) obj;
 		if (idAccount != other.idAccount)
 			return false;
 		if (money != other.money)

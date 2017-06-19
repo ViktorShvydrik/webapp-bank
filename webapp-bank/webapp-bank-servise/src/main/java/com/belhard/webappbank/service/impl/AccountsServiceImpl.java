@@ -2,14 +2,16 @@ package com.belhard.webappbank.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.belhard.webappbank.beans.ClientBean;
+import com.belhard.webappbank.beans.RefillBean;
 import com.belhard.webappbank.dao.AccountsDao;
 import com.belhard.webappbank.dao.ClientInfDao;
 import com.belhard.webappbank.entity.Accounts;
-import com.belhard.webappbank.entity.ClientInf;
-import com.belhard.webappbank.entity.ClientInfTabl;
-import com.belhard.webappbank.entity.Refill;
 import com.belhard.webappbank.service.AccountsService;
 
+@Service
 public class AccountsServiceImpl implements AccountsService{
 
 	private AccountsDao accountsDao;
@@ -24,11 +26,11 @@ public class AccountsServiceImpl implements AccountsService{
 		this.clientInfDao = clientInfDao;
 	}
 
-	@Override
+	/*@Override
 	public List<Accounts> getAllByIdClient(int id) {
 		
 		return accountsDao.getAllByIdClient(id);
-	}
+	}*/
 
 	@Override
 	public Accounts getById(int id) {
@@ -36,7 +38,7 @@ public class AccountsServiceImpl implements AccountsService{
 		return null;
 	}
 
-	@Override
+	/*@Override
 	public ClientInfTabl createByClient(ClientInfTabl clientInfTabl) {
 		int id = 0;
 		id = clientInfTabl.getIdClient();
@@ -48,18 +50,29 @@ public class AccountsServiceImpl implements AccountsService{
 		clientInfTabl = clientInfDao.getAllInfByID(id);
 		
 		return clientInfTabl;
+	}*/
+
+	@Override
+	public void refill(RefillBean refill) {
+		int id = refill.getIdAccount();
+		//Accounts accounts = accountsDao.getByID(id);
+		//int money = accounts.getMoney() + refill.getMoney();
+		//accounts.setMoney(money);
+		//accountsDao.update(accounts);
+		
+		
 	}
 
 	@Override
-	public void refill(Refill refill) {
-		int id = refill.getIdAccount();
-		Accounts accounts = accountsDao.getByID(id);
-		int money = accounts.getMoney() + refill.getMoney();
-		accounts.setMoney(money);
-		accountsDao.update(accounts);
-		
-		
+	public List<Accounts> getAllByIdClient(ClientBean client) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
+
+
+
 
 
 

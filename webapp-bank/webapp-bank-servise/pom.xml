@@ -17,8 +17,13 @@
   
   <dependencies>
 		
-			<dependency>
+		<dependency>
 			<artifactId>webapp-bank-dao</artifactId>
+			<groupId>com.belhard</groupId>
+			<version>${app.version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>webapp-bank-beans</artifactId>
 			<groupId>com.belhard</groupId>
 			<version>${app.version}</version>
 		</dependency>

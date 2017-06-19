@@ -1,54 +1,25 @@
-package com.belhard.webappbank.entity;
+package com.belhard.webappbank.beans;
 
-import java.io.Serializable;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-@Entity
-@Table (name = "clientInf")
-public class ClientInf implements Serializable{
+public class ClientInfBean {
 	
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column (name = "idClient")
 	private int idClient;
-	
-	@Column (name = "name")
 	private String name;
-	
-	@Column (name = "secondName")
 	private String secondName;
-	
-	@Column (name = "email")
 	private String email;
-	
-	@Column (name = "accounts")
-	private int accounts;
-	
-	@OneToOne (cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_client")
-	private Clients client;
+	private int countAccounts;
 	
 	
-	public ClientInf() {
-		
+	public ClientInfBean() {
+		super();
 	}
 
-	
 
 	public int getIdClient() {
 		return idClient;
 	}
 
 
-	public void setIdСlient(int idClient) {
+	public void setIdClient(int idClient) {
 		this.idClient = idClient;
 	}
 
@@ -83,48 +54,27 @@ public class ClientInf implements Serializable{
 	}
 
 
-	public int getAccounts() {
-		return accounts;
+	public int getCountAccounts() {
+		return countAccounts;
 	}
 
 
-	public void setAccounts(int accounts) {
-		this.accounts = accounts;
+	public void setCountAccounts(int countAccounts) {
+		this.countAccounts = countAccounts;
 	}
-
-
-
-	public Clients getClient() {
-		return client;
-	}
-
-
-
-	public void setClient(Clients client) {
-		this.client = client;
-	}
-
-
-
-	public void setIdClient(int idClient) {
-		this.idClient = idClient;
-	}
-
 
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + accounts;
-		result = prime * result + ((client == null) ? 0 : client.hashCode());
+		result = prime * result + countAccounts;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + idClient;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((secondName == null) ? 0 : secondName.hashCode());
 		return result;
 	}
-
 
 
 	@Override
@@ -135,13 +85,8 @@ public class ClientInf implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ClientInf other = (ClientInf) obj;
-		if (accounts != other.accounts)
-			return false;
-		if (client == null) {
-			if (other.client != null)
-				return false;
-		} else if (!client.equals(other.client))
+		ClientInfBean other = (ClientInfBean) obj;
+		if (countAccounts != other.countAccounts)
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -164,19 +109,12 @@ public class ClientInf implements Serializable{
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "ClientInf [idClient=" + idClient + ", name=" + name + ", secondName=" + secondName + ", email=" + email
-				+ ", accounts=" + accounts + ", client=" + client + "]";
+		return "ClientInfBean [idClient=" + idClient + ", name=" + name + ", secondName=" + secondName + ", email="
+				+ email + ", countAccounts=" + countAccounts + "]";
 	}
-
-
-
-
 	
-	
-	
-	
+
 
 }

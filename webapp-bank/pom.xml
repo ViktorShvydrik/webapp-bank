@@ -10,7 +10,7 @@
   <name>com.belhard.webapp.bank</name>
   
   <properties>
-  <app.version>0.0.1-SNAPSHOT</app.version>
+  <app.version>0.0.2-SNAPSHOT</app.version>
   
   <jinit.version>4.12</jinit.version>
   <servlet.version>3.1.0</servlet.version>

@@ -1,14 +1,41 @@
 package com.belhard.webappbank.entity;
 
+import java.io.Serializable;
 
-public class Accounts {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table (name = "accounts")
+public class Accounts implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column (name ="id_account")
 	private int idAccount;
-	private int idClient;	
+	
+	@ManyToOne
+	@JoinColumn (name ="id_client")
+	private Clients Client;	
+	
+	@Column (name = "status")
 	private int status;
+	
+	@Column (name= "account")
 	private int account;
+	
+	@Column (name ="money")
 	private int money;
+	
+	@Column (name = "cards")
 	private int cards;
 	
 	
@@ -17,19 +44,6 @@ public class Accounts {
 	
 	public Accounts() {
 		super();
-	}
-
-	
-	
-
-	public Accounts(int idAccount, int idClient, int status, int account, int money, int cards) {
-		super();
-		this.idAccount = idAccount;
-		this.idClient = idClient;
-		this.status = status;
-		this.account = account;
-		this.money = money;
-		this.cards = cards;
 	}
 
 
@@ -43,13 +57,7 @@ public class Accounts {
 		this.idAccount = idAccount;
 	}
 
-	public int getIdClient() {
-		return idClient;
-	}
-
-	public void setId_client(int idClient) {
-		this.idClient = idClient;
-	}
+	
 
 	public int getStatus() {
 		return status;
@@ -83,18 +91,32 @@ public class Accounts {
 		this.cards = cards;
 	}
 
+	public Clients getClient() {
+		return Client;
+	}
+
+	public void setClient(Clients client) {
+		Client = client;
+	}
+
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((Client == null) ? 0 : Client.hashCode());
 		result = prime * result + account;
 		result = prime * result + cards;
 		result = prime * result + idAccount;
-		result = prime * result + idClient;
 		result = prime * result + money;
 		result = prime * result + status;
 		return result;
 	}
+
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -105,13 +127,16 @@ public class Accounts {
 		if (getClass() != obj.getClass())
 			return false;
 		Accounts other = (Accounts) obj;
+		if (Client == null) {
+			if (other.Client != null)
+				return false;
+		} else if (!Client.equals(other.Client))
+			return false;
 		if (account != other.account)
 			return false;
 		if (cards != other.cards)
 			return false;
 		if (idAccount != other.idAccount)
-			return false;
-		if (idClient != other.idClient)
 			return false;
 		if (money != other.money)
 			return false;
@@ -120,10 +145,13 @@ public class Accounts {
 		return true;
 	}
 
+
+
+
 	@Override
 	public String toString() {
-		return "Accounts [idAccount=" + idAccount + ", idClient=" + idClient + ", status=" + status + ", account="
-				+ account + ", money=" + money + ", cards=" + cards + "]";
+		return "Accounts [idAccount=" + idAccount + ", Client=" + Client + ", status=" + status + ", account=" + account
+				+ ", money=" + money + ", cards=" + cards + "]";
 	}
 
 	

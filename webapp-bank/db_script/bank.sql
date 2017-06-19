@@ -55,11 +55,12 @@ CREATE TABLE cards(id_card int AUTO_INCREMENT primary key,
    INSERT INTO   cards (id_account,  id_client, number_card) VALUES  ( 3, 1, FLOOR(90000001*RAND()+10000000));
                     
 CREATE TABLE transfers (id_transfers int AUTO_INCREMENT,
-					id_client int,
+					id_accountCA int,
 					money int DEFAULT 0,
-					id_account int,
-					FOREIGN KEY (id_client) REFERENCES clients (id_client),
-					FOREIGN KEY (id_account) REFERENCES accounts (id_account),
+					id_accountCB int,
+
+					FOREIGN KEY (id_accountCA) REFERENCES accounts (id_account),
+					FOREIGN KEY (id_accountCB) REFERENCES accounts (id_account),
 					PRIMARY KEY (id_transfers));                    
                                         
                     

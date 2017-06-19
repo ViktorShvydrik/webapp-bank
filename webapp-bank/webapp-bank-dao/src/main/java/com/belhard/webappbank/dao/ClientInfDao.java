@@ -1,15 +1,14 @@
 package com.belhard.webappbank.dao;
 
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
 
 import com.belhard.webappbank.entity.ClientInf;
-import com.belhard.webappbank.entity.ClientInfTabl;
 
-public interface ClientInfDao extends DaoGlobal<ClientInf>{
+public interface ClientInfDao extends CrudRepository<ClientInf, Integer>{
 
-	List<ClientInfTabl> getAllInf();
+	//List<ClientInfTabl> getAllInf();
 
-	ClientInfTabl getAllInfByID(int id);
+	
 	
 	
 }

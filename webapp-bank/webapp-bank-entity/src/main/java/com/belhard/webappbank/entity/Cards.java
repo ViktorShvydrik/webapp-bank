@@ -1,11 +1,39 @@
 package com.belhard.webappbank.entity;
 
-public class Cards {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "cards")
+public class Cards implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column (name = "id_card")
 	private int idCard;
-	private int idAccount;
-	private int idClient;
+	
+	@ManyToOne
+	@JoinColumn (name = "id_account")
+	private Accounts account;
+	
+	@ManyToOne
+	@JoinColumn (name = "id_client")
+	private Clients client;
+	
+	@Column (name = "number_card")
 	private int numberCard;
+	
+	@Column (name = "status")
 	private int status;
 	
 	
@@ -13,20 +41,6 @@ public class Cards {
 		super();
 	}
 	
-	
-
-
-	public Cards(int idCard, int idAccount, int idClient, int numberCard, int status) {
-		super();
-		this.idCard = idCard;
-		this.idAccount = idAccount;
-		this.idClient = idClient;
-		this.numberCard = numberCard;
-		this.status = status;
-	}
-
-
-
 
 	public int getIdCard() {
 		return idCard;
@@ -35,26 +49,6 @@ public class Cards {
 
 	public void setIdCard(int idCard) {
 		this.idCard = idCard;
-	}
-
-
-	public int getIdAccount() {
-		return idAccount;
-	}
-
-
-	public void setIdAccount(int idAccount) {
-		this.idAccount = idAccount;
-	}
-
-
-	public int getIdClient() {
-		return idClient;
-	}
-
-
-	public void setIdClient(int idClient) {
-		this.idClient = idClient;
 	}
 
 
@@ -78,13 +72,33 @@ public class Cards {
 	}
 
 
+	public Accounts getAccount() {
+		return account;
+	}
+
+
+	public void setAccount(Accounts account) {
+		this.account = account;
+	}
+
+
+	public Clients getClient() {
+		return client;
+	}
+
+
+	public void setClient(Clients client) {
+		this.client = client;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idAccount;
+		result = prime * result + ((account == null) ? 0 : account.hashCode());
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
 		result = prime * result + idCard;
-		result = prime * result + idClient;
 		result = prime * result + numberCard;
 		result = prime * result + status;
 		return result;
@@ -100,11 +114,17 @@ public class Cards {
 		if (getClass() != obj.getClass())
 			return false;
 		Cards other = (Cards) obj;
-		if (idAccount != other.idAccount)
+		if (account == null) {
+			if (other.account != null)
+				return false;
+		} else if (!account.equals(other.account))
+			return false;
+		if (client == null) {
+			if (other.client != null)
+				return false;
+		} else if (!client.equals(other.client))
 			return false;
 		if (idCard != other.idCard)
-			return false;
-		if (idClient != other.idClient)
 			return false;
 		if (numberCard != other.numberCard)
 			return false;
@@ -116,11 +136,10 @@ public class Cards {
 
 	@Override
 	public String toString() {
-		return "Cards [idCard=" + idCard + ", idAccount=" + idAccount + ", idClient=" + idClient + ", numberCard="
-				+ numberCard + ", status=" + status + "]";
+		return "Cards [idCard=" + idCard + ", account=" + account + ", client=" + client + ", numberCard=" + numberCard
+				+ ", status=" + status + "]";
 	}
-	
-	
+
 	
 	
 

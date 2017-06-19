@@ -1,41 +1,72 @@
 package com.belhard.webappbank.service.impl;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.dao.ClientsDao;
 import com.belhard.webappbank.entity.Clients;
 import com.belhard.webappbank.service.ClientsService;
+import com.belhard.webappbank.service.EntityBeanConverter;
 
+@Service
+@Transactional
 public class ClientsServiceImpl implements ClientsService{
 
 	
 	private static final int NO_ENTRY = 9;
+	
+	@Autowired
 	private ClientsDao clientsDao;
 	
+	@Autowired
+	private EntityBeanConverter converter;
 	
-	public void setClientsDao(ClientsDao clientsDao) {
-		this.clientsDao = clientsDao;
+	
+
+
+	@Override
+	public Iterable<Clients> getAllClients() {
+		 
+		return clientsDao.findAll();
 	}
 
 	@Override
-	public List<Clients> getAllClients() {
-		return clientsDao.getAll();
-	}
-
-	@Override
-	public Clients login(Clients clients) {
-		return clientsDao.login(clients);
-	}
-
-	@Override
-	public Integer add(Clients clients) {
-		clients = login(clients);
-		if (clients.getAccess() == NO_ENTRY ) {
-			clients.setAccess(0);
-			return clientsDao.add(clients);
+	public ClientBean login(ClientBean clientBean) {
+		String login = clientBean.getLogin();
+		Clients clientDB = clientsDao.findByLogin(login);
+		if(clientDB != null){
+			ClientBean clientBeanOut = converter.convertToBean(clientDB, ClientBean.class);
+			if(clientBean.getPass().equals(clientBeanOut.getPass())){
+				return clientBeanOut;
+			}else {
+				clientBeanOut.setAccess(NO_ENTRY);
+				return clientBeanOut;
+			}
+		}else{
+			ClientBean clientBeanOut = new ClientBean();
+			clientBeanOut.setAccess(NO_ENTRY);
+			return clientBeanOut;
 		}
-		return null;
+		
 	}
+
+	@Override
+	public int add(ClientBean clientBean) {
+		ClientBean clientBeanDB = login(clientBean);
+		String login = clientBean.getLogin();
+		if (clientBeanDB.getAccess() == NO_ENTRY ) {
+			Clients client = converter.convertToEntity(clientBeanDB, Clients.class);
+			clientsDao.save(client);
+		}
+		Clients clientDB = clientsDao.findByLogin(login);
+		return clientDB.getIdClient();
+		
+	}
+
+
+
 	
 	
 
