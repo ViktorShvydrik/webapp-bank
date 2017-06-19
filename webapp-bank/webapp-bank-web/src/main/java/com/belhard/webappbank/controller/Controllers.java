@@ -56,7 +56,7 @@ public class Controllers{
 		
 		clientBean = clientsService.login(clientBean);
 		ClientAllInfBean allInfBean = clientInfService.getAllInfById(clientBean);
-		if(clientBean.getIdClient() != allInfBean.getClientInf().getIdClient()){
+		if(clientBean.getIdClient() != allInfBean.getClient().getIdClient()){
 			return "reg";
 		}
 		switch (clientBean.getAccess()) {

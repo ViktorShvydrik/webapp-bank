@@ -2,12 +2,9 @@ package com.belhard.webappbank.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,9 +29,6 @@ public class ClientInf implements Serializable{
 	@Column (name = "accounts")
 	private int accounts;
 	
-	@OneToOne (cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_client")
-	private Clients client;
 	
 	
 	public ClientInf() {
@@ -93,19 +87,6 @@ public class ClientInf implements Serializable{
 	}
 
 
-
-	public Clients getClient() {
-		return client;
-	}
-
-
-
-	public void setClient(Clients client) {
-		this.client = client;
-	}
-
-
-
 	public void setIdClient(int idClient) {
 		this.idClient = idClient;
 	}
@@ -117,7 +98,6 @@ public class ClientInf implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + accounts;
-		result = prime * result + ((client == null) ? 0 : client.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + idClient;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -137,11 +117,6 @@ public class ClientInf implements Serializable{
 			return false;
 		ClientInf other = (ClientInf) obj;
 		if (accounts != other.accounts)
-			return false;
-		if (client == null) {
-			if (other.client != null)
-				return false;
-		} else if (!client.equals(other.client))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -168,14 +143,11 @@ public class ClientInf implements Serializable{
 	@Override
 	public String toString() {
 		return "ClientInf [idClient=" + idClient + ", name=" + name + ", secondName=" + secondName + ", email=" + email
-				+ ", accounts=" + accounts + ", client=" + client + "]";
+				+ ", accounts=" + accounts + "]";
 	}
 
 
 
-
-	
-	
 	
 	
 

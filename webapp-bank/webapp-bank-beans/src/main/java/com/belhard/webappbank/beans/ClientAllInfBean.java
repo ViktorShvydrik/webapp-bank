@@ -3,7 +3,6 @@ package com.belhard.webappbank.beans;
 public class ClientAllInfBean {
 	
 	private ClientBean client;
-	private ClientInfBean clientInf;
 	private int countAcc;
 	private int totalMoney;
 	private int countCards;
@@ -21,16 +20,6 @@ public class ClientAllInfBean {
 
 	public void setClient(ClientBean client) {
 		this.client = client;
-	}
-
-
-	public ClientInfBean getClientInf() {
-		return clientInf;
-	}
-
-
-	public void setClientInf(ClientInfBean clientInf) {
-		this.clientInf = clientInf;
 	}
 
 
@@ -69,7 +58,6 @@ public class ClientAllInfBean {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((client == null) ? 0 : client.hashCode());
-		result = prime * result + ((clientInf == null) ? 0 : clientInf.hashCode());
 		result = prime * result + countAcc;
 		result = prime * result + countCards;
 		result = prime * result + totalMoney;
@@ -91,11 +79,6 @@ public class ClientAllInfBean {
 				return false;
 		} else if (!client.equals(other.client))
 			return false;
-		if (clientInf == null) {
-			if (other.clientInf != null)
-				return false;
-		} else if (!clientInf.equals(other.clientInf))
-			return false;
 		if (countAcc != other.countAcc)
 			return false;
 		if (countCards != other.countCards)
@@ -108,10 +91,11 @@ public class ClientAllInfBean {
 
 	@Override
 	public String toString() {
-		return "ClientAllInfBean [client=" + client + ", clientInf=" + clientInf + ", countAcc=" + countAcc
-				+ ", totalMoney=" + totalMoney + ", countCards=" + countCards + "]";
+		return "ClientAllInfBean [client=" + client + ", countAcc=" + countAcc + ", totalMoney=" + totalMoney
+				+ ", countCards=" + countCards + "]";
 	}
-	 
+
+
 	
 	
 

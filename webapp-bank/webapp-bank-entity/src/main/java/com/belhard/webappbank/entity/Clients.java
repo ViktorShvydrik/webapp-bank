@@ -2,11 +2,14 @@ package com.belhard.webappbank.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,6 +35,9 @@ public class Clients implements Serializable {
 	@Column (name = "access")
 	private int access;
 	
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_client")
+	private ClientInf clientInf;
 	
 	public Clients (){
 		
@@ -79,23 +85,26 @@ public class Clients implements Serializable {
 		this.access = access;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public ClientInf getClientInf() {
+		return clientInf;
 	}
 
+	public void setClientInf(ClientInf clientInf) {
+		this.clientInf = clientInf;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + access;
+		result = prime * result + ((clientInf == null) ? 0 : clientInf.hashCode());
 		result = prime * result + idClient;
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((pass == null) ? 0 : pass.hashCode());
 		result = prime * result + status;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -107,6 +116,11 @@ public class Clients implements Serializable {
 			return false;
 		Clients other = (Clients) obj;
 		if (access != other.access)
+			return false;
+		if (clientInf == null) {
+			if (other.clientInf != null)
+				return false;
+		} else if (!clientInf.equals(other.clientInf))
 			return false;
 		if (idClient != other.idClient)
 			return false;
@@ -125,12 +139,13 @@ public class Clients implements Serializable {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Clients [idClient=" + idClient + ", login=" + login + ", pass=" + pass + ", status=" + status
-				+ ", access=" + access + "]";
+				+ ", access=" + access + ", clientInf=" + clientInf + "]";
 	}
+
+	
 
 	
 	

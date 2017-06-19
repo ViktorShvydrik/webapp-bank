@@ -7,6 +7,7 @@ public class ClientBean {
 	private String pass;
 	private int status;
 	private int access;
+	private ClientInfBean inf;
 	
 	
 	public ClientBean() {
@@ -64,12 +65,23 @@ public class ClientBean {
 	}
 
 
+	public ClientInfBean getInf() {
+		return inf;
+	}
+
+
+	public void setInf(ClientInfBean inf) {
+		this.inf = inf;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + access;
 		result = prime * result + idClient;
+		result = prime * result + ((inf == null) ? 0 : inf.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((pass == null) ? 0 : pass.hashCode());
 		result = prime * result + status;
@@ -90,6 +102,11 @@ public class ClientBean {
 			return false;
 		if (idClient != other.idClient)
 			return false;
+		if (inf == null) {
+			if (other.inf != null)
+				return false;
+		} else if (!inf.equals(other.inf))
+			return false;
 		if (login == null) {
 			if (other.login != null)
 				return false;
@@ -109,9 +126,10 @@ public class ClientBean {
 	@Override
 	public String toString() {
 		return "ClientBean [idClient=" + idClient + ", login=" + login + ", pass=" + pass + ", status=" + status
-				+ ", access=" + access + "]";
+				+ ", access=" + access + ", inf=" + inf + "]";
 	}
-	
+
+
 	
 	
 }

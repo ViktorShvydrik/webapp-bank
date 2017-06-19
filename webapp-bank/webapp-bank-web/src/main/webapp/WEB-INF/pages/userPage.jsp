@@ -39,13 +39,13 @@
 			</tr>
 
 				<tr>
-					<td>${user.name}</td>
-					<td>${user.secondName}</td>
-					<td>${user.login}</td>
-					<td>${user.email}</td>
-					<td>${user.accounts}</td>
-					<td>${user.money}</td>
-					<td>${user.cards}</td>
+					 <td>${user.client.inf.name}</td> 
+					<td>${user.client.inf.secondName}</td>
+					<td>${user.client.login}</td>
+					<td>${user.client.inf.email}</td>
+					<td>${user.countAcc}</td>
+					<td>${user.totalMoney}</td>
+					<td>${user.countCards}</td>
 				</tr>
 		
 		</table>
