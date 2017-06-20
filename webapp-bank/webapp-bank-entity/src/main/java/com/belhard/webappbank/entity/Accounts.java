@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table (name = "accounts")
@@ -30,6 +31,7 @@ public class Accounts implements Serializable{
 	private int status;
 	
 	@Column (name= "account")
+	@Transient
 	private int account;
 	
 	@Column (name ="money")

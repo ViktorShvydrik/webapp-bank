@@ -7,7 +7,8 @@ import com.belhard.webappbank.entity.ClientInf;
 public interface ClientInfDao extends CrudRepository<ClientInf, Integer>{
 
 	//List<ClientInfTabl> getAllInf();
-
+	
+	
 	
 	
 	
