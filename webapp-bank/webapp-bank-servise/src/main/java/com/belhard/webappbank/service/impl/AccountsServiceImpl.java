@@ -1,7 +1,6 @@
 package com.belhard.webappbank.service.impl;
 
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.belhard.webappbank.beans.ClientBean;
@@ -10,27 +9,17 @@ import com.belhard.webappbank.dao.AccountsDao;
 import com.belhard.webappbank.dao.ClientInfDao;
 import com.belhard.webappbank.entity.Accounts;
 import com.belhard.webappbank.service.AccountsService;
+import com.belhard.webappbank.service.EntityBeanConverter;
 
 @Service
 public class AccountsServiceImpl implements AccountsService{
 
+	@Autowired
 	private AccountsDao accountsDao;
+	@Autowired
 	private ClientInfDao clientInfDao;
-	
-		
-	public void setAccountsDao(AccountsDao accountsDao) {
-		this.accountsDao = accountsDao;
-	}
-
-	public void setClientInfDao(ClientInfDao clientInfDao) {
-		this.clientInfDao = clientInfDao;
-	}
-
-	/*@Override
-	public List<Accounts> getAllByIdClient(int id) {
-		
-		return accountsDao.getAllByIdClient(id);
-	}*/
+	@Autowired
+	private EntityBeanConverter converter;
 
 	@Override
 	public Accounts getById(int id) {
@@ -64,9 +53,10 @@ public class AccountsServiceImpl implements AccountsService{
 	}
 
 	@Override
-	public List<Accounts> getAllByIdClient(ClientBean client) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterable<Accounts> getAllByClient(ClientBean client) {
+		int id = client.getIdClient();
+		
+		return accountsDao.accbyIdClient(id);
 	}
 
 

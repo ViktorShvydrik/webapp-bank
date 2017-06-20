@@ -111,7 +111,7 @@ public class Controllers{
 		if (allInfBean != null){
 			 ClientBean client = allInfBean.getClient();
 			
-			List<Accounts> list = accountsService.getAllByIdClient(client);
+			Iterable<Accounts> list = accountsService.getAllByClient(client);
 			httpSession.setAttribute("user_accounts", list);
 			
 			return "accounts";

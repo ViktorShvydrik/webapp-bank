@@ -48,7 +48,7 @@
 		<br />
 		<br />
 		<br />
-	<c:if test="${user.accounts > 0}">
+	<c:if test="${user.countAcc > 0}">
 		<h2>Ваши счета:</h2>
 				<table border="1">
 		<tr>
@@ -73,7 +73,7 @@
 		
 		</table>
 	</c:if>
-	<c:if test="${user.accounts == 0}">У Вас нет открытых счетов.  </c:if> 
+	<c:if test="${user.countAcc == 0}">У Вас нет открытых счетов.  </c:if> 
 	<br />
 	<a href="newAccountUser.html">Открыть новый счет</a>
 	
