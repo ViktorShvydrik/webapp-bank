@@ -22,9 +22,9 @@ public class Accounts implements Serializable{
 	@Column (name ="id_account")
 	private int idAccount;
 	
-	@ManyToOne
+	@ManyToOne 
 	@JoinColumn (name ="id_client")
-	private Clients Client;	
+	private Clients client;	
 	
 	@Column (name = "status")
 	private int status;
@@ -92,11 +92,11 @@ public class Accounts implements Serializable{
 	}
 
 	public Clients getClient() {
-		return Client;
+		return client;
 	}
 
 	public void setClient(Clients client) {
-		Client = client;
+		client = client;
 	}
 
 
@@ -106,7 +106,7 @@ public class Accounts implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Client == null) ? 0 : Client.hashCode());
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
 		result = prime * result + account;
 		result = prime * result + cards;
 		result = prime * result + idAccount;
@@ -127,10 +127,10 @@ public class Accounts implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Accounts other = (Accounts) obj;
-		if (Client == null) {
-			if (other.Client != null)
+		if (client == null) {
+			if (other.client != null)
 				return false;
-		} else if (!Client.equals(other.Client))
+		} else if (!client.equals(other.client))
 			return false;
 		if (account != other.account)
 			return false;
@@ -150,7 +150,7 @@ public class Accounts implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Accounts [idAccount=" + idAccount + ", Client=" + Client + ", status=" + status + ", account=" + account
+		return "Accounts [idAccount=" + idAccount + ", Client=" + client + ", status=" + status + ", account=" + account
 				+ ", money=" + money + ", cards=" + cards + "]";
 	}
 
