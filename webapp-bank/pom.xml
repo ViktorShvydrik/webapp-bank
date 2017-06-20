@@ -25,17 +25,7 @@
   
   <maven.compiller.plugin.version>3.6.1</maven.compiller.plugin.version>
   </properties>
-  
-  <dependencies>
-  	
-  	<dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${jinit.version}</version>
-      <scope>test</scope>
-    </dependency>
-  
-  </dependencies>
+
   
     <build>
     <pluginManagement>
