@@ -12,23 +12,19 @@ import com.belhard.webappbank.service.EntityBeanConverter;
 
 @Service
 @Transactional
-public class ClientsServiceImpl implements ClientsService{
+public class ClientsServiceImpl implements ClientsService {
 
-	
 	private static final int NO_ENTRY = 9;
-	
+
 	@Autowired
 	private ClientsDao clientsDao;
-	
+
 	@Autowired
 	private EntityBeanConverter converter;
-	
-	
-
 
 	@Override
 	public Iterable<Clients> getAllClients() {
-		 
+
 		return clientsDao.findAll();
 	}
 
@@ -36,38 +32,33 @@ public class ClientsServiceImpl implements ClientsService{
 	public ClientBean login(ClientBean clientBean) {
 		String login = clientBean.getLogin();
 		Clients clientDB = clientsDao.findByLogin(login);
-		if(clientDB != null){
+		if (clientDB != null) {
 			ClientBean clientBeanOut = converter.convertToBean(clientDB, ClientBean.class);
-			if(clientBean.getPass().equals(clientBeanOut.getPass())){
+			if (clientBean.getPass().equals(clientBeanOut.getPass())) {
 				return clientBeanOut;
-			}else {
+			} else {
 				clientBeanOut.setAccess(NO_ENTRY);
 				return clientBeanOut;
 			}
-		}else{
+		} else {
 			ClientBean clientBeanOut = new ClientBean();
 			clientBeanOut.setAccess(NO_ENTRY);
 			return clientBeanOut;
 		}
-		
+
 	}
 
 	@Override
 	public int add(ClientBean clientBean) {
 		ClientBean clientBeanDB = login(clientBean);
-		String login = clientBean.getLogin();
-		if (clientBeanDB.getAccess() == NO_ENTRY ) {
+		Clients clientDB = null;
+		if (clientBeanDB.getAccess() == NO_ENTRY) {
 			Clients client = converter.convertToEntity(clientBeanDB, Clients.class);
-			clientsDao.save(client);
+			clientDB = clientsDao.save(client);
 		}
-		Clients clientDB = clientsDao.findByLogin(login);
+
 		return clientDB.getIdClient();
-		
+
 	}
-
-
-
-	
-	
 
 }

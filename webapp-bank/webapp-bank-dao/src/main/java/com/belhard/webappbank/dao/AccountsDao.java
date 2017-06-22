@@ -10,7 +10,7 @@ public interface AccountsDao extends CrudRepository<Accounts, Integer>{
 
 	//List<Accounts> getAllByIdClient(int id);
 
-	Integer create(int id);
+	//Integer create(int id);
 	
 	@Query ("SELECT COUNT(a) FROM Accounts a WHERE a.client.idClient =:id")
 	int countAllByClient(@Param ("id") int idClient);

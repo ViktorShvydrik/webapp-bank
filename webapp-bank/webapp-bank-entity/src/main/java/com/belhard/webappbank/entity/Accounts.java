@@ -10,46 +10,38 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
-@Table (name = "accounts")
-public class Accounts implements Serializable{
+@Table(name = "accounts")
+public class Accounts implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column (name ="id_account")
+	@Column(name = "id_account")
 	private int idAccount;
-	
-	@ManyToOne 
-	@JoinColumn (name ="id_client")
-	private Clients client;	
-	
-	@Column (name = "status")
+
+	@ManyToOne
+	@JoinColumn(name = "id_client")
+	private Clients client;
+
+	@Column(name = "status")
 	private int status;
-	
-	@Column (name= "account")
-	@Transient
+
+	@Column(name = "account")
+	// @Transient
 	private int account;
-	
-	@Column (name ="money")
+
+	@Column(name = "money")
 	private int money;
-	
-	@Column (name = "cards")
+
+	@Column(name = "cards")
 	private int cards;
-	
-	
-	
-	
-	
+
 	public Accounts() {
 		super();
 	}
-
-
-
 
 	public int getIdAccount() {
 		return idAccount;
@@ -58,8 +50,6 @@ public class Accounts implements Serializable{
 	public void setIdAccount(int idAccount) {
 		this.idAccount = idAccount;
 	}
-
-	
 
 	public int getStatus() {
 		return status;
@@ -101,9 +91,6 @@ public class Accounts implements Serializable{
 		client = client;
 	}
 
-
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -116,9 +103,6 @@ public class Accounts implements Serializable{
 		result = prime * result + status;
 		return result;
 	}
-
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -147,15 +131,10 @@ public class Accounts implements Serializable{
 		return true;
 	}
 
-
-
-
 	@Override
 	public String toString() {
 		return "Accounts [idAccount=" + idAccount + ", Client=" + client + ", status=" + status + ", account=" + account
 				+ ", money=" + money + ", cards=" + cards + "]";
 	}
-
-	
 
 }
