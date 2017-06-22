@@ -15,7 +15,7 @@
 
 
 <div class="p-x-1 p-y-3">
- <spring:form class="card card-block m-x-auto bg-faded form-width" action="reginf.html" method="POST" modelAttribute="clientInf">
+ <spring:form class="card card-block m-x-auto bg-faded form-width" action="reginf.html" method="POST" modelAttribute="clientInfBean">
  <spring:hidden path="Id_client"/>
  <legend class="m-b-1 text-xs-center">Регистрация</legend>
  <div class="form-group input-group">

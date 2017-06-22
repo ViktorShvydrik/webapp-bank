@@ -30,7 +30,6 @@ public class Accounts implements Serializable {
 	private int status;
 
 	@Column(name = "account")
-	// @Transient
 	private int account;
 
 	@Column(name = "money")
@@ -88,7 +87,7 @@ public class Accounts implements Serializable {
 	}
 
 	public void setClient(Clients client) {
-		client = client;
+		this.client = client;
 	}
 
 	@Override
