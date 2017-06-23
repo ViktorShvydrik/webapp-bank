@@ -50,7 +50,7 @@
 		<br />
 		<br />
 		<h2>Ваши карточки</h2>
-		<c:if test="${user.cards > 0}">
+		<c:if test="${user.countCards > 0}">
 		<table border="1">
 		<tr>
 				<th>

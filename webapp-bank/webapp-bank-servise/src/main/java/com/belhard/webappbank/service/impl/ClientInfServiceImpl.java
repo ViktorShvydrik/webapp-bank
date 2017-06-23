@@ -102,7 +102,7 @@ public class ClientInfServiceImpl implements ClientInfService{
 		
 	}
 	
-	private ClientAllInfBean getCountCards (ClientAllInfBean allInfBean){
+	/*private ClientAllInfBean getCountCards (ClientAllInfBean allInfBean){
 		ClientBean clientBean = allInfBean.getClient();
 		Clients client = converter.convertToEntity(clientBean, Clients.class);
 		Iterable<Cards> list = cardsDao.findAllByClient(client);
@@ -115,7 +115,7 @@ public class ClientInfServiceImpl implements ClientInfService{
 		allInfBean.setCountCards(count);
 		return allInfBean;
 		
-	}
+	}*/
 
 	
 		

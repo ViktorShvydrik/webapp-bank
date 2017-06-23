@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.belhard.webappbank.beans.AccountBean;
+import com.belhard.webappbank.beans.CardBean;
 import com.belhard.webappbank.beans.ClientAllInfBean;
 import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.beans.ClientInfBean;
 import com.belhard.webappbank.beans.RefillBean;
-import com.belhard.webappbank.entity.Cards;
 import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.CardsService;
 import com.belhard.webappbank.service.ClientInfService;
@@ -133,7 +133,7 @@ public class Controllers {
 	public String userCards(HttpSession httpSession) {
 		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
 		if (allInfBean != null) {
-			List<Cards> list = cardsService.getAllByClientId(allInfBean.getClient().getIdClient());
+			List<CardBean> list = cardsService.getAllByClientId(allInfBean.getClient().getIdClient());
 			httpSession.setAttribute("user_cards", list);
 
 			return "cards";
@@ -191,7 +191,7 @@ public class Controllers {
 		return new ClientInfBean();
 	}
 
-	@ModelAttribute
+	@ModelAttribute(name = "clients")
 	private ClientBean addCl() {
 		return new ClientBean();
 	}

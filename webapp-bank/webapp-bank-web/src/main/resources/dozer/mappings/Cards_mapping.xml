@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping>
+		<class-a>com.belhard.webappbank.entity.Cards</class-a>
+		<class-b>com.belhard.webappbank.beans.CardBean</class-b>
+		<field custom-converter="com.belhard.webappbank.service.impl.dozer.CardsClientConverter">
+			<a>client</a>
+			<b>login</b>
+		</field>
+		
+		<field custom-converter="com.belhard.webappbank.service.impl.dozer.CardsAccountConverter">
+			<a>account</a>
+			<b>account</b>
+		</field>
+
+		
+	</mapping>
+
+</mappings>
