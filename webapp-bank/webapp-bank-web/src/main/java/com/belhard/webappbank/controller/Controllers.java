@@ -52,13 +52,16 @@ public class Controllers {
 	}
 
 	@RequestMapping(value = "/login.html", method = RequestMethod.POST)
-	public String loginController(HttpSession httpSession, ClientBean clientBean) {
+	public ModelAndView loginController(HttpSession httpSession, ClientBean clientBean, ClientInfBean clientInfBean) {
 
 		clientBean = clientsService.login(clientBean);
 		ClientAllInfBean allInfBean = clientInfService.getAllInfById(clientBean);
 		if (clientBean.getInf() == null) {
-			// модель
-			return "reg.page";
+			int id = clientBean.getIdClient();
+			clientInfBean.setIdClient(id);
+			ModelAndView model = new ModelAndView("reg.page", "clientsInf", clientInfBean);
+
+			return model;
 		}
 		switch (clientBean.getAccess()) {
 
@@ -68,12 +71,13 @@ public class Controllers {
 			// break;
 		case USER_ACCESS:
 			httpSession.setAttribute("user", allInfBean);
-			return "redirect:userPage";
+			ModelAndView model = new ModelAndView("redirect:userPage.html");
+			return model;
 		case NO_ENTRY: // пользователя нет в базе, ошибки, отправка на индекс
 			break;
 		}
 
-		return "index.page";
+		return new ModelAndView("index.page");
 	}
 
 	@RequestMapping(value = "/reg.html", method = RequestMethod.POST)
