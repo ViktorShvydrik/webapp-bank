@@ -5,30 +5,13 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="resources/css/main.css" type="text/css">
-<meta charset="utf-8">
-<title> Пластиковые карты</title>
-</head>
-<body>
 
-		<ul class="nav">
-            <li><a href="index.html">Логин</a></li>
-            <li><a href="userPage.html" >Главная</a></li>
-            <li><a href="accounts.html">Счета</a></li>
-            <li><a href="#" class = "active">Карты</a></li>
-            <li><a href="#">Переводы</a></li>
-            <li><a href="refill.html">Пополнение счета</a></li>
-            <li><a href="#">Настроки</a></li>
-        </ul>
         
-        <table border="1">
+        <table class="table table-striped table-bordered table-hover" id="dataTables">
 			<tr>
-				<th>имя </th>
-				<th>фамилия</th>
-				<th>логин</th>
+			<th> Имя </th>
+				<th>Фамилия</th>
+				<th>Логин</th>
 				<th>Емейл</th>
 				<th>Открыто счетов</th>
 				<th>Деньги на счетах</th>
@@ -51,7 +34,7 @@
 		<br />
 		<h2>Ваши карточки</h2>
 		<c:if test="${user.countCards > 0}">
-		<table border="1">
+		<table class="table table-striped table-bordered table-hover" id="dataTables">
 		<tr>
 				<th>
 					Номер карточки 
@@ -81,6 +64,3 @@
 		</c:forEach>
 		</table>
 		</c:if>
-
-</body>
-</html>

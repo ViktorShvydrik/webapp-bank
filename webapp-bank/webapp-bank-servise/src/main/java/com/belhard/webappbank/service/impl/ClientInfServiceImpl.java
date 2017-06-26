@@ -23,37 +23,35 @@ import com.belhard.webappbank.service.EntityBeanConverter;
 
 @Service
 @Transactional
-public class ClientInfServiceImpl implements ClientInfService{
+public class ClientInfServiceImpl implements ClientInfService {
 
 	@Autowired
 	private ClientInfDao clientInfDao;
-	
+
 	@Autowired
 	private AccountsDao accountsDao;
-	
+
 	@Autowired
 	private CardsDao cardsDao;
-	
-	
+
 	@Autowired
 	private ClientsDao clientsDao;
-	
+
 	@Autowired
 	private EntityBeanConverter converter;
-	
+
 	private static final int DELETE = 1;
-	
 
 	@Override
 	public void add(ClientInfBean clientInfBean) {
 		ClientInf clientInf = converter.convertToEntity(clientInfBean, ClientInf.class);
 		clientInfDao.save(clientInf);
-		
+
 	}
 
 	@Override
 	public List<ClientInfBean> getAll() {
-		//NOOP
+		// NOOP
 		return null;
 	}
 
@@ -61,63 +59,56 @@ public class ClientInfServiceImpl implements ClientInfService{
 	public List<ClientAllInfBean> getAllInfToTable() {
 		List<ClientAllInfBean> list = new ArrayList<>();
 		Iterable<Clients> findAll = clientsDao.findAll();
-		for (Clients client:findAll ){
+		for (Clients client : findAll) {
 			ClientBean clientBean = converter.convertToBean(client, ClientBean.class);
 			ClientAllInfBean allInfById = getAllInfById(clientBean);
 			list.add(allInfById);
 		}
-		
+
 		return list;
 	}
-
 
 	@Override
 	public ClientAllInfBean getAllInfById(ClientBean clientBean) {
 		ClientAllInfBean allInfBean = new ClientAllInfBean();
 		allInfBean.setClient(clientBean);
 		int id = clientBean.getIdClient();
-		int totalMoney = accountsDao.moneyByClient(id);
-		int countAcc = accountsDao.countAllByClient(id);
-		int countCards = cardsDao.countByIdClient(id);
+		allInfBean = getTotalMoneyAndCountAcc(allInfBean);
+		allInfBean = getCountCards(allInfBean);
+		return allInfBean;
+	}
+
+	private ClientAllInfBean getTotalMoneyAndCountAcc(ClientAllInfBean allInfBean) {
+
+		// доработать до отбора только не удаленных данных
+
+		int id = allInfBean.getClient().getIdClient();
+		List<Accounts> list = accountsDao.accByIdClient(id);
+		int totalMoney = 0;
+		int countAcc = 0;
+		if (list.size() > 0) {
+			totalMoney = accountsDao.moneyByClient(id);
+			countAcc = accountsDao.countAllByClient(id);
+		}
+
 		allInfBean.setTotalMoney(totalMoney);
 		allInfBean.setCountAcc(countAcc);
-		allInfBean.setCountCards(countCards);
-		//allInfBean = getTotalMoneyAndCountAcc(allInfBean); 
-		//allInfBean = getCountCards(allInfBean);
 		return allInfBean;
+
 	}
-	
-	private ClientAllInfBean getTotalMoneyAndCountAcc (ClientAllInfBean allInfBean){ //доработать до отбора только не удаленных данных
-		int id = allInfBean.getClient().getIdClient();
-		Iterable<Accounts> list = accountsDao.accbyIdClient(id);
-		int totalMoney = 0;
-		int count = 0;
-		for (Accounts accounts : list) {
-			count++;
-			totalMoney += accounts.getMoney();
-		}
-		allInfBean.setTotalMoney(totalMoney);
-		allInfBean.setCountAcc(count);
-		return allInfBean;
-		
-	}
-	
-	/*private ClientAllInfBean getCountCards (ClientAllInfBean allInfBean){
+
+	private ClientAllInfBean getCountCards(ClientAllInfBean allInfBean) {
 		ClientBean clientBean = allInfBean.getClient();
 		Clients client = converter.convertToEntity(clientBean, Clients.class);
-		Iterable<Cards> list = cardsDao.findAllByClient(client);
+		List<Cards> list = cardsDao.findAllByClient(client);
 		int count = 0;
-		for (Cards cards : list) {
-			if (cards.getStatus() != DELETE) {
-				count++;
-			}
+		if (list.size() > 0) {
+			count = cardsDao.countByIdClient(client.getIdClient());
 		}
+
 		allInfBean.setCountCards(count);
 		return allInfBean;
-		
-	}*/
 
-	
-		
-	
+	}
+
 }

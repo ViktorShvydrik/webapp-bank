@@ -1,5 +1,7 @@
 package com.belhard.webappbank.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +22,7 @@ public interface AccountsDao extends CrudRepository<Accounts, Integer> {
 	int moneyByClient(@Param("id") int idClient);
 
 	@Query("Select a FROM Accounts a WHERE a.client.idClient= :id")
-	Iterable<Accounts> accbyIdClient(@Param("id") int idClient);
+	List<Accounts> accByIdClient(@Param("id") int idClient);
 
 	Accounts findByAccount(int account);
 

@@ -3,20 +3,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/reg.css" media="screen" type="text/css" />
-<title>Регистрация</title>
-</head>
-<body>
+
 
 
 <div class="p-x-1 p-y-3">
- <spring:form class="card card-block m-x-auto bg-faded form-width" action="reginf.html" method="POST" modelAttribute="clientInfBean">
- <spring:hidden path="Id_client"/>
+ <spring:form class="card card-block m-x-auto bg-faded form-width" action="reginf.html" method="POST" modelAttribute="clientsInf">
+ <spring:hidden path="idClient"/>
  <legend class="m-b-1 text-xs-center">Регистрация</legend>
  <div class="form-group input-group">
  <span class="has-float-label">
@@ -41,6 +33,3 @@
  </div>
  </spring:form>
 </div>
-
-</body>
-</html>

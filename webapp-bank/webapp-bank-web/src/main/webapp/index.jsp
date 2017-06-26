@@ -8,7 +8,7 @@
 
     <meta http-equiv="refresh" content="0; url=index.html">
 
-    <title>JEE Laboratory - Users DB</title>
+    <title>JEE Laboratory - Bank</title>
 </head>
 <body>
     Система загружается... подождите немного...

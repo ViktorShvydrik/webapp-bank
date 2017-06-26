@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC 
+    "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="user.page" extends="menuPage">
+		<put-attribute name="content" value="/WEB-INF/pages/userPage.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.home" />
+	</definition>
+	
+	<definition name="accounts.page" extends="menuPage">
+		<put-attribute name="content" value="/WEB-INF/pages/accounts.jsp" />
+		<put-attribute name="include" value="/WEB-INF/pages/common/blocks/include/withTables.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/pages/common/blocks/footer/TableFooter.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.accaunts" />
+	</definition>
+	
+	<definition name="refill.page" extends="menuPage">
+		<put-attribute name="content" value="/WEB-INF/pages/refill.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.refill" />
+	</definition>
+	
+	<definition name="cards.page" extends="menuPage">
+		<put-attribute name="content" value="/WEB-INF/pages/cards.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.cards" />
+	</definition>
+
+</tiles-definitions>

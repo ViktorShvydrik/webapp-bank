@@ -14,6 +14,8 @@ import com.belhard.webappbank.service.EntityBeanConverter;
 @Transactional
 public class ClientsServiceImpl implements ClientsService {
 
+	private static final int NOT_SAVED = -1;
+
 	private static final int NO_ENTRY = 9;
 
 	@Autowired
@@ -53,8 +55,10 @@ public class ClientsServiceImpl implements ClientsService {
 		ClientBean clientBeanDB = login(clientBean);
 		Clients clientDB = null;
 		if (clientBeanDB.getAccess() == NO_ENTRY) {
-			Clients client = converter.convertToEntity(clientBeanDB, Clients.class);
+			Clients client = converter.convertToEntity(clientBean, Clients.class);
 			clientDB = clientsDao.save(client);
+		} else {
+			return NOT_SAVED;
 		}
 
 		return clientDB.getIdClient();

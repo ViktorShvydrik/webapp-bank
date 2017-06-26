@@ -67,7 +67,7 @@ public class AccountsServiceImpl implements AccountsService {
 	public List<AccountBean> getAllByClient(ClientBean client) {
 		int id = client.getIdClient();
 		List<AccountBean> list = new ArrayList<>();
-		Iterable<Accounts> listBD = accountsDao.accbyIdClient(id);
+		Iterable<Accounts> listBD = accountsDao.accByIdClient(id);
 		for (Accounts accounts : listBD) {
 			AccountBean accountBean = converter.convertToBean(accounts, AccountBean.class);
 			list.add(accountBean);

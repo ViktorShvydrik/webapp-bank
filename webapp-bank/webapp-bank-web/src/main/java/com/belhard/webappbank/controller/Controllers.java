@@ -38,6 +38,8 @@ public class Controllers {
 	@Autowired
 	AccountsService accountsService;
 
+	private static final int NOT_SAVED = -1;
+
 	private static final int ADMIN_ACCESS = 0;
 	private static final int OPERATOR_ACCESS = 1;
 	private static final int USER_ACCESS = 2;
@@ -45,7 +47,7 @@ public class Controllers {
 
 	@RequestMapping("/index.html")
 	public ModelAndView indexController(ClientBean client) {
-		ModelAndView model = new ModelAndView("index", "clients", client);
+		ModelAndView model = new ModelAndView("index.page", "clients", client);
 		return model;
 	}
 
@@ -54,8 +56,9 @@ public class Controllers {
 
 		clientBean = clientsService.login(clientBean);
 		ClientAllInfBean allInfBean = clientInfService.getAllInfById(clientBean);
-		if (clientBean.getIdClient() != allInfBean.getClient().getIdClient()) {
-			return "reg";
+		if (clientBean.getInf() == null) {
+			// модель
+			return "reg.page";
 		}
 		switch (clientBean.getAccess()) {
 
@@ -70,16 +73,20 @@ public class Controllers {
 			break;
 		}
 
-		return "index";
+		return "index.page";
 	}
 
 	@RequestMapping(value = "/reg.html", method = RequestMethod.POST)
 	public ModelAndView regController(ClientBean client, ClientInfBean clientsInf) {
 
 		int id = clientsService.add(client);
+		if (id == NOT_SAVED) {
+			return new ModelAndView("index.page");
+		}
+
 		clientsInf.setIdClient(id);
 
-		ModelAndView model = new ModelAndView("reg", "clientsInf", clientsInf);
+		ModelAndView model = new ModelAndView("reg.page", "clientsInf", clientsInf);
 
 		return model;
 	}
@@ -88,7 +95,7 @@ public class Controllers {
 	public String regIngController(ClientInfBean clientInf) {
 		clientInfService.add(clientInf);
 
-		return "index";
+		return "index.page";
 
 	}
 
@@ -96,9 +103,9 @@ public class Controllers {
 	public String userController(HttpSession httpSession) {
 		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
 		if (allInfBean != null) {
-			return "userPage";
+			return "user.page";
 		}
-		return "index";
+		return "index.page";
 
 	}
 
@@ -111,10 +118,10 @@ public class Controllers {
 			List<AccountBean> list = accountsService.getAllByClient(client);
 			httpSession.setAttribute("user_accounts", list);
 
-			return "accounts";
+			return "accounts.page";
 		}
 
-		return "index";
+		return "index.page";
 	}
 
 	@RequestMapping("/newAccountUser.html")
@@ -123,9 +130,9 @@ public class Controllers {
 		if (allInfBean != null) {
 			allInfBean = accountsService.createByClient(allInfBean);
 			httpSession.setAttribute("user", allInfBean);
-			return "redirect:accounts";
+			return "redirect:accounts.html";
 		}
-		return "index";
+		return "index.page";
 
 	}
 
@@ -136,9 +143,9 @@ public class Controllers {
 			List<CardBean> list = cardsService.getAllByClientId(allInfBean.getClient().getIdClient());
 			httpSession.setAttribute("user_cards", list);
 
-			return "cards";
+			return "cards.page";
 		}
-		return "index";
+		return "index.page";
 	}
 
 	@RequestMapping("/cardsblock.html")
@@ -162,10 +169,10 @@ public class Controllers {
 
 			// List<Accounts> list = accountsService.getAllByIdClient(id);
 			// httpSession.setAttribute("user_accounts", list);
-			return "refill";
+			return "refill.page";
 		}
 
-		return "index";
+		return "index.page";
 
 	}
 
@@ -186,7 +193,7 @@ public class Controllers {
 
 	}
 
-	@ModelAttribute
+	@ModelAttribute(name = "clientsInf")
 	private ClientInfBean addinf() {
 		return new ClientInfBean();
 	}
@@ -196,7 +203,7 @@ public class Controllers {
 		return new ClientBean();
 	}
 
-	@ModelAttribute
+	@ModelAttribute(name = "refill")
 	private RefillBean addRefill() {
 		return new RefillBean();
 

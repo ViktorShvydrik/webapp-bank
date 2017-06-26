@@ -1,74 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-<import resource="dao-config.xml" />
-<import resource="spring-data-config.xml" />
+	<import resource="dao-config.xml" />
+	<import resource="spring-data-config.xml" />
 
-<mvc:annotation-driven />
+	<mvc:annotation-driven />
 
-<context:component-scan base-package="com.belhard.webappbank.controller" />
-<context:component-scan base-package="com.belhard.webappbank.service.impl" />
-<context:component-scan base-package="com.belhard.webappbank.dao" />
-<context:component-scan base-package="om.belhard.webappbank.service.impl.dozer" />
+	<context:component-scan base-package="com.belhard.webappbank.controller" />
+	<context:component-scan base-package="com.belhard.webappbank.service.impl" />
+	<context:component-scan base-package="com.belhard.webappbank.dao" />
+	<context:component-scan base-package="om.belhard.webappbank.service.impl.dozer" />
 
 
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-<mvc:resources mapping="/resources/**" location="/resources/" />
+ 	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" />
 
-<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
-    
-    
-    <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
-		<property name="mappingFiles" value="classpath:/dozer/mappings/*_mapping.xml" />
-
-		<property name="customConverters">
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
 			<list>
-				<!-- <bean class="com.skillsimprover.spring.data.service.impl.dozer.EventCountConverter" />
-				<bean class="com.skillsimprover.spring.data.service.impl.dozer.EventCreatorConverter" />
-				<bean class="com.skillsimprover.spring.data.service.impl.dozer.GoingToVisitConverter" /> -->
+				<value>/WEB-INF/tiles/commonPages.xml</value>
+				<value>/WEB-INF/tiles/index.xml</value>
+				<value>/WEB-INF/tiles/reg.xml</value>
+				<value>/WEB-INF/tiles/userLayer.xml</value>
 			</list>
 		</property>
-	</bean>
-    
+	</bean> 
 
-	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basenames">
-            <list>
-                <value>classpath:i18n/msgs</value>
-            </list>
-        </property>
-        <property name="defaultEncoding" value="UTF-8"/>
-    </bean>
-    
- <!--    <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-        <property name="definitions">
-            <list>
-                <value>/WEB-INF/tiles/commonPages.xml</value>
-                <value>/WEB-INF/tiles/login.xml</value>
-            </list>
-        </property>
-    </bean> -->
-    
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-        <property name="defaultLocale" value="en_US" />
-        <property name="cookieName" value="myAppLocaleCookie" />
-        <property name="cookieMaxAge" value="3600" />
-    </bean> 
-    
-     <mvc:interceptors>
-        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-            <property name="paramName" value="language" />
-        </bean>
-    </mvc:interceptors>
+
+	<bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
+		<property name="mappingFiles" value="classpath:/dozer/mappings/*_mapping.xml" />
+
+		<!-- <property name="customConverters"> <list> <bean class="com.belhard.webappbank.service.impl.dozer.AccountClientConverter" 
+			/> <bean class="com.belhard.webappbank.service.impl.dozer.CardsAccountConverter" 
+			/> <bean class="com.belhard.webappbank.service.impl.dozer.CardsClientConverter" 
+			/> </list> </property> -->
+	</bean>
+
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:i18n/msgs</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+
+	
+<!-- <bean	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean> -->
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="en_US" />
+		<property name="cookieName" value="myAppLocaleCookie" />
+		<property name="cookieMaxAge" value="3600" />
+	</bean>
+
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
 </beans>
