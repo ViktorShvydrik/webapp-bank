@@ -61,7 +61,7 @@ public class ClientInfServiceImpl implements ClientInfService {
 		Iterable<Clients> findAll = clientsDao.findAll();
 		for (Clients client : findAll) {
 			ClientBean clientBean = converter.convertToBean(client, ClientBean.class);
-			ClientAllInfBean allInfById = getAllInfById(clientBean);
+			ClientAllInfBean allInfById = getAllInfByClient(clientBean);
 			list.add(allInfById);
 		}
 
@@ -69,7 +69,15 @@ public class ClientInfServiceImpl implements ClientInfService {
 	}
 
 	@Override
-	public ClientAllInfBean getAllInfById(ClientBean clientBean) {
+	public ClientAllInfBean getAllInfById(int id) {
+		Clients clients = clientsDao.findOne(id);
+		ClientBean clientBean = converter.convertToBean(clients, ClientBean.class);
+		ClientAllInfBean allInfByClient = getAllInfByClient(clientBean);
+		return allInfByClient;
+	}
+
+	@Override
+	public ClientAllInfBean getAllInfByClient(ClientBean clientBean) {
 		ClientAllInfBean allInfBean = new ClientAllInfBean();
 		allInfBean.setClient(clientBean);
 		int id = clientBean.getIdClient();

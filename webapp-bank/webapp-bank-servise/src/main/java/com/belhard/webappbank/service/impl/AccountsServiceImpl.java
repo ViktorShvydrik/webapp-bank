@@ -48,7 +48,7 @@ public class AccountsServiceImpl implements AccountsService {
 		ClientInf clientInf = clientInfDao.findOne(id);
 		clientInf.setAccounts(count);
 		clientInfDao.save(clientInf);
-		allInfBean = clientInfService.getAllInfById(allInfBean.getClient());
+		allInfBean = clientInfService.getAllInfByClient(allInfBean.getClient());
 
 		return allInfBean;
 	}

@@ -55,7 +55,7 @@ public class Controllers {
 	public ModelAndView loginController(HttpSession httpSession, ClientBean clientBean, ClientInfBean clientInfBean) {
 
 		clientBean = clientsService.login(clientBean);
-		ClientAllInfBean allInfBean = clientInfService.getAllInfById(clientBean);
+		ClientAllInfBean allInfBean = clientInfService.getAllInfByClient(clientBean);
 		if (clientBean.getInf() == null) {
 			int id = clientBean.getIdClient();
 			clientInfBean.setIdClient(id);
@@ -96,10 +96,12 @@ public class Controllers {
 	}
 
 	@RequestMapping(value = "/reginf.html", method = RequestMethod.POST)
-	public String regIngController(ClientInfBean clientInf) {
+	public String regIngController(ClientInfBean clientInf, HttpSession httpSession) {
 		clientInfService.add(clientInf);
-
-		return "index.page";
+		int id = clientInf.getIdClient();
+		ClientAllInfBean allInfBean = clientInfService.getAllInfById(id);
+		httpSession.setAttribute("user", allInfBean);
+		return "user.page";
 
 	}
 
@@ -192,7 +194,7 @@ public class Controllers {
 	private void reloadInf(HttpSession httpSession) {
 		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
 		ClientBean clientBean = allInfBean.getClient();
-		allInfBean = clientInfService.getAllInfById(clientBean);
+		allInfBean = clientInfService.getAllInfByClient(clientBean);
 		httpSession.setAttribute("user", allInfBean);
 
 	}
