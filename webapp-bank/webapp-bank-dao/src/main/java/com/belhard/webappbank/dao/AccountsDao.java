@@ -10,8 +10,6 @@ import com.belhard.webappbank.entity.Accounts;
 
 public interface AccountsDao extends CrudRepository<Accounts, Integer> {
 
-	// List<Accounts> getAllByIdClient(int id);
-
 	@SuppressWarnings("unchecked")
 	Accounts save(Accounts account);
 

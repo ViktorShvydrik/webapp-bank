@@ -55,14 +55,7 @@ public class Controllers {
 	public ModelAndView loginController(HttpSession httpSession, ClientBean clientBean, ClientInfBean clientInfBean) {
 
 		clientBean = clientsService.login(clientBean);
-		ClientAllInfBean allInfBean = clientInfService.getAllInfByClient(clientBean);
-		if (clientBean.getInf() == null) {
-			int id = clientBean.getIdClient();
-			clientInfBean.setIdClient(id);
-			ModelAndView model = new ModelAndView("reg.page", "clientsInf", clientInfBean);
 
-			return model;
-		}
 		switch (clientBean.getAccess()) {
 
 		case ADMIN_ACCESS:
@@ -70,6 +63,14 @@ public class Controllers {
 		case OPERATOR_ACCESS:
 			// break;
 		case USER_ACCESS:
+			if (clientBean.getInf() == null) {
+				int id = clientBean.getIdClient();
+				clientInfBean.setIdClient(id);
+				ModelAndView model = new ModelAndView("reg.page", "clientsInf", clientInfBean);
+
+				return model;
+			}
+			ClientAllInfBean allInfBean = clientInfService.getAllInfByClient(clientBean);
 			httpSession.setAttribute("user", allInfBean);
 			ModelAndView model = new ModelAndView("redirect:userPage.html");
 			return model;
@@ -173,8 +174,8 @@ public class Controllers {
 		if (allInfBean != null) {
 			ClientBean client = allInfBean.getClient();
 
-			// List<Accounts> list = accountsService.getAllByIdClient(id);
-			// httpSession.setAttribute("user_accounts", list);
+			List<AccountBean> list = accountsService.getAllByClient(client);
+			httpSession.setAttribute("user_accounts", list);
 			return "refill.page";
 		}
 
@@ -184,8 +185,8 @@ public class Controllers {
 
 	@RequestMapping("/refillmoney.html")
 	public String refillMoney(HttpSession httpSession, RefillBean refill) {
-		// accountsService.refill(refill);
-		// reloadInf(httpSession);
+		accountsService.refill(refill);
+		reloadInf(httpSession);
 
 		return "redirect:refill.html";
 

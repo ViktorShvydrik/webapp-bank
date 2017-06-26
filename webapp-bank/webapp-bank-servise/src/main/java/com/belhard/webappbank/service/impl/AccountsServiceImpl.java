@@ -56,10 +56,10 @@ public class AccountsServiceImpl implements AccountsService {
 	@Override
 	public void refill(RefillBean refill) {
 		int id = refill.getIdAccount();
-		// Accounts accounts = accountsDao.getByID(id);
-		// int money = accounts.getMoney() + refill.getMoney();
-		// accounts.setMoney(money);
-		// accountsDao.update(accounts);
+		Accounts accounts = accountsDao.findOne(id);
+		int money = accounts.getMoney() + refill.getMoney();
+		accounts.setMoney(money);
+		accountsDao.save(accounts);
 
 	}
 
