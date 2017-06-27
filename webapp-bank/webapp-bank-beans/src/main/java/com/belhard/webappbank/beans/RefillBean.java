@@ -1,35 +1,35 @@
 package com.belhard.webappbank.beans;
 
 public class RefillBean {
-	
+
 	private int idAccount;
 	private int money;
-	
-	
+
 	public RefillBean() {
 		super();
 	}
 
+	public RefillBean(int idAccount, int money) {
+		super();
+		this.idAccount = idAccount;
+		this.money = money;
+	}
 
 	public int getIdAccount() {
 		return idAccount;
 	}
 
-
 	public void setIdAccount(int idAccount) {
 		this.idAccount = idAccount;
 	}
-
 
 	public int getMoney() {
 		return money;
 	}
 
-
 	public void setMoney(int money) {
 		this.money = money;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -39,7 +39,6 @@ public class RefillBean {
 		result = prime * result + money;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -57,14 +56,9 @@ public class RefillBean {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Refill [idAccount=" + idAccount + ", money=" + money + "]";
 	}
-	
-	
-	
-
 
 }

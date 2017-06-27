@@ -10,9 +10,7 @@ public interface ClientInfService {
 
 	void add(ClientInfBean clientsInfBean);
 
-	List<ClientInfBean> getAll();
-
-	List<ClientAllInfBean> getAllInfToTable();
+	List<ClientAllInfBean> getAllInf();
 
 	ClientAllInfBean getAllInfByClient(ClientBean clientBean);
 

@@ -8,72 +8,58 @@ public class ClientBean {
 	private int status;
 	private int access;
 	private ClientInfBean inf;
-	
-	
+
 	public ClientBean() {
 		super();
 	}
-
 
 	public int getIdClient() {
 		return idClient;
 	}
 
-
 	public void setIdClient(int idClient) {
 		this.idClient = idClient;
 	}
-
 
 	public String getLogin() {
 		return login;
 	}
 
-
 	public void setLogin(String login) {
 		this.login = login;
 	}
-
 
 	public String getPass() {
 		return pass;
 	}
 
-
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
-
 
 	public int getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
 
 	public int getAccess() {
 		return access;
 	}
 
-
 	public void setAccess(int access) {
 		this.access = access;
 	}
-
 
 	public ClientInfBean getInf() {
 		return inf;
 	}
 
-
 	public void setInf(ClientInfBean inf) {
 		this.inf = inf;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -87,7 +73,6 @@ public class ClientBean {
 		result = prime * result + status;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -122,14 +107,10 @@ public class ClientBean {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "ClientBean [idClient=" + idClient + ", login=" + login + ", pass=" + pass + ", status=" + status
 				+ ", access=" + access + ", inf=" + inf + "]";
 	}
 
-
-	
-	
 }

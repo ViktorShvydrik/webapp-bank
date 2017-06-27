@@ -2,8 +2,7 @@
 
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 
-    <!-- jQuery -->
-    <script src="resources/js/jquery.min.js"></script>
+   
 
     <!-- Bootstrap Core JavaScript -->
     <script src="resources/js/bootstrap.min.js"></script>

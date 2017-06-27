@@ -11,10 +11,12 @@ public interface AccountsService {
 
 	List<AccountBean> getAllByClient(ClientBean client);
 
-	// Accounts getById (int id);
+	AccountBean getById(int id);
 
 	ClientAllInfBean createByClient(ClientAllInfBean allInfBean);
 
-	void refill(RefillBean refill);
+	AccountBean createByIdClient(int id);
+
+	AccountBean refill(RefillBean refill);
 
 }

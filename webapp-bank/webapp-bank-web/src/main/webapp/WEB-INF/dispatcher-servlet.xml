@@ -15,7 +15,9 @@
 	<context:component-scan base-package="com.belhard.webappbank.controller" />
 	<context:component-scan base-package="com.belhard.webappbank.service.impl" />
 	<context:component-scan base-package="com.belhard.webappbank.dao" />
-	<context:component-scan base-package="om.belhard.webappbank.service.impl.dozer" />
+	<context:component-scan base-package="com.belhard.webappbank.service.impl.dozer" />
+	<context:component-scan base-package="com.belhard.webappbank.restAPI" /> 
+
 
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
@@ -63,7 +65,7 @@
 
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-		<property name="defaultLocale" value="en_US" />
+		<property name="defaultLocale" value="ru_RU" />
 		<property name="cookieName" value="myAppLocaleCookie" />
 		<property name="cookieMaxAge" value="3600" />
 	</bean>

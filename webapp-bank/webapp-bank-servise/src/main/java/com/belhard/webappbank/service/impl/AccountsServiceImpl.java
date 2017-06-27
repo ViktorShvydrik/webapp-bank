@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.belhard.webappbank.beans.AccountBean;
 import com.belhard.webappbank.beans.ClientAllInfBean;
 import com.belhard.webappbank.beans.ClientBean;
+import com.belhard.webappbank.beans.ClientInfBean;
 import com.belhard.webappbank.beans.RefillBean;
 import com.belhard.webappbank.dao.AccountsDao;
 import com.belhard.webappbank.dao.ClientInfDao;
+import com.belhard.webappbank.dao.ClientsDao;
 import com.belhard.webappbank.entity.Accounts;
 import com.belhard.webappbank.entity.ClientInf;
 import com.belhard.webappbank.entity.Clients;
@@ -27,6 +29,8 @@ public class AccountsServiceImpl implements AccountsService {
 	private AccountsDao accountsDao;
 	@Autowired
 	private ClientInfDao clientInfDao;
+	@Autowired
+	private ClientsDao clientsDao;
 	@Autowired
 	private ClientInfService clientInfService;
 	@Autowired
@@ -45,21 +49,24 @@ public class AccountsServiceImpl implements AccountsService {
 		account.setAccount(acc);
 		account = accountsDao.save(account);
 		int count = accountsDao.countAllByClient(id);
-		ClientInf clientInf = clientInfDao.findOne(id);
-		clientInf.setAccounts(count);
-		clientInfDao.save(clientInf);
+		ClientInfBean clientInfBean = allInfBean.getClient().getInf();
+		clientInfBean.setCountAccounts(count);
+		ClientInf clientInf = converter.convertToEntity(clientInfBean, ClientInf.class);
+		clientInf = clientInfDao.save(clientInf);
 		allInfBean = clientInfService.getAllInfByClient(allInfBean.getClient());
 
 		return allInfBean;
 	}
 
 	@Override
-	public void refill(RefillBean refill) {
+	public AccountBean refill(RefillBean refill) {
 		int id = refill.getIdAccount();
 		Accounts accounts = accountsDao.findOne(id);
 		int money = accounts.getMoney() + refill.getMoney();
 		accounts.setMoney(money);
-		accountsDao.save(accounts);
+		accounts = accountsDao.save(accounts);
+		AccountBean accountBean = converter.convertToBean(accounts, AccountBean.class);
+		return accountBean;
 
 	}
 
@@ -85,5 +92,29 @@ public class AccountsServiceImpl implements AccountsService {
 		} while (accounts != null);
 		return acc;
 
+	}
+
+	@Override
+	public AccountBean getById(int id) {
+		Accounts accounts = accountsDao.findOne(id);
+		AccountBean accountBean = converter.convertToBean(accounts, AccountBean.class);
+		return accountBean;
+	}
+
+	@Override
+	@Transactional
+	public AccountBean createByIdClient(int id) {
+		Accounts account = new Accounts();
+		Clients client = clientsDao.findOne(id);
+		int acc = randomAcc();
+		account.setClient(client);
+		account.setAccount(acc);
+		account = accountsDao.save(account);
+		int count = accountsDao.countAllByClient(id);
+		ClientInf clientInf = clientInfDao.findOne(id);
+		clientInf.setAccounts(count);
+		clientInfDao.save(clientInf);
+		AccountBean accountBean = converter.convertToBean(account, AccountBean.class);
+		return accountBean;
 	}
 }

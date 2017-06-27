@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.belhard.webappbank.beans.AccountBean;
@@ -110,6 +109,7 @@ public class Controllers {
 	public String userController(HttpSession httpSession) {
 		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
 		if (allInfBean != null) {
+			reloadInf(httpSession);
 			return "user.page";
 		}
 		return "index.page";
@@ -120,6 +120,7 @@ public class Controllers {
 	public String userAccountsController(HttpSession httpSession) {
 		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
 		if (allInfBean != null) {
+			allInfBean = reloadInf(httpSession);
 			ClientBean client = allInfBean.getClient();
 
 			List<AccountBean> list = accountsService.getAllByClient(client);
@@ -147,6 +148,7 @@ public class Controllers {
 	public String userCards(HttpSession httpSession) {
 		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
 		if (allInfBean != null) {
+			allInfBean = reloadInf(httpSession);
 			List<CardBean> list = cardsService.getAllByClientId(allInfBean.getClient().getIdClient());
 			httpSession.setAttribute("user_cards", list);
 
@@ -155,23 +157,11 @@ public class Controllers {
 		return "index.page";
 	}
 
-	@RequestMapping("/cardsblock.html")
-	public String blockCard(@RequestParam("id") int id) {
-
-		cardsService.block(id);
-		return "redirect:cards";
-	}
-
-	@RequestMapping("/cardsunblock.html")
-	public String unBlockCard(@RequestParam("id") int id) {
-		cardsService.unBlock(id);
-		return "redirect:cards";
-	}
-
 	@RequestMapping("/refill.html")
 	public String refill(HttpSession httpSession, RefillBean refill) {
 		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
 		if (allInfBean != null) {
+			allInfBean = reloadInf(httpSession);
 			ClientBean client = allInfBean.getClient();
 
 			List<AccountBean> list = accountsService.getAllByClient(client);
@@ -183,6 +173,7 @@ public class Controllers {
 
 	}
 
+	@Deprecated
 	@RequestMapping("/refillmoney.html")
 	public String refillMoney(HttpSession httpSession, RefillBean refill) {
 		accountsService.refill(refill);
@@ -192,11 +183,12 @@ public class Controllers {
 
 	}
 
-	private void reloadInf(HttpSession httpSession) {
+	private ClientAllInfBean reloadInf(HttpSession httpSession) {
 		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
 		ClientBean clientBean = allInfBean.getClient();
 		allInfBean = clientInfService.getAllInfByClient(clientBean);
 		httpSession.setAttribute("user", allInfBean);
+		return allInfBean;
 
 	}
 

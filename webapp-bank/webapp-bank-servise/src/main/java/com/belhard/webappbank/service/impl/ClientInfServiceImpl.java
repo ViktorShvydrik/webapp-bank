@@ -50,13 +50,7 @@ public class ClientInfServiceImpl implements ClientInfService {
 	}
 
 	@Override
-	public List<ClientInfBean> getAll() {
-		// NOOP
-		return null;
-	}
-
-	@Override
-	public List<ClientAllInfBean> getAllInfToTable() {
+	public List<ClientAllInfBean> getAllInf() {
 		List<ClientAllInfBean> list = new ArrayList<>();
 		Iterable<Clients> findAll = clientsDao.findAll();
 		for (Clients client : findAll) {

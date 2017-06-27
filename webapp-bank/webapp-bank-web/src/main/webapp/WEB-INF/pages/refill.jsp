@@ -6,7 +6,7 @@
 
 
         
-        <table class="table table-striped table-bordered table-hover">
+        <table class="table table-striped table-bordered table-hover" id="inf">
 			<tr>
 				<th> Имя </th>
 				<th>Фамилия</th>
@@ -35,15 +35,41 @@
 
 	<c:if test="${user.countAcc == 0}">У Вас нет открытых счетов.  </c:if> 
 	<c:if test="${user.countAcc > 0}">
-	<spring:form action="refillmoney.html" modelAttribute="refill">
-		<spring:select path="idAccount">
+	<spring:form modelAttribute="refill" method="POST" id="refill">
+		<spring:select path="idAccount" id="id">
 		<c:forEach items="${user_accounts}" var="acc">
 		<spring:option value="${acc.idAccount}">${acc.account} (${acc.money} руб.)</spring:option>
 		</c:forEach>
 		</spring:select>
 		
-		<spring:input path="money" />
+		<spring:input path="money" id="money"/>
 		<input  type="submit" value="Пополнить">
 	</spring:form>
 	
 	</c:if>
+
+
+<script type="text/javascript">
+$(function(){ 
+	$('#refill').submit(function(e){
+		//отменяем стандартное действие при отправке формы
+		e.preventDefault();
+		var select = document.getElementById('id');
+		var id = select.value;
+		var money = document.getElementById('money').value;
+		var url = '/webapp-bank-web/rest/users/accounts/'+id+'/'+ money;
+		$.ajax({
+			type: "POST",
+			url: url,
+			dataType: "json",
+			success: function(data){
+				select.options[select.selectedIndex].text = data.account + "(" + data.money + " руб.)";
+				var totalMoney = Number(document.all.inf.rows[1].cells[5].innerText);
+				totalMoney = Number(totalMoney) + Number(money);
+				document.all.inf.rows[1].cells[5].innerText = totalMoney;
+				
+			}
+			});
+		});
+	});
+</script>

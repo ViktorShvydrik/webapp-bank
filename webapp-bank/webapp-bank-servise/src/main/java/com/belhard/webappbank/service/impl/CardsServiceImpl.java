@@ -40,18 +40,16 @@ public class CardsServiceImpl implements CardsService {
 	}
 
 	@Override
-	public void block(int idCard) {
-		Cards cards = cardsDao.findOne(idCard);
-		cards.setStatus(BLOCK);
-		cardsDao.save(cards);
-
-	}
-
-	@Override
-	public void unBlock(int idCard) {
-		Cards cards = cardsDao.findOne(idCard);
-		cards.setStatus(UNBLOCK);
-		cardsDao.save(cards);
+	public CardBean blockOrUnblok(int idCard) {
+		Cards card = cardsDao.findOne(idCard);
+		if (card.getStatus() == UNBLOCK) {
+			card.setStatus(BLOCK);
+		} else {
+			card.setStatus(UNBLOCK);
+		}
+		card = cardsDao.save(card);
+		CardBean cardBean = converter.convertToBean(card, CardBean.class);
+		return cardBean;
 
 	}
 

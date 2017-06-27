@@ -8,8 +8,6 @@ public interface CardsService {
 
 	List<CardBean> getAllByClientId(int id);
 
-	void block(int idCard);
-
-	void unBlock(int idCardz);
+	CardBean blockOrUnblok(int idCard);
 
 }
