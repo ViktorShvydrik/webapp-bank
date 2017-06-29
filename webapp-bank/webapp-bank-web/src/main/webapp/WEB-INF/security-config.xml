@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http auto-config="true">
+		<intercept-url pattern="/resources/**" access="permitAll" />
+		<intercept-url pattern="/index.*" access="permitAll" />
+		<intercept-url pattern="/reg.html" access="permitAll" />
+		<intercept-url pattern="/logout.html" access="permitAll" />
+		<intercept-url pattern="/login.html" access="permitAll" />
+		<intercept-url pattern="/access_denided.html" access="permitAll" />
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+
+		<!-- <form-login login-page="/index.html"
+			login-processing-url="login.html"
+			
+			authentication-failure-url="/access_denided.html" username-parameter="login"
+			password-parameter="pass" />
+
+
+		<csrf disabled="true" /> -->
+		<logout logout-url="/logout.html" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT login AS username, pass AS password, access as enabled FROM clients WHERE login = ?"
+				authorities-by-username-query="SELECT c.login AS username, r.role_name AS role_name
+															  FROM  clients c, roles r
+															  WHERE c.access = r.id AND
+															  	    login = ?" />
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

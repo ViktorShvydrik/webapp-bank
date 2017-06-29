@@ -1,14 +1,16 @@
 USE `bank`;
 
+
 CREATE TABLE clients (id_client INT AUTO_INCREMENT,
 					login VARCHAR(50) UNIQUE,
 					pass VARCHAR(50) NOT NULL,
 					status INT(1) DEFAULT 0,
-					access INT(1) DEFAULT 2,
+					access INT(1) DEFAULT 3,
 					PRIMARY KEY (id_client));
 
 INSERt INTO clients (login, pass, access) VALUES ('admin', 'admin', 1);
 
+USE `bank`;
 
 CREATE TABLE accounts (id_account INT AUTO_INCREMENT,
 					id_client int not null,

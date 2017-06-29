@@ -16,6 +16,7 @@ public class ClientsServiceImpl implements ClientsService {
 
 	private static final int NOT_SAVED = -1;
 
+	private static final int USER_ACCESS = 3;
 	private static final int NO_ENTRY = 9;
 
 	@Autowired
@@ -56,6 +57,7 @@ public class ClientsServiceImpl implements ClientsService {
 		Clients clientDB = null;
 		if (clientBeanDB.getAccess() == NO_ENTRY) {
 			Clients client = converter.convertToEntity(clientBean, Clients.class);
+			client.setAccess(USER_ACCESS);
 			clientDB = clientsDao.save(client);
 		} else {
 			return NOT_SAVED;

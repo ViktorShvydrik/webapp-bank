@@ -13,16 +13,16 @@
   <spring:form  action="login.html" method="post" modelAttribute="clients">
     <spring:input type="text" placeholder="Логин" path="login" />
     <spring:input type="password" placeholder="Пароль" path="pass" />
-    <input class="signin-submit" type="submit" onclick="submit()" value="ВОЙТИ">
+    <input class="signin-submit" type="submit"  value="ВОЙТИ">
     </spring:form>
   </div>
-  <div class="back-sign-up">
+   <div class="back-sign-up">
   <spring:form  action="reg.html" method="post" modelAttribute="clients">
     <spring:input type="text" placeholder="Логин" path="login" />
     <spring:input type="password" placeholder="Пароль" path="pass" />
-    <input class="signup-submit" type="submit" onclick="submit()" value="Регистрация">
+    <input class="signup-submit" type="submit" value="Регистрация">
     </spring:form>
-  </div>
+  </div> 
  </div>
 
  

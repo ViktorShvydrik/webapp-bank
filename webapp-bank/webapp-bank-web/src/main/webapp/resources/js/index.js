@@ -20,7 +20,4 @@ $(function(){
   
   $('#form-switch').on('click', formSwitch);
   
-  $('form').submit(function(e){
-    e.preventDefault();
-  });
 });
