@@ -21,6 +21,7 @@ import com.belhard.webappbank.entity.Clients;
 import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.ClientInfService;
 import com.belhard.webappbank.service.EntityBeanConverter;
+import com.belhard.webappbank.service.TransfersService;
 
 @Service
 public class AccountsServiceImpl implements AccountsService {
@@ -33,6 +34,8 @@ public class AccountsServiceImpl implements AccountsService {
 	private ClientsDao clientsDao;
 	@Autowired
 	private ClientInfService clientInfService;
+	@Autowired
+	private TransfersService transfersService;
 	@Autowired
 	private EntityBeanConverter converter;
 
@@ -66,6 +69,7 @@ public class AccountsServiceImpl implements AccountsService {
 		accounts.setMoney(money);
 		accounts = accountsDao.save(accounts);
 		AccountBean accountBean = converter.convertToBean(accounts, AccountBean.class);
+		transfersService.addTransfer(refill);
 		return accountBean;
 
 	}
@@ -80,18 +84,6 @@ public class AccountsServiceImpl implements AccountsService {
 			list.add(accountBean);
 		}
 		return list;
-	}
-
-	private int randomAcc() {
-		int acc = 0;
-		Accounts accounts = null;
-		do {
-			acc = (int) (Math.random() * 900000001 + 100000000);
-			accounts = accountsDao.findByAccount(acc);
-
-		} while (accounts != null);
-		return acc;
-
 	}
 
 	@Override
@@ -116,5 +108,17 @@ public class AccountsServiceImpl implements AccountsService {
 		clientInfDao.save(clientInf);
 		AccountBean accountBean = converter.convertToBean(account, AccountBean.class);
 		return accountBean;
+	}
+
+	private int randomAcc() {
+		int acc = 0;
+		Accounts accounts = null;
+		do {
+			acc = (int) (Math.random() * 900000001 + 100000000);
+			accounts = accountsDao.findByAccount(acc);
+
+		} while (accounts != null);
+		return acc;
+
 	}
 }

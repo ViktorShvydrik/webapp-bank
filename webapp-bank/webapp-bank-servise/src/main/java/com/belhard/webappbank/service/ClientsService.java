@@ -13,4 +13,6 @@ public interface ClientsService {
 
 	ClientBean getClient(int id);
 
+	ClientBean getClient(String login);
+
 }

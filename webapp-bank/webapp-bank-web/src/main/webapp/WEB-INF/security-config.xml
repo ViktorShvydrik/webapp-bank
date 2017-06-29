@@ -11,23 +11,20 @@
 		<intercept-url pattern="/index.*" access="permitAll" />
 		<intercept-url pattern="/reg.html" access="permitAll" />
 		<intercept-url pattern="/logout.html" access="permitAll" />
-		<intercept-url pattern="/login.html" access="permitAll" />
 		<intercept-url pattern="/access_denided.html" access="permitAll" />
 		<intercept-url pattern="/**" access="isAuthenticated()" />
-		<intercept-url pattern="/**" access="isAuthenticated()" />
 
-		<!-- <form-login login-page="/index.html"
-			login-processing-url="login.html"
+		 <form-login login-page="/index.html"
 			
 			authentication-failure-url="/access_denided.html" username-parameter="login"
 			password-parameter="pass" />
 
 
-		<csrf disabled="true" /> -->
+		<csrf disabled="true" /> 
 		<logout logout-url="/logout.html" />
 	</http>
 
-	<authentication-manager>
+	<!-- <authentication-manager>
 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="SELECT login AS username, pass AS password, access as enabled FROM clients WHERE login = ?"
@@ -36,6 +33,17 @@
 															  WHERE c.access = r.id AND
 															  	    login = ?" />
 		</authentication-provider>
+	</authentication-manager> -->
+	
+	
+	<beans:bean id="bankAuth" class="com.belhard.webappbank.security.authentication.BankAuthentication">
+	</beans:bean>
+	
+	<authentication-manager>
+		<authentication-provider ref="bankAuth" />
+		
+		
+	
 	</authentication-manager>
 
 </beans:beans>

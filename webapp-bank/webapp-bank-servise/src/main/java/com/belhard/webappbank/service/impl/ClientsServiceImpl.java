@@ -75,4 +75,11 @@ public class ClientsServiceImpl implements ClientsService {
 		return clientBean;
 	}
 
+	@Override
+	public ClientBean getClient(String login) {
+		Clients clientDB = clientsDao.findByLogin(login);
+		ClientBean clientBeanOut = converter.convertToBean(clientDB, ClientBean.class);
+		return clientBeanOut;
+	}
+
 }

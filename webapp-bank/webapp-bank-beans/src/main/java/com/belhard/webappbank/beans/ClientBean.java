@@ -13,6 +13,12 @@ public class ClientBean {
 		super();
 	}
 
+	public ClientBean(String login, String pass) {
+		super();
+		this.login = login;
+		this.pass = pass;
+	}
+
 	public int getIdClient() {
 		return idClient;
 	}

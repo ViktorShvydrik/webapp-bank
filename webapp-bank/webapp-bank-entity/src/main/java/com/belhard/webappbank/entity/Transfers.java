@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,24 +13,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table (name ="")
-public class Transfers implements Serializable{
-	
+@Table(name = "transfers")
+public class Transfers implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column(name ="id_transfers")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_transfers")
 	private int idTransfers;
-	
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_accountCA")
 	private Accounts accountCA;
-	
+
 	@Column(name = "money")
 	private int money;
-	
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_accountCB")
 	private Accounts accountCB;
 
@@ -111,8 +112,5 @@ public class Transfers implements Serializable{
 		return "Transfers [idTransfers=" + idTransfers + ", accountCA=" + accountCA + ", money=" + money
 				+ ", accountCB=" + accountCB + "]";
 	}
-	
 
-	
-	
 }

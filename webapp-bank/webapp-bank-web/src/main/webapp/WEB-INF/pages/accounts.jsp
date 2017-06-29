@@ -58,7 +58,7 @@
 	<button type="button" class="btn btn-primary btn-sm">Открыть новый счет</button>
 	<a href="newAccountUser.html">Открыть новый счет</a> </c:if> 
 	
-	<<script type="text/javascript">
+	<script type="text/javascript">
 
 		$(function(){
 		    $('button').bind('click', function(){

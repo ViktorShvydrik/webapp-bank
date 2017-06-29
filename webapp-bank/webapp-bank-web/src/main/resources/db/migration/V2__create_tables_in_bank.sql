@@ -21,7 +21,7 @@ CREATE TABLE accounts (id_account INT AUTO_INCREMENT,
 					PRIMARY KEY (id_account),
                     FOREIGN KEY (id_client) REFERENCES clients (id_client));
                     
-INSERT INTO accounts (id_client, account, money) VALUES ( 1, 1, 10000);
+INSERT INTO accounts (id_client, account, money) VALUES ( 1, 0, 10000);
 
 CREATE TABLE clientInf (id_client int,
 					name VARCHAR(50) NOT NULL,
@@ -42,9 +42,9 @@ CREATE TABLE cards(id_card int AUTO_INCREMENT primary key,
 
                     
 CREATE TABLE transfers (id_transfers int AUTO_INCREMENT,
-					id_accountCA int,
+					id_accountCA int NOT NULL default 1,
 					money int DEFAULT 0,
-					id_accountCB int,
+					id_accountCB int NOT NULL default 1,
 					FOREIGN KEY (id_accountCA) REFERENCES accounts (id_account),
 					FOREIGN KEY (id_accountCB) REFERENCES accounts (id_account),
 					PRIMARY KEY (id_transfers));   

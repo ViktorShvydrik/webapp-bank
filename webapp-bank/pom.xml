@@ -50,5 +50,6 @@
     <module>webapp-bank-dao</module>
     <module>webapp-bank-servise</module>
     <module>webapp-bank-beans</module>
+    <module>webapp-bank-security</module>
   </modules>
 </project>

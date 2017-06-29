@@ -10,7 +10,7 @@
 
 <div class="form">
   <div class="front-sign-in">
-  <spring:form  action="login.html" method="post" modelAttribute="clients">
+  <spring:form  action="login" method="post" modelAttribute="clients">
     <spring:input type="text" placeholder="Логин" path="login" />
     <spring:input type="password" placeholder="Пароль" path="pass" />
     <input class="signin-submit" type="submit"  value="ВОЙТИ">

@@ -35,5 +35,14 @@
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.cards" />
 	</definition>
+	
+	<definition name="transfers.page" extends="menuPage">
+		<put-attribute name="content" value="/WEB-INF/pages/transfers/transfers.jsp" />
+		<put-attribute name="include" value="/WEB-INF/pages/common/blocks/include/withTables.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/pages/common/blocks/footer/TableFooter.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.transfers" />
+	</definition>
 
 </tiles-definitions>

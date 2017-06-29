@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,25 +23,35 @@ import com.belhard.webappbank.beans.ClientAllInfBean;
 import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.beans.ClientInfBean;
 import com.belhard.webappbank.beans.RefillBean;
+import com.belhard.webappbank.beans.TransferBean;
+import com.belhard.webappbank.security.authentication.BankAuthentication;
+import com.belhard.webappbank.security.bean.SecurityLoginBean;
 import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.CardsService;
 import com.belhard.webappbank.service.ClientInfService;
 import com.belhard.webappbank.service.ClientsService;
+import com.belhard.webappbank.service.TransfersService;
 
 @Controller
 public class Controllers {
 
 	@Autowired
-	ClientsService clientsService;
+	private ClientsService clientsService;
 
 	@Autowired
-	ClientInfService clientInfService;
+	private ClientInfService clientInfService;
 
 	@Autowired
-	CardsService cardsService;
+	private CardsService cardsService;
 
 	@Autowired
-	AccountsService accountsService;
+	private AccountsService accountsService;
+
+	@Autowired
+	private TransfersService transfersService;
+
+	@Autowired
+	private BankAuthentication bankAuthentication;
 
 	private static final int NOT_SAVED = -1;
 
@@ -63,32 +74,39 @@ public class Controllers {
 		return "redirect:/index.html?logout";
 	}
 
-	@RequestMapping(value = "/login.html", method = RequestMethod.POST)
-	public ModelAndView loginController(HttpSession httpSession, ClientBean clientBean, ClientInfBean clientInfBean,
-			HttpServletRequest request, HttpServletResponse res) {
-
-		clientBean = clientsService.login(clientBean);
-		ClientAllInfBean allInfBean = clientInfService.getAllInfByClient(clientBean);
-		httpSession.setAttribute("user", allInfBean);
+	@RequestMapping(value = "/login.html")
+	public ModelAndView loginController(HttpSession httpSession, ClientBean clientBean, ClientInfBean clientInfBean) {
+		SecurityLoginBean bean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String login = bean.getUsername();
+		clientBean = clientsService.getClient(login);
 		ModelAndView model = new ModelAndView("redirect:userPage.html");
-		return model;
+		// return model;
 
-		/*
-		 * switch (clientBean.getAccess()) {
-		 * 
-		 * case ADMIN_ACCESS: // break; case OPERATOR_ACCESS: // break; case
-		 * USER_ACCESS: if (clientBean.getInf() == null) { int id =
-		 * clientBean.getIdClient(); clientInfBean.setIdClient(id); model = new
-		 * ModelAndView("reg.page", "clientsInf", clientInfBean);
-		 * 
-		 * return model; } ClientAllInfBean allInfBean =
-		 * clientInfService.getAllInfByClient(clientBean);
-		 * httpSession.setAttribute("user", allInfBean); model = new
-		 * ModelAndView("redirect:userPage.html"); return model; case NO_ENTRY:
-		 * // пользователя нет в базе, ошибки, отправка на индекс break; }
-		 */
+		switch (clientBean.getAccess()) {
 
-		// return new ModelAndView("index.page");
+		case ADMIN_ACCESS:
+			// break;
+		case OPERATOR_ACCESS:
+			// break;
+		case USER_ACCESS:
+			if (clientBean.getInf() == null) {
+				int id = clientBean.getIdClient();
+				clientInfBean.setIdClient(id);
+				model = new ModelAndView("reg.page", "clientsInf", clientInfBean);
+
+				return model;
+			}
+			ClientAllInfBean allInfBean = clientInfService.getAllInfByClient(clientBean);
+			httpSession.setAttribute("user", allInfBean);
+			model = new ModelAndView("redirect:userPage.html");
+			return model;
+
+		case NO_ENTRY:
+
+		}
+
+		return new ModelAndView("index.page");
 	}
 
 	@RequestMapping(value = "/reg.html", method = RequestMethod.POST)
@@ -112,6 +130,8 @@ public class Controllers {
 		int id = clientInf.getIdClient();
 		ClientAllInfBean allInfBean = clientInfService.getAllInfById(id);
 		httpSession.setAttribute("user", allInfBean);
+		bankAuthentication.login(id);
+
 		return "user.page";
 
 	}
@@ -184,13 +204,14 @@ public class Controllers {
 
 	}
 
-	@Deprecated
-	@RequestMapping("/refillmoney.html")
-	public String refillMoney(HttpSession httpSession, RefillBean refill) {
-		accountsService.refill(refill);
-		reloadInf(httpSession);
-
-		return "redirect:refill.html";
+	@RequestMapping("transfers/transfers.html")
+	public String allTransfers(HttpSession httpSession) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String login = user.getUsername();
+		ClientBean clientBean = clientsService.getClient(login);
+		List<TransferBean> list = transfersService.getAllByClient(clientBean);
+		httpSession.setAttribute("transfers_list", list);
+		return "transfers.page";
 
 	}
 
