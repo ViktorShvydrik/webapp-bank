@@ -16,6 +16,7 @@
 	<context:component-scan base-package="com.belhard.webappbank.dao" />
 	<context:component-scan base-package="com.belhard.webappbank.service.impl.dozer" />
 	<context:component-scan base-package="com.belhard.webappbank.restAPI" />
+	
 
 
 
@@ -38,10 +39,13 @@
 		<bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
 			<property name="mappingFiles" value="classpath:/dozer/mappings/*_mapping.xml" />
 
-			<!-- <property name="customConverters"> <list> <bean class="com.belhard.webappbank.service.impl.dozer.AccountClientConverter" 
-				/> <bean class="com.belhard.webappbank.service.impl.dozer.CardsAccountConverter" 
-				/> <bean class="com.belhard.webappbank.service.impl.dozer.CardsClientConverter" 
-				/> </list> </property> -->
+			 <property name="customConverters"> 
+			 <list> 
+			 <bean class="com.belhard.webappbank.service.impl.dozer.AccountClientConverter" /> 
+			 <bean class="com.belhard.webappbank.service.impl.dozer.CardsAccountConverter" />
+			<bean class="com.belhard.webappbank.service.impl.dozer.CardsClientConverter" /> 
+			</list> 
+			</property> 
 		</bean>
 
 
@@ -58,8 +62,9 @@
 
 
 		<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
-			<property name="prefix" value="/WEB-INF/pages/" /> <property name="suffix" 
-			value=".jsp" /> </bean> -->
+			<property name="prefix" value="/WEB-INF/pages/" /> 
+			<property name="suffix" value=".jsp" /> 
+			</bean> -->
 
 		<bean id="localeResolver"
 			class="org.springframework.web.servlet.i18n.CookieLocaleResolver">

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,14 +22,14 @@ public class Transfers implements Serializable {
 	@Column(name = "id_transfers")
 	private int idTransfers;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_accountCA")
 	private Accounts accountCA;
 
 	@Column(name = "money")
 	private int money;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_accountCB")
 	private Accounts accountCB;
 

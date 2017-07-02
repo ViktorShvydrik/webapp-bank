@@ -44,5 +44,20 @@
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.transfers" />
 	</definition>
+	
+	<definition name="betweenOwnAcc.page" extends="menuPage">
+		<put-attribute name="content" value="/WEB-INF/pages/transfers/betweenOwnAccounts.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.refill" />
+	</definition>
+	
+		<definition name="transfersToAll.page" extends="menuPage">
+		<put-attribute name="content" value="/WEB-INF/pages/transfers/transfersToAll.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.refill" />
+	</definition>
+	
 
 </tiles-definitions>

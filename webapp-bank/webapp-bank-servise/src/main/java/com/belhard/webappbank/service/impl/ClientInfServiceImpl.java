@@ -74,7 +74,6 @@ public class ClientInfServiceImpl implements ClientInfService {
 	public ClientAllInfBean getAllInfByClient(ClientBean clientBean) {
 		ClientAllInfBean allInfBean = new ClientAllInfBean();
 		allInfBean.setClient(clientBean);
-		int id = clientBean.getIdClient();
 		allInfBean = getTotalMoneyAndCountAcc(allInfBean);
 		allInfBean = getCountCards(allInfBean);
 		return allInfBean;

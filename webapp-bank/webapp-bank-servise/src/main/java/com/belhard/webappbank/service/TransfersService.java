@@ -12,8 +12,10 @@ public interface TransfersService {
 
 	List<TransferBean> getAllByClient(ClientBean clientBean);
 
-	List<TransferBean> getLastHowByClient(ClientBean clientBean, int how);
+	List<TransferBean> getLastFewByClient(ClientBean clientBean, int few);
 
 	void addTransfer(RefillBean refill);
+	
+	TransferBean addTransfer(TransferBean transferBean);
 
 }

@@ -1,1 +1,2 @@
-com\belhard\webappbank\security\App.class
+com\belhard\webappbank\security\bean\SecurityLoginBean.class
+com\belhard\webappbank\security\authentication\BankAuthentication.class

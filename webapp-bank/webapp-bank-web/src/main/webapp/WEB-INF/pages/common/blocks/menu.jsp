@@ -20,8 +20,8 @@
 							<li><a
 								href="${pageContext.request.contextPath}/transfers/transfers.html">Просмотр
 									всех переводов</a></li>
-							<li><a href="#">Между своими счетами</a></li>
-							<li><a href="#">На счета других клиентов</a></li>
+							<li><a href="${pageContext.request.contextPath}/transfers/betweenOwnAcc.html">Между своими счетами</a></li>
+							<li><a href="${pageContext.request.contextPath}/transfers/transfersToAll.html">На счета других клиентов</a></li>
 
 
 						</ul> <!-- /.nav-third-level --></li>
@@ -46,3 +46,7 @@
 	<!-- /.sidebar-collapse -->
 </div>
 <!-- /.navbar-static-side -->
+
+<script>
+
+</script>

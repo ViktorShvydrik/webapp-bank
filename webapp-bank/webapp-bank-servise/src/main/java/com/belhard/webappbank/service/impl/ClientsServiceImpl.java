@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.dao.ClientsDao;
+import com.belhard.webappbank.dao.RolesDao;
 import com.belhard.webappbank.entity.Clients;
 import com.belhard.webappbank.service.ClientsService;
 import com.belhard.webappbank.service.EntityBeanConverter;
@@ -21,6 +22,9 @@ public class ClientsServiceImpl implements ClientsService {
 
 	@Autowired
 	private ClientsDao clientsDao;
+
+	@Autowired
+	private RolesDao rolesdDao;
 
 	@Autowired
 	private EntityBeanConverter converter;
@@ -80,6 +84,12 @@ public class ClientsServiceImpl implements ClientsService {
 		Clients clientDB = clientsDao.findByLogin(login);
 		ClientBean clientBeanOut = converter.convertToBean(clientDB, ClientBean.class);
 		return clientBeanOut;
+	}
+
+	@Override
+	public String getRole(int access) {
+
+		return rolesdDao.findOne(access).getRoleName();
 	}
 
 }

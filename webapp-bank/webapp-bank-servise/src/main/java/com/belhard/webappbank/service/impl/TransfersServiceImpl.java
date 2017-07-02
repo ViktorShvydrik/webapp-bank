@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.beans.RefillBean;
@@ -39,6 +40,7 @@ public class TransfersServiceImpl implements TransfersService {
 	}
 
 	@Override
+	@Transactional
 	public List<TransferBean> getAllByClient(ClientBean clientBean) {
 		Clients client = converter.convertToEntity(clientBean, Clients.class);
 		Iterable<Transfers> iterable = transfersDao.findByClient(client);
@@ -51,16 +53,21 @@ public class TransfersServiceImpl implements TransfersService {
 	}
 
 	@Override
-	public List<TransferBean> getLastHowByClient(ClientBean clientBean, int how) {
+	public List<TransferBean> getLastFewByClient(ClientBean clientBean, int few) {
 		Clients client = converter.convertToEntity(clientBean, Clients.class);
-		// Iterable<Transfers> iterable =
-		// transfersDao.getLastHowByClients(client, how);
+		Iterable<Transfers> iterable = transfersDao.getLastByClients(client);
 		List<TransferBean> list = new ArrayList<>();
-		/*
-		 * for (Transfers transfers : iterable) { TransferBean transferBean =
-		 * converter.convertToBean(transfers, TransferBean.class);
-		 * list.add(transferBean); }
-		 */
+		int iter = 0;
+		for (Transfers transfers : iterable) {
+			if (iter == few) {
+				return list;
+			}
+			TransferBean transferBean = converter.convertToBean(transfers, TransferBean.class);
+			list.add(transferBean);
+			iter++;
+
+		}
+
 		return list;
 	}
 
@@ -75,6 +82,15 @@ public class TransfersServiceImpl implements TransfersService {
 		accounts.setIdAccount(DEFAULT_ID_ACCOUNT);
 		transfer.setAccountCA(accounts);
 		transfersDao.save(transfer);
+	}
+
+	@Override
+	public TransferBean addTransfer(TransferBean transferBean) {
+		Transfers transfer = converter.convertToEntity(transferBean, Transfers.class);
+		transfer = transfersDao.save(transfer);
+		transferBean = converter.convertToBean(transfer, TransferBean.class);
+		return transferBean;
+		
 	}
 
 }

@@ -12,9 +12,7 @@ public interface TransfersDao extends CrudRepository<Transfers, Integer> {
 	@Query("SELECT t FROM Transfers t WHERE t.accountCA.client = :client OR t.accountCB.client = :client")
 	Iterable<Transfers> findByClient(@Param("client") Clients client);
 
-	/*
-	 * @Query("SELECT t FROM Transfers t WHERE t.accountCA.client = :client OR t.accountCB.client = :client  ORDER BY t.idTransfers DESC limit :N"
-	 * ) Iterable<Transfers> getLastHowByClients(@Param("client") Clients
-	 * client, @Param("N") int how);
-	 */
+	@Query("SELECT t FROM Transfers t WHERE t.accountCA.client = :client OR t.accountCB.client = :client  ORDER BY t.idTransfers DESC ")
+	Iterable<Transfers> getLastByClients(@Param("client") Clients client);
+
 }

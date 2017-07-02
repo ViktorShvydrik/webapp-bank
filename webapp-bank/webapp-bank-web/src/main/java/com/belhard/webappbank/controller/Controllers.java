@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -206,13 +205,30 @@ public class Controllers {
 
 	@RequestMapping("transfers/transfers.html")
 	public String allTransfers(HttpSession httpSession) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String login = user.getUsername();
-		ClientBean clientBean = clientsService.getClient(login);
+		ClientBean clientBean = getClientBean();
 		List<TransferBean> list = transfersService.getAllByClient(clientBean);
 		httpSession.setAttribute("transfers_list", list);
 		return "transfers.page";
+	}
 
+	@RequestMapping("transfers/betweenOwnAcc.html")
+	public String betweenOwnAcc(HttpSession httpSession) {
+		ClientBean clientBean = getClientBean();
+		List<TransferBean> list = transfersService.getLastFewByClient(clientBean, 5);
+		httpSession.setAttribute("transfers_list", list);
+		List<AccountBean> listAcc = accountsService.getAllByClient(clientBean);
+		httpSession.setAttribute("user_accounts", listAcc);
+		return "betweenOwnAcc.page";
+	}
+	
+	@RequestMapping("transfers/transfersToAll.html")
+	public String transfersToAll(HttpSession httpSession) {
+		ClientBean clientBean = getClientBean();
+		List<TransferBean> list = transfersService.getLastFewByClient(clientBean, 5);
+		httpSession.setAttribute("transfers_list", list);
+		List<AccountBean> listAcc = accountsService.getAllByClient(clientBean);
+		httpSession.setAttribute("user_accounts", listAcc);
+		return "transfersToAll.page";
 	}
 
 	private ClientAllInfBean reloadInf(HttpSession httpSession) {
@@ -222,6 +238,14 @@ public class Controllers {
 		httpSession.setAttribute("user", allInfBean);
 		return allInfBean;
 
+	}
+
+	private ClientBean getClientBean() {
+		SecurityLoginBean loginBean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String login = loginBean.getUsername();
+		ClientBean clientBean = clientsService.getClient(login);
+		return clientBean;
 	}
 
 	@ModelAttribute(name = "clientsInf")
@@ -237,7 +261,11 @@ public class Controllers {
 	@ModelAttribute(name = "refill")
 	private RefillBean addRefill() {
 		return new RefillBean();
+	}
 
+	@ModelAttribute(name = "transfer")
+	private TransferBean addTransB() {
+		return new TransferBean();
 	}
 
 }

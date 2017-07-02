@@ -16,8 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.security.bean.SecurityLoginBean;
 import com.belhard.webappbank.service.ClientsService;
+import com.belhard.webappbank.service.EntityBeanConverter;
 
 public class BankAuthentication implements AuthenticationProvider {
+
+	private static final int UNDELETE_STATUS = 0;
 
 	private static final int ADMIN_ACCESS = 1;
 	private static final int OPERATOR_ACCESS = 2;
@@ -26,36 +29,40 @@ public class BankAuthentication implements AuthenticationProvider {
 
 	@Autowired
 	ClientsService clientsService;
+	@Autowired
+	EntityBeanConverter converter;
 
-	@SuppressWarnings("unused")
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String userName = authentication.getName().trim();
 		String password = authentication.getCredentials().toString().trim();
 		Authentication auth = null;
 		ClientBean clientBean = new ClientBean(userName, password);
 		clientBean = clientsService.login(clientBean);
+		boolean status = clientBean.getStatus() == UNDELETE_STATUS;
 		String role = "";
 		switch (clientBean.getAccess()) {
 
 		case ADMIN_ACCESS:
-			role = "ADMIN";
+			role = "administrator";
 			break;
 		case OPERATOR_ACCESS:
-			role = "OPERATOR";
+			role = "operator";
 			break;
 		case USER_ACCESS:
-			role = "USER";
+			role = "client";
 			break;
 		case NO_ENTRY:
 			throw new BadCredentialsException("Username or password incorrect");
-
+		default:
+			role = clientsService.getRole(clientBean.getAccess());
 		}
 
 		if (role != null) {
 			Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
 			grantedAuths.add(new SimpleGrantedAuthority(role));
 
-			SecurityLoginBean appUser = new SecurityLoginBean(userName, password, true, true, true, true, grantedAuths);
+			SecurityLoginBean appUser = new SecurityLoginBean(userName, password, status, status, status, status,
+					grantedAuths);
 			auth = new UsernamePasswordAuthenticationToken(appUser, password, grantedAuths);
 			return auth;
 		}
@@ -68,24 +75,20 @@ public class BankAuthentication implements AuthenticationProvider {
 		return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
 	}
 
-	@SuppressWarnings("unused")
 	public Authentication login(int id) {
 		ClientBean clientBean = clientsService.getClient(id);
 		String userName = clientBean.getLogin();
 		String password = clientBean.getPass();
 		Authentication auth = null;
 		String role = "USER";
-		if (role != null) {
-			Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
-			grantedAuths.add(new SimpleGrantedAuthority(role));
 
-			SecurityLoginBean appUser = new SecurityLoginBean(userName, password, true, true, true, true, grantedAuths);
-			auth = new UsernamePasswordAuthenticationToken(appUser, password, grantedAuths);
+		Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
+		grantedAuths.add(new SimpleGrantedAuthority(role));
 
-			SecurityContextHolder.getContext().setAuthentication(auth);
+		SecurityLoginBean appUser = new SecurityLoginBean(userName, password, true, true, true, true, grantedAuths);
+		auth = new UsernamePasswordAuthenticationToken(appUser, password, grantedAuths);
 
-			return auth;
-		}
+		SecurityContextHolder.getContext().setAuthentication(auth);
 
 		return auth;
 

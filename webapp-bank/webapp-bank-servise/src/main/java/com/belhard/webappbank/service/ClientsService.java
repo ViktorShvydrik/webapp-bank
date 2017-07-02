@@ -15,4 +15,6 @@ public interface ClientsService {
 
 	ClientBean getClient(String login);
 
+	String getRole(int access);
+
 }

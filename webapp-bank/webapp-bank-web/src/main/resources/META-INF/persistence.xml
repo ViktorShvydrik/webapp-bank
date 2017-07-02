@@ -11,7 +11,7 @@
         <class>com.belhard.webappbank.entity.ClientInf</class>
         <class>com.belhard.webappbank.entity.Clients</class>
         <class>com.belhard.webappbank.entity.Transfers</class>
-    
+    	<class>com.belhard.webappbank.entity.Roles</class>
 
         <properties>
 			<!-- Hibernate properties -->

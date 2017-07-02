@@ -12,12 +12,12 @@
 			<b>idTransfer</b>
 		</field>
 		
-		<field  custom-converter="com.belhard.webappbank.service.impl.dozer.TransfersAccountConverter">
+		<field>
 			<a>accountCA</a>
 			<b>fromAcc</b>
 		</field>
 		
-		<field  custom-converter="com.belhard.webappbank.service.impl.dozer.TransfersAccountConverter">
+		<field>
 			<a>accountCB</a>
 			<b>toAcc</b>
 		</field>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-	
+<%@taglib prefix="s" uri="http://www.springframework.org/tags"%>	
 	
 	
 	<!-- jQuery -->
@@ -21,8 +21,12 @@
     
     <script>
     $(document).ready(function() {
+    	var lang = '<s:message code="language.table" />';
+    	var URL = '${pageContext.request.contextPath}/resources/i18n/'+lang+'.json';
         $('#dataTables').DataTable({
-            responsive: true
+        	language: {
+                url: URL
+            }
         });
     });
     </script>

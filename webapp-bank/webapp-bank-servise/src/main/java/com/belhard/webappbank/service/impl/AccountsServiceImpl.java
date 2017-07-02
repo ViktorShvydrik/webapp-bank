@@ -12,6 +12,7 @@ import com.belhard.webappbank.beans.ClientAllInfBean;
 import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.beans.ClientInfBean;
 import com.belhard.webappbank.beans.RefillBean;
+import com.belhard.webappbank.beans.TransferBean;
 import com.belhard.webappbank.dao.AccountsDao;
 import com.belhard.webappbank.dao.ClientInfDao;
 import com.belhard.webappbank.dao.ClientsDao;
@@ -73,6 +74,24 @@ public class AccountsServiceImpl implements AccountsService {
 		return accountBean;
 
 	}
+	@Transactional
+	@Override
+	public TransferBean transfer(TransferBean transferBean) {
+		Accounts accounts = accountsDao.findByAccount(transferBean.getFromAcc().getAccount());
+		int money = accounts.getMoney() - transferBean.getMoney();
+		accounts.setMoney(money);
+		accounts = accountsDao.save(accounts);
+		AccountBean acc = converter.convertToBean(accounts, AccountBean.class);
+		transferBean.setFromAcc(acc);
+		accounts = accountsDao.findByAccount(transferBean.getToAcc().getAccount());
+		money = accounts.getMoney() + transferBean.getMoney();
+		accounts.setMoney(money);
+		accounts = accountsDao.save(accounts);
+		acc = converter.convertToBean(accounts, AccountBean.class);
+		transferBean.setToAcc(acc);
+		transferBean = transfersService.addTransfer(transferBean);
+		return transferBean;
+	}
 
 	@Override
 	public List<AccountBean> getAllByClient(ClientBean client) {
@@ -121,4 +140,6 @@ public class AccountsServiceImpl implements AccountsService {
 		return acc;
 
 	}
+
+
 }

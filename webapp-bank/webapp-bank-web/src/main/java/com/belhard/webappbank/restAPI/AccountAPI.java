@@ -2,8 +2,6 @@ package com.belhard.webappbank.restAPI;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.belhard.webappbank.beans.AccountBean;
 import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.beans.RefillBean;
+import com.belhard.webappbank.beans.TransferBean;
 import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.ClientsService;
 
@@ -56,12 +55,23 @@ public class AccountAPI {
 	@ResponseBody
 	@RequestMapping(value = "/accounts/{id}/{money}", method = RequestMethod.POST)
 	public ResponseEntity<AccountBean> putRefill(@PathVariable(name = "id") Integer id,
-			@PathVariable(name = "money") Integer money, HttpSession httpSession) {
+			@PathVariable(name = "money") Integer money) {
 		RefillBean refillBean = new RefillBean(id, money);
 
 		AccountBean accountBean = accountsService.refill(refillBean);
 		return new ResponseEntity<AccountBean>(accountBean, HttpStatus.OK);
-
+	}
+	
+	@ResponseBody
+	@RequestMapping (value = "/accounts/{accA}/Transfer/{accB}/{money}", method = RequestMethod.POST)
+	public ResponseEntity<TransferBean> transfer (@PathVariable (name = "accA") int accA,
+												  @PathVariable (name = "accB") int accB,
+												  @PathVariable (name = "money") int money){
+		TransferBean transferBean = new TransferBean(accA, money, accB);
+		transferBean = accountsService.transfer(transferBean);
+		
+		return new ResponseEntity<TransferBean>(transferBean, HttpStatus.OK);
 	}
 
 }
+

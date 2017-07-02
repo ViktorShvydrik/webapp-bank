@@ -8,7 +8,7 @@ CREATE TABLE `roles` (
 
 -- ************************ Test Data for table roles ************************ 
 INSERT INTO `roles` (`id`, `role_name`, `role_desc`) VALUES (1, 'administrator', 'Role for Administrators');
-INSERT INTO `roles` (`id`, `role_name`, `role_desc`) VALUES (2, 'moderator', 'Role for Moderators');
-INSERT INTO `roles` (`id`, `role_name`, `role_desc`) VALUES (3, 'regular_user', 'Role for Regular Users');
+INSERT INTO `roles` (`id`, `role_name`, `role_desc`) VALUES (2, 'operator', 'Role for Moderators');
+INSERT INTO `roles` (`id`, `role_name`, `role_desc`) VALUES (3, 'client', 'Role for Regular Users');
 
 ALTER TABLE clients ADD CONSTRAINT fk_clients_roles FOREIGN KEY (access) REFERENCES roles (id);
