@@ -87,7 +87,6 @@ $(function() {
 					url : url,
 					dataType : "json",
 					success : function(data) {
-						console.log(document.all.dataTables.rows.length);
 						if(document.all.dataTables.rows.length > 5){
 							document.all.dataTables.deleteRow(5);
 						}
