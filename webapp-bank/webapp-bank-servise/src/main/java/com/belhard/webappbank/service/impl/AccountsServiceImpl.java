@@ -23,6 +23,7 @@ import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.ClientInfService;
 import com.belhard.webappbank.service.EntityBeanConverter;
 import com.belhard.webappbank.service.TransfersService;
+import com.belhard.webappbank.service.Exception.TransferException;
 
 @Service
 public class AccountsServiceImpl implements AccountsService {
@@ -42,6 +43,10 @@ public class AccountsServiceImpl implements AccountsService {
 	
 	
 	private static final int STATUS_DELETE = 2;
+	private static final int DEFAULT_ID_ACCOUNT = 1;
+	private static final int ADMIN_ACCESS = 1;
+	private static final int OPERATOR_ACCESS = 2;
+	private static final int USER_ACCESS = 3;
 
 	@Override
 	@Transactional
@@ -66,21 +71,26 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	@Override
-	public AccountBean refill(RefillBean refill) {
+	public AccountBean refillById(RefillBean refill, String login) {
 		int id = refill.getIdAccount();
 		Accounts accounts = accountsDao.findOne(id);
 		int money = accounts.getMoney() + refill.getMoney();
 		accounts.setMoney(money);
 		accounts = accountsDao.save(accounts);
 		AccountBean accountBean = converter.convertToBean(accounts, AccountBean.class);
-		transfersService.addTransfer(refill);
+		transfersService.addTransfer(refill, login);
 		return accountBean;
-
 	}
+	
+
+	
 	@Transactional
 	@Override
 	public TransferBean transfer(TransferBean transferBean) {
+		Clients clients = clientsDao.findByLogin(transferBean.getLogin());
 		Accounts accounts = accountsDao.findByAccount(transferBean.getFromAcc().getAccount());
+		int access = clients.getAccess();
+		if( access == ADMIN_ACCESS || access == OPERATOR_ACCESS || accounts.getClient().equals(clients) ){
 		int money = accounts.getMoney() - transferBean.getMoney();
 		accounts.setMoney(money);
 		accounts = accountsDao.save(accounts);
@@ -94,6 +104,9 @@ public class AccountsServiceImpl implements AccountsService {
 		transferBean.setToAcc(acc);
 		transferBean = transfersService.addTransfer(transferBean);
 		return transferBean;
+		}else {
+			throw new TransferException("Access is denied");
+		}
 	}
 
 	@Override
@@ -161,6 +174,20 @@ public class AccountsServiceImpl implements AccountsService {
 		accountsDao.save(accounts);
 		
 	}
+	@Transactional
+	@Override
+	public void refillByAccount(RefillBean refill, String login) {
+		int acc = refill.getAccount();
+		Accounts accounts = accountsDao.findByAccount(acc);
+		int money = accounts.getMoney() + refill.getMoney();
+		accounts.setMoney(money);
+		accounts = accountsDao.save(accounts);
+		refill.setIdAccount(accounts.getIdAccount());
+		transfersService.addTransfer(refill, login);
+		
+	}
+
+	
 
 
 }

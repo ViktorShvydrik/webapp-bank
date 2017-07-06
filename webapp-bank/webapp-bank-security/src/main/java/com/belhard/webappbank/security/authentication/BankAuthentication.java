@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -21,11 +22,14 @@ import com.belhard.webappbank.service.EntityBeanConverter;
 public class BankAuthentication implements AuthenticationProvider {
 
 	private static final int OK_STATUS = 0;
-
+	private static final int STATUS_BLOCK = 1;
+	private static final int STATUS_DELETE = 2;
+	
 	private static final int ADMIN_ACCESS = 1;
 	private static final int OPERATOR_ACCESS = 2;
 	private static final int USER_ACCESS = 3;
 	private static final int NO_ENTRY = 9;
+	
 
 	@Autowired
 	ClientsService clientsService;
@@ -38,7 +42,7 @@ public class BankAuthentication implements AuthenticationProvider {
 		Authentication auth = null;
 		ClientBean clientBean = new ClientBean(userName, password);
 		clientBean = clientsService.login(clientBean);
-		boolean status = clientBean.getStatus() == OK_STATUS;
+		
 		String role = "";
 		switch (clientBean.getAccess()) {
 
@@ -57,20 +61,28 @@ public class BankAuthentication implements AuthenticationProvider {
 			role = clientsService.getRole(clientBean.getAccess());
 		}
 		
-		if(!status){
+		switch (clientBean.getStatus()) {
+		case STATUS_BLOCK:
+			throw new LockedException("Account is blocked");
+		case STATUS_DELETE:
+			throw new BadCredentialsException("Access is denied");
+			
+		case OK_STATUS:
+			if (role != null) {
+				Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
+				grantedAuths.add(new SimpleGrantedAuthority(role));
+
+				SecurityLoginBean appUser = new SecurityLoginBean(userName, password, true, true, true, true, grantedAuths);
+				auth = new UsernamePasswordAuthenticationToken(appUser, password, grantedAuths);
+				return auth;
+			}
+			return auth;
+			
+		default:
 			throw new BadCredentialsException("Access is denied");
 		}
 
-		if (role != null) {
-			Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
-			grantedAuths.add(new SimpleGrantedAuthority(role));
-
-			SecurityLoginBean appUser = new SecurityLoginBean(userName, password, status, status, status, status,
-					grantedAuths);
-			auth = new UsernamePasswordAuthenticationToken(appUser, password, grantedAuths);
-			return auth;
-		}
-		return auth;
+		
 
 	}
 

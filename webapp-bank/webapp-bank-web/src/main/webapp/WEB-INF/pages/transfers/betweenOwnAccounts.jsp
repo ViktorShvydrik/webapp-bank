@@ -5,7 +5,7 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 
 
-<h4> Последнии 5 переводов:</h4>
+<h4> Последние 5 переводов:</h4>
 <table class="table table-striped table-bordered table-hover"	id="dataTables">
 	<thead>
 	<tr>

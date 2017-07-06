@@ -7,6 +7,7 @@
 		<class-a>com.belhard.webappbank.entity.Transfers</class-a>
 		<class-b>com.belhard.webappbank.beans.TransferBean</class-b>
 		
+		
 		<field >
 			<a>idTransfers</a>
 			<b>idTransfer</b>
@@ -20,6 +21,11 @@
 		<field>
 			<a>accountCB</a>
 			<b>toAcc</b>
+		</field>
+		
+		<field custom-converter="com.belhard.webappbank.service.impl.dozer.TransfersClientConverter">
+			<a>client</a>
+			<b>login</b>
 		</field>
 		
 	</mapping>

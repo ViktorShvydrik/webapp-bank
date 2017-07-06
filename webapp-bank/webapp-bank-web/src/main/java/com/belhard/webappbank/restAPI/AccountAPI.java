@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,7 @@ import com.belhard.webappbank.beans.AccountBean;
 import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.beans.RefillBean;
 import com.belhard.webappbank.beans.TransferBean;
+import com.belhard.webappbank.security.bean.SecurityLoginBean;
 import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.ClientsService;
 
@@ -57,8 +59,10 @@ public class AccountAPI {
 	public ResponseEntity<AccountBean> putRefill(@PathVariable(name = "id") Integer id,
 			@PathVariable(name = "money") Integer money) {
 		RefillBean refillBean = new RefillBean(id, money);
-
-		AccountBean accountBean = accountsService.refill(refillBean);
+		SecurityLoginBean loginBean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String login = loginBean.getUsername();
+		AccountBean accountBean = accountsService.refillById(refillBean, login);
 		return new ResponseEntity<AccountBean>(accountBean, HttpStatus.OK);
 	}
 	
@@ -67,7 +71,10 @@ public class AccountAPI {
 	public ResponseEntity<TransferBean> transfer (@PathVariable (name = "accA") int accA,
 												  @PathVariable (name = "accB") int accB,
 												  @PathVariable (name = "money") int money){
-		TransferBean transferBean = new TransferBean(accA, money, accB);
+		SecurityLoginBean loginBean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String login = loginBean.getUsername();
+		TransferBean transferBean = new TransferBean(accA, money, accB, login);
 		transferBean = accountsService.transfer(transferBean);
 		
 		return new ResponseEntity<TransferBean>(transferBean, HttpStatus.OK);

@@ -45,6 +45,8 @@
 			 <list> 
 			 <bean class="com.belhard.webappbank.service.impl.dozer.CardsAccountConverter" />
 			<bean class="com.belhard.webappbank.service.impl.dozer.CardsClientConverter" /> 
+			<bean class="com.belhard.webappbank.service.impl.dozer.TransfersClientConverter" />
+			
 			</list> 
 			</property> 
 		</bean>

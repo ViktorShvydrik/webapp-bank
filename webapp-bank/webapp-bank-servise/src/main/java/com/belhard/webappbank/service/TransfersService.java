@@ -14,7 +14,7 @@ public interface TransfersService {
 
 	List<TransferBean> getLastFewByClient(ClientBean clientBean, int few);
 
-	void addTransfer(RefillBean refill);
+	void addTransfer(RefillBean refill, String login);
 	
 	TransferBean addTransfer(TransferBean transferBean);
 

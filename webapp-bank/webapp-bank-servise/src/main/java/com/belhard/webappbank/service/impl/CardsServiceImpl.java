@@ -53,4 +53,11 @@ public class CardsServiceImpl implements CardsService {
 
 	}
 
+	@Override
+	public List<CardBean> getAll() {
+		Iterable<Cards> findAll = cardsDao.findAll();
+		List<CardBean> list = converter.convertToBeanList(findAll, CardBean.class);
+		return list;
+	}
+
 }

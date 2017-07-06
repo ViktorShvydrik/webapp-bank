@@ -16,16 +16,11 @@
 					</li>
 					<li><a href="${pageContext.request.contextPath}/admin/refill.html">Пополнить
 							баланс</a></li>
-					<li><a href="#">Переводы<span class="fa arrow"></span></a>
-						<ul class="nav nav-third-level">
-							<li><a
-								href="${pageContext.request.contextPath}/admin/transfers/transfers.html">Просмотр
-									всех переводов</a></li>
-							<li><a href="${pageContext.request.contextPath}/admin/transfers/betweenOwnAcc.html">Между своими счетами</a></li>
-							<li><a href="${pageContext.request.contextPath}/admin/transfers/transfersToAll.html">На счета других клиентов</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/transfers.html">Переводы</a></li>
+						
 
 
-						</ul> <!-- /.nav-third-level --></li>
+					
 
 				</ul> <!-- /.nav-second-level --></li>
 

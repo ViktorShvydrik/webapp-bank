@@ -2,6 +2,7 @@ package com.belhard.webappbank.beans;
 
 public class RefillBean {
 
+	private int account;
 	private int idAccount;
 	private int money;
 
@@ -13,6 +14,14 @@ public class RefillBean {
 		super();
 		this.idAccount = idAccount;
 		this.money = money;
+	}
+
+	public int getAccount() {
+		return account;
+	}
+
+	public void setAccount(int account) {
+		this.account = account;
 	}
 
 	public int getIdAccount() {
@@ -35,6 +44,7 @@ public class RefillBean {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + account;
 		result = prime * result + idAccount;
 		result = prime * result + money;
 		return result;
@@ -49,6 +59,8 @@ public class RefillBean {
 		if (getClass() != obj.getClass())
 			return false;
 		RefillBean other = (RefillBean) obj;
+		if (account != other.account)
+			return false;
 		if (idAccount != other.idAccount)
 			return false;
 		if (money != other.money)
@@ -58,7 +70,9 @@ public class RefillBean {
 
 	@Override
 	public String toString() {
-		return "Refill [idAccount=" + idAccount + ", money=" + money + "]";
+		return "RefillBean [account=" + account + ", idAccount=" + idAccount + ", money=" + money + "]";
 	}
+
+	
 
 }

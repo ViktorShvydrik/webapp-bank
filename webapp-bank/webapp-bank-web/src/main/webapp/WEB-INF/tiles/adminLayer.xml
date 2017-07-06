@@ -15,7 +15,36 @@
 	</definition>
 	
 	<definition name="adminAcc.page" extends="adminPage">
-		<put-attribute name="content" value="/WEB-INF/pages/admin/accounts.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/admin/adminAccounts.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+	</definition>
+	
+	<definition name="adminAcc2.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/adminAccounts2.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+	</definition>
+	
+	<definition name="adminRefill.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/adminRefill.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+	</definition>
+	
+
+	<definition name="adminTransfers.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/adminTransfers.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+	</definition>
+	
+		<definition name="adminCards.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/adminCards.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.admin.accounts" />

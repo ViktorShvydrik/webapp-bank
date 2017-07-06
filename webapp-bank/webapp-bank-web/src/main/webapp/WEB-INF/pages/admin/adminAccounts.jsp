@@ -29,7 +29,7 @@
 				<tr class="timeline-badge warning"></c:if> 
 				<c:if test="${acc.status == 2 }">
 				<tr class="timeline-badge danger"></c:if> 
-					<td>${acc.account }</td>
+					<td><a href="#" id= "acc">${acc.account }</a></td>
 					<td>${acc.money }</td>
 					<td>${acc.client.login }: ${acc.client.inf.secondName } ${acc.client.inf.name }</td>
 					<td>
@@ -49,5 +49,52 @@
 	</table>
 	<br />
 
+<spring:form modelAttribute="transfer" id="form" action="addTransfer.html" method="POST">
+	<div class="row">
+		<div class="col-xs-4 form-group">
+			<label for="disabledSelect">Укажите откуда:</label> 
+		<spring:input class="form-control" path="fromAcc.account" id="accA" />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4 form-group">
+			<label for="exampleInputAmount">Укажите сумму:</label>
+			<div class="input-group">
+				<div class="input-group-addon"><span class="glyphicon glyphicon-rub" aria-hidden="true"></span></div>
+				<spring:input class="form-control" id="money" path="money" />
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class=" col-xs-4 form-group">
+			<label for="disabledSelect">Укажите куда:</label> 
+				<spring:input class="form-control" path="toAcc.account" id="accB" />
+		
+				
+		</div>
+	</div>
+	
+	<div class="row">
+	<button type="submit" class="btn btn-primary">Перевести</button>
+	</div>
+</spring:form>
 
+
+<script type="text/javascript">
+$(function() {
+	$('a#acc').on('click', function(e){
+		e.preventDefault();
+		var acc1 = this.innerText;
+		document.all.accA.value = acc1;
+		$('a#acc').each( function(){
+			$(this).unbind('click');
+				$('a#acc').on('click', function(e){
+					e.preventDefault();
+					var acc2 = this.innerText;
+					document.all.accB.value = acc2;
+				})
+		})
+	})
+})
+</script>
 

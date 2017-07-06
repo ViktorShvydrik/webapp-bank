@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.beans.RefillBean;
 import com.belhard.webappbank.beans.TransferBean;
+import com.belhard.webappbank.dao.ClientsDao;
 import com.belhard.webappbank.dao.TransfersDao;
 import com.belhard.webappbank.entity.Accounts;
 import com.belhard.webappbank.entity.Clients;
@@ -24,6 +25,8 @@ public class TransfersServiceImpl implements TransfersService {
 
 	@Autowired
 	private TransfersDao transfersDao;
+	@Autowired
+	ClientsDao clientsDao;
 
 	@Autowired
 	private EntityBeanConverter converter;
@@ -72,15 +75,18 @@ public class TransfersServiceImpl implements TransfersService {
 	}
 
 	@Override
-	public void addTransfer(RefillBean refill) {
+	public void addTransfer(RefillBean refill, String login) {
 		Transfers transfer = new Transfers();
+		
 		Accounts accounts = new Accounts();
 		accounts.setIdAccount(refill.getIdAccount());
-		transfer.setAccountCB(accounts);
+		transfer.setAccountCB(accounts); 
 		transfer.setMoney(refill.getMoney());
 		accounts = new Accounts();
 		accounts.setIdAccount(DEFAULT_ID_ACCOUNT);
 		transfer.setAccountCA(accounts);
+		Clients client = clientsDao.findByLogin(login);
+		transfer.setClient(client);
 		transfersDao.save(transfer);
 	}
 

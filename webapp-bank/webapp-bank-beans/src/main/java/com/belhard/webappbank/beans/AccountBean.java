@@ -12,6 +12,13 @@ public class AccountBean {
 	public AccountBean() {
 		super();
 	}
+	
+
+	public AccountBean(int account) {
+		super();
+		this.account = account;
+	}
+
 
 	public int getIdAccount() {
 		return idAccount;

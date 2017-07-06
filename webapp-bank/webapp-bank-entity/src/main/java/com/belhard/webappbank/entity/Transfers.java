@@ -32,6 +32,10 @@ public class Transfers implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_accountCB")
 	private Accounts accountCB;
+	
+	@ManyToOne
+	@JoinColumn (name = "id_client")
+	private Clients client;
 
 	public Transfers() {
 		super();
@@ -69,12 +73,25 @@ public class Transfers implements Serializable {
 		this.accountCB = accountCB;
 	}
 
+	public Clients getClient() {
+		return client;
+	}
+
+	public void setClient(Clients client) {
+		this.client = client;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((accountCA == null) ? 0 : accountCA.hashCode());
 		result = prime * result + ((accountCB == null) ? 0 : accountCB.hashCode());
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
 		result = prime * result + idTransfers;
 		result = prime * result + money;
 		return result;
@@ -99,6 +116,11 @@ public class Transfers implements Serializable {
 				return false;
 		} else if (!accountCB.equals(other.accountCB))
 			return false;
+		if (client == null) {
+			if (other.client != null)
+				return false;
+		} else if (!client.equals(other.client))
+			return false;
 		if (idTransfers != other.idTransfers)
 			return false;
 		if (money != other.money)
@@ -109,7 +131,9 @@ public class Transfers implements Serializable {
 	@Override
 	public String toString() {
 		return "Transfers [idTransfers=" + idTransfers + ", accountCA=" + accountCA + ", money=" + money
-				+ ", accountCB=" + accountCB + "]";
+				+ ", accountCB=" + accountCB + ", client=" + client + "]";
 	}
+
+	
 
 }

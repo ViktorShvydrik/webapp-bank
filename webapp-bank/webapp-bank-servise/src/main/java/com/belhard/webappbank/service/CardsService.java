@@ -10,4 +10,6 @@ public interface CardsService {
 
 	CardBean blockOrUnblok(int idCard);
 
+	List<CardBean> getAll();
+
 }

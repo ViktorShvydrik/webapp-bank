@@ -18,7 +18,9 @@ public interface AccountsService {
 
 	AccountBean createByIdClient(int id);
 
-	AccountBean refill(RefillBean refill);
+	AccountBean refillById(RefillBean refill, String login);
+	
+	void refillByAccount(RefillBean refill, String login);
 	
 	TransferBean transfer (TransferBean transferBean);
 
