@@ -96,27 +96,6 @@ public class AdminComtrollers {
 		return "redirect:accounts.html";
 	}
 	
-	@RequestMapping ("/accounts2step.html")
-	public ModelAndView accountsTwoStep (@RequestParam (name = "acc1") int acc,TransferBean bean){
-		AccountBean accountBean = new AccountBean();
-		accountBean.setAccount(acc);
-		bean.setFromAcc(accountBean);
-		
-		return new ModelAndView("adminAcc2.page", "transfer", bean);
-		
-	}
-	@RequestMapping ("/accounts3step.html")
-	public ModelAndView accountsThreeStep (@RequestParam (name = "acc1") int acc, @RequestParam (name = "acc2") int acc2, TransferBean bean){
-		AccountBean accountBean = new AccountBean();
-		accountBean.setAccount(acc2);
-		bean.setToAcc(accountBean);
-		accountBean = new AccountBean();
-		accountBean.setAccount(acc);
-		bean.setFromAcc(accountBean);
-		
-		return new ModelAndView("adminAcc.page", "transfer", bean);
-		
-	}
 	
 	@RequestMapping ("/refill.html")
 	public ModelAndView refill (RefillBean refill, HttpSession httpSession){
