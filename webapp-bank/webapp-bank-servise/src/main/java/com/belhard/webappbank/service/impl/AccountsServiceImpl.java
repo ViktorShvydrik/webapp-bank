@@ -39,6 +39,9 @@ public class AccountsServiceImpl implements AccountsService {
 	private TransfersService transfersService;
 	@Autowired
 	private EntityBeanConverter converter;
+	
+	
+	private static final int STATUS_DELETE = 2;
 
 	@Override
 	@Transactional
@@ -99,6 +102,9 @@ public class AccountsServiceImpl implements AccountsService {
 		List<AccountBean> list = new ArrayList<>();
 		Iterable<Accounts> listBD = accountsDao.accByIdClient(id);
 		for (Accounts accounts : listBD) {
+			if(accounts.getStatus() == STATUS_DELETE){
+				continue;
+			}
 			AccountBean accountBean = converter.convertToBean(accounts, AccountBean.class);
 			list.add(accountBean);
 		}
