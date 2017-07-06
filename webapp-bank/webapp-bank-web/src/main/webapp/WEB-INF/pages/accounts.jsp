@@ -38,15 +38,20 @@
 			<tr>
 				<th>Счет</th>
 				<th>Баланс</th>
+				<th>Статус</th>
 				<th>Действия</th>
 
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${user_accounts}" var="acc">
-				<tr>
+				<c:if test="${acc.status == 1 }">
+				<tr class="timeline-badge warning"></c:if> 
 					<td>${acc.account }</td>
 					<td>${acc.money }</td>
+					<td>
+					<c:if test="${acc.status == 0 }">Активен</c:if> 
+					<c:if test="${acc.status == 1 }">Заблокирован</c:if>
 					<td></td>
 				</tr>
 			</c:forEach>
