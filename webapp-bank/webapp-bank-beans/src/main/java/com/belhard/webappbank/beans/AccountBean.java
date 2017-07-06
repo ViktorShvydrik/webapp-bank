@@ -3,7 +3,7 @@ package com.belhard.webappbank.beans;
 public class AccountBean {
 
 	private int idAccount;
-	private String Login;
+	private ClientBean client;
 	private int status;
 	private int account;
 	private int money;
@@ -21,12 +21,12 @@ public class AccountBean {
 		this.idAccount = idAccount;
 	}
 
-	public String getLogin() {
-		return Login;
+	public ClientBean getClient() {
+		return client;
 	}
 
-	public void setLogin(String login) {
-		Login = login;
+	public void setClient(ClientBean client) {
+		this.client = client;
 	}
 
 	public int getStatus() {
@@ -65,8 +65,8 @@ public class AccountBean {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Login == null) ? 0 : Login.hashCode());
 		result = prime * result + account;
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
 		result = prime * result + countCards;
 		result = prime * result + idAccount;
 		result = prime * result + money;
@@ -83,12 +83,12 @@ public class AccountBean {
 		if (getClass() != obj.getClass())
 			return false;
 		AccountBean other = (AccountBean) obj;
-		if (Login == null) {
-			if (other.Login != null)
-				return false;
-		} else if (!Login.equals(other.Login))
-			return false;
 		if (account != other.account)
+			return false;
+		if (client == null) {
+			if (other.client != null)
+				return false;
+		} else if (!client.equals(other.client))
 			return false;
 		if (countCards != other.countCards)
 			return false;
@@ -103,8 +103,11 @@ public class AccountBean {
 
 	@Override
 	public String toString() {
-		return "AccountBean [idAccount=" + idAccount + ", Login=" + Login + ", status=" + status + ", account="
+		return "AccountBean [idAccount=" + idAccount + ", client=" + client + ", status=" + status + ", account="
 				+ account + ", money=" + money + ", countCards=" + countCards + "]";
 	}
+
+	
+
 
 }

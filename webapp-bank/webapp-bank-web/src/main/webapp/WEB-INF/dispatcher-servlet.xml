@@ -31,6 +31,8 @@
 					<value>/WEB-INF/tiles/index.xml</value>
 					<value>/WEB-INF/tiles/reg.xml</value>
 					<value>/WEB-INF/tiles/userLayer.xml</value>
+					<value>/WEB-INF/tiles/adminLayer.xml</value>
+					<value>/WEB-INF/tiles/operatorLayer.xml</value>
 				</list>
 			</property>
 		</bean>
@@ -41,7 +43,6 @@
 
 			 <property name="customConverters"> 
 			 <list> 
-			 <bean class="com.belhard.webappbank.service.impl.dozer.AccountClientConverter" /> 
 			 <bean class="com.belhard.webappbank.service.impl.dozer.CardsAccountConverter" />
 			<bean class="com.belhard.webappbank.service.impl.dozer.CardsClientConverter" /> 
 			</list> 

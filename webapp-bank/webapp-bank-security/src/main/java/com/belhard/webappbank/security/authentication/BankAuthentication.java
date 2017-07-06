@@ -20,7 +20,7 @@ import com.belhard.webappbank.service.EntityBeanConverter;
 
 public class BankAuthentication implements AuthenticationProvider {
 
-	private static final int UNDELETE_STATUS = 0;
+	private static final int OK_STATUS = 0;
 
 	private static final int ADMIN_ACCESS = 1;
 	private static final int OPERATOR_ACCESS = 2;
@@ -38,7 +38,7 @@ public class BankAuthentication implements AuthenticationProvider {
 		Authentication auth = null;
 		ClientBean clientBean = new ClientBean(userName, password);
 		clientBean = clientsService.login(clientBean);
-		boolean status = clientBean.getStatus() == UNDELETE_STATUS;
+		boolean status = clientBean.getStatus() == OK_STATUS;
 		String role = "";
 		switch (clientBean.getAccess()) {
 
@@ -55,6 +55,10 @@ public class BankAuthentication implements AuthenticationProvider {
 			throw new BadCredentialsException("Username or password incorrect");
 		default:
 			role = clientsService.getRole(clientBean.getAccess());
+		}
+		
+		if(!status){
+			throw new BadCredentialsException("Access is denied");
 		}
 
 		if (role != null) {

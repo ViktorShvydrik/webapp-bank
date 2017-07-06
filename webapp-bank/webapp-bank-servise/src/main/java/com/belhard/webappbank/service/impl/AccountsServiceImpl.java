@@ -141,5 +141,20 @@ public class AccountsServiceImpl implements AccountsService {
 
 	}
 
+	@Override
+	public List<AccountBean> getAll() {
+		Iterable<Accounts> iterable = accountsDao.findAll();
+		List<AccountBean> list = converter.convertToBeanList(iterable, AccountBean.class);
+		return list;
+	}
+
+	@Override
+	public void setStatus(int id, int status) {
+		Accounts accounts = accountsDao.findOne(id);
+		accounts.setStatus(status);
+		accountsDao.save(accounts);
+		
+	}
+
 
 }

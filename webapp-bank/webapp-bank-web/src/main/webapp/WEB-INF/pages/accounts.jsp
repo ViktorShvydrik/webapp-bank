@@ -60,30 +60,23 @@
 	<br />
 	<button type="button" class="btn btn-primary btn-sm">Открыть
 		новый счет</button>
-	<a href="newAccountUser.html">Открыть новый счет</a>
+	
 </c:if>
 
 <script type="text/javascript">
 	$(function() {
-		$('button')
-				.bind(
-						'click',
-						function() {
-							var id = $
-							{
-								user.client.idClient
-							}
-							;
-							var url = '/webapp-bank-web/rest/users/' + id
-									+ '/accounts/';
+		var id = ${user.client.idClient};
+		var url = '/webapp-bank-web/rest/users/' + id+ '/accounts/';
+		$('button').bind('click',function() {
+							var id = ${user.client.idClient};
+							var url = '/webapp-bank-web/rest/users/' + id+ '/accounts/';
 							$
 									.ajax({
 										type : "PUT",
 										url : url,
 										dataType : "json",
 										success : function(data) {
-											newrow = document.all.dataTables
-													.insertRow()
+											newrow = document.all.dataTables.insertRow()
 											newcell = newrow.insertCell(0);
 											newcell.innerText = data.account;
 											newcell = newrow.insertCell(1);

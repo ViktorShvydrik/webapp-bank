@@ -6,23 +6,23 @@
 	<div class="sidebar-nav navbar-collapse">
 		<ul class="nav" id="side-menu">
 
-			<li><a href="${pageContext.request.contextPath}/userPage.html"><i
+			<li><a href="${pageContext.request.contextPath}/admin/index.html"><i
 					class="fa fa-list-alt fa-fw"></i> Главная страница</a></li>
 
 			<li><a href="#"><i class="fa fa-table fa-fw"></i> Управление
 					счетами <span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level">
-					<li><a href="${pageContext.request.contextPath}/accounts.html">Счета</a>
+					<li><a href="${pageContext.request.contextPath}/admin/accounts.html">Счета</a>
 					</li>
-					<li><a href="${pageContext.request.contextPath}/refill.html">Пополнить
+					<li><a href="${pageContext.request.contextPath}/admin/refill.html">Пополнить
 							баланс</a></li>
 					<li><a href="#">Переводы<span class="fa arrow"></span></a>
 						<ul class="nav nav-third-level">
 							<li><a
-								href="${pageContext.request.contextPath}/transfers/transfers.html">Просмотр
+								href="${pageContext.request.contextPath}/admin/transfers/transfers.html">Просмотр
 									всех переводов</a></li>
-							<li><a href="${pageContext.request.contextPath}/transfers/betweenOwnAcc.html">Между своими счетами</a></li>
-							<li><a href="${pageContext.request.contextPath}/transfers/transfersToAll.html">На счета других клиентов</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/transfers/betweenOwnAcc.html">Между своими счетами</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/transfers/transfersToAll.html">На счета других клиентов</a></li>
 
 
 						</ul> <!-- /.nav-third-level --></li>
@@ -33,17 +33,13 @@
 			<li><a href="#"><i class="fa fa-credit-card fa-fw"></i>
 					Пластиковые карточки<span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level">
-					<li><a href="${pageContext.request.contextPath}/cards.html">Мои
+					<li><a href="${pageContext.request.contextPath}/admin/cards.html">Мои
 							карточки</a></li>
 
 				</ul> <!-- /.nav-second-level --></li>
 			<li><a href="${pageContext.request.contextPath}/logout.html">Выход</a></li>
-			<sec:authorize access="hasAuthority('administrator')">
-			<li><a href="${pageContext.request.contextPath}/admin/index.html">Админ</a></li>
-			</sec:authorize>
-			 <sec:authorize access="hasAnyAuthority('administrator', 'operator')">
+			<li><a href="${pageContext.request.contextPath}/userPage.html">Клиент</a></li>
 			<li><a href="${pageContext.request.contextPath}/operator/index.html">Оператор</a></li>
-			</sec:authorize>
 
 
 

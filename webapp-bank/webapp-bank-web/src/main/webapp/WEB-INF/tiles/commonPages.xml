@@ -24,5 +24,16 @@
 	    
 	    <put-attribute name="appTitle" value="application.title" />
     </definition>
+    
+     <definition name="adminPage" template="/WEB-INF/pages/common/menuPage.jsp">
+        <put-attribute name="include" value="/WEB-INF/pages/common/blocks/include/withTables.jsp" />
+        <put-attribute name="header" value="/WEB-INF/pages/common/blocks/header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/pages/admin/adminMenu.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/common/blocks/defaultBody.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/pages/common/blocks/footer/TableFooter.jsp" />
+
+        <put-attribute name="appTitle" value="application.title" />
+        <put-attribute name="pageTitle" value="default.page.title" />
+    </definition>
 
 </tiles-definitions>

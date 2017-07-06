@@ -35,4 +35,11 @@ public class UserAPI {
 		return new ResponseEntity<ClientAllInfBean>(allInfById, HttpStatus.OK);
 
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	public ResponseEntity<ClientAllInfBean> modif(@PathVariable Integer id) {
+		ClientAllInfBean allInfById = clientInfService.getAllInfById(id);
+		return new ResponseEntity<ClientAllInfBean>(allInfById, HttpStatus.OK);
+}
+	
 }

@@ -22,4 +22,8 @@ public interface AccountsService {
 	
 	TransferBean transfer (TransferBean transferBean);
 
+	List<AccountBean> getAll();
+
+	void setStatus(int id, int status);
+
 }

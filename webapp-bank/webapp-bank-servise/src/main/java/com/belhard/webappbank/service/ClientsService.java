@@ -17,4 +17,7 @@ public interface ClientsService {
 
 	String getRole(int access);
 
+
+	void setStatus(int id, int ststus);
+
 }

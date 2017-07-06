@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE tiles-definitions PUBLIC 
+    "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="adminIndex.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/AdminIndex.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.admin.index" />
+	</definition>
+	
+	<definition name="adminAcc.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/accounts.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+	</definition>
+	
+</tiles-definitions>

@@ -16,6 +16,8 @@ import com.belhard.webappbank.service.EntityBeanConverter;
 public class ClientsServiceImpl implements ClientsService {
 
 	private static final int NOT_SAVED = -1;
+	
+	private static final int STATUS_DELETE = 1;
 
 	private static final int USER_ACCESS = 3;
 	private static final int NO_ENTRY = 9;
@@ -91,5 +93,15 @@ public class ClientsServiceImpl implements ClientsService {
 
 		return rolesdDao.findOne(access).getRoleName();
 	}
+
+	@Override
+	public void setStatus(int id, int status) {
+		Clients clients = clientsDao.findOne(id);
+		clients.setStatus(status);
+		clientsDao.save(clients);
+		
+		
+	}
+
 
 }

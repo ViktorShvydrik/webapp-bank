@@ -72,6 +72,14 @@ public class Controllers {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		return "redirect:/index.html?logout";
 	}
+	@RequestMapping(value = "/access_denided.html", method = RequestMethod.GET)
+	public String accessDenided(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null)
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		return "redirect:/index.html?access-denided";
+	}
+	
 
 	@RequestMapping(value = "/login.html")
 	public ModelAndView loginController(HttpSession httpSession, ClientBean clientBean, ClientInfBean clientInfBean) {

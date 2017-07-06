@@ -10,8 +10,15 @@
 		<intercept-url pattern="/resources/**" access="permitAll" />
 		<intercept-url pattern="/index.*" access="permitAll" />
 		<intercept-url pattern="/reg.html" access="permitAll" />
+		<intercept-url pattern="/reginf.html" access="permitAll" />
+		
 		<intercept-url pattern="/logout.html" access="permitAll" />
 		<intercept-url pattern="/access_denided.html" access="permitAll" />
+		
+		<intercept-url pattern="/client/**" access="hasAnyAuthority('administrator', 'operator', 'client') " />
+		<intercept-url pattern="/operator/**" access="hasAnyAuthority('administrator', 'operator')" />
+		<intercept-url pattern="/admin/**" access="hasAuthority('administrator')" />
+		
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 
 		 <form-login login-page="/index.html"

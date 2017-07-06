@@ -432,13 +432,10 @@ table.dataTable thead .sorting:after {
     border-left-width: 0;
   }
 
-#inf {
-	border: 1px;
-}  
 
-#inf td {
-  width: 150px;
-}
+
+
+
 
 
 
