@@ -399,8 +399,4 @@ public class AdminComtrollers {
         return pass;
     }
 
-	@ModelAttribute ("transfer")
-	private TransferBean transfer (){
-		return new TransferBean();
-	}
 }

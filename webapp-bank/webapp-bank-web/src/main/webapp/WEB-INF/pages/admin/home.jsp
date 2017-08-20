@@ -34,9 +34,9 @@
 					<td>${user.totalMoney}</td>
 					<td><a href="cardscl.html?login=${user.client.login}" >${user.countCards}</a></td>
 					<td>
-					<c:if test="${user.client.access == 1 }"><a href="acessUp.html?id=${user.client.idClient}">Администратор</a></c:if> 
-					<c:if test="${user.client.access == 2 }"><a href="acessUp.html?id=${user.client.idClient}">Оператор</a></c:if>
-					<c:if test="${user.client.access == 3 }"><a href="acessUp.html?id=${user.client.idClient}">Клиент</a></c:if> 
+					<c:if test="${user.client.access == 1 }"><a href="acessUp.html?id=${user.client.idClient}"><s:message code="page.table.role.admin" /></a></c:if> 
+					<c:if test="${user.client.access == 2 }"><a href="acessUp.html?id=${user.client.idClient}"><s:message code="page.table.role.operator" /></a></c:if>
+					<c:if test="${user.client.access == 3 }"><a href="acessUp.html?id=${user.client.idClient}"><s:message code="page.table.role.client" /></a></c:if> 
 					</td>
 					<td>
 					<c:if test="${user.client.status == 0 }"><s:message code="page.table.status.active" /></c:if> 

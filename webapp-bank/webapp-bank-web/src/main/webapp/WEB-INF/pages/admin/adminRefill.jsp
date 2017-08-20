@@ -66,7 +66,7 @@
 		
 	
 		<div class="form-group">
-			<label for="exampleInputAmount">Укажите сумму:</label>
+			<label for="exampleInputAmount"><s:message code="page.context.refill.amount" />:</label>
 			<div class="input-group">
 				<div class="input-group-addon"><span class="glyphicon glyphicon-rub" aria-hidden="true"></span></div>
 				<spring:input type="number" class="form-control" id="money" path="money" min = "0"/>

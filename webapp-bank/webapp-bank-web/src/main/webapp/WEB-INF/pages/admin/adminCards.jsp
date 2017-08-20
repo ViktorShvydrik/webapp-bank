@@ -12,10 +12,10 @@
 		id="dataTables">
 		<thead>
 		<tr>
-			<th width="25%">Номер карточки</th>
-			<td width="25%">Владелец</td>
-			<th width="25%">Статус</th>
-			<th width="25%">Действия</th>
+			<th width="25%"><s:message code="page.table.thead.number" /></th>
+			<td width="25%"><s:message code="page.table.thead.owner" /></td>
+			<th width="25%"><s:message code="page.table.thead.status" /></th>
+			<th width="25%"><s:message code="page.table.thead.actions" /></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -24,12 +24,12 @@
 				<td >${card.numberCard}</td>
 				<td><a href="cardscl.html?login=${card.login}" >${card.login}</a></td>
 				<td >
-				<c:if test="${card.status == 1}">Заблокированна</c:if> 
-				<c:if test="${card.status == 0}">Доступна</c:if>
+				<c:if test="${card.status == 1}"><s:message code="page.table.card.status.blocked" /></c:if> 
+				<c:if test="${card.status == 0}"><s:message code="page.table.card.status.available" /></c:if>
 				</td>
 				<td >
-				<c:if test="${card.status == 0}"><a href="#" class="action" id="${card.idCard}">Заблокировать</a></c:if>
-				 <c:if test="${card.status == 1}"><a href="#" class="action" id="${card.idCard}">Разблокировать</a></c:if>
+				<c:if test="${card.status == 0}"><a href="#" class="action" id="${card.idCard}"><s:message code="page.table.actions.block" /></a></c:if>
+				 <c:if test="${card.status == 1}"><a href="#" class="action" id="${card.idCard}"><s:message code="page.table.actions.active" /></a></c:if>
 				</td>
 			</tr>
 		</c:forEach>
@@ -44,9 +44,11 @@
 				.on(
 						'click',
 						function(e) {
-							//отменяем стандартное действие при отправке формы
-							e.preventDefault();
 							var id = this.id;
+							var block = '<s:message code="page.table.actions.block" />';
+							var unblock = '<s:message code="page.table.actions.active" />';
+							var blocked = '<s:message code="page.table.card.status.blocked" />';
+							var available = '<s:message code="page.table.card.status.available" />';
 							var obj = this;
 							var numCell = obj.parentNode.cellIndex;
 							var numRow = obj.parentNode.parentNode.rowIndex;
@@ -58,14 +60,14 @@
 										url : url,
 										dataType : "json",
 										success : function(data) {
-											if (obj.innerText == "Заблокировать") {
+											if (obj.innerText == block) {
 
-												obj.innerText = "Разблокировать";
-												document.all.dataTables.rows[numRow].cells[numCell - 1].innerText = "Заблокированна";
+												obj.innerText = unblock;
+												document.all.dataTables.rows[numRow].cells[numCell - 1].innerText = blocked;
 											} else {
 
-												obj.innerText = "Заблокировать";
-												document.all.dataTables.rows[numRow].cells[numCell - 1].innerText = "Доступна";
+												obj.innerText = block;
+												document.all.dataTables.rows[numRow].cells[numCell - 1].innerText = available;
 											}
 										}
 									});

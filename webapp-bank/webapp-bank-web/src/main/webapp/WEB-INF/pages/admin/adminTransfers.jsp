@@ -11,11 +11,11 @@
 	<thead>
 	<tr>
 	
-		<th width="20%">Номер перевода</th>
-		<th width="20%">С какого счета</th>
-		<th width="20%">Деньги</th>
-		<th width="20%">На какой счет</th>
-		<th width="20%">Кто перевел</th>
+		<th width="20%"><s:message code="page.table.transfers.number" /></th>
+		<th width="20%"><s:message code="page.table.transfers.from" /></th>
+		<th width="20%"><s:message code="page.table.transfers.money" /></th>
+		<th width="20%"><s:message code="page.table.transfers.to" /></th>
+		<th width="20%"><s:message code="page.table.transfers.who" /></th>
 	</tr>
 	</thead>
 	<tbody>

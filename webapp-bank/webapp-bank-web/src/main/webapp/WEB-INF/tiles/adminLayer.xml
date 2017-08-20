@@ -73,14 +73,14 @@
 	</definition>
 	
 	<definition name="error.page" extends="adminPage">
-		<put-attribute name="content" value="/WEB-INF/pages/admin/error.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/admin/response/error.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.error" />
 	</definition>
 	
 	<definition name="successfully.page" extends="adminPage">
-		<put-attribute name="content" value="/WEB-INF/pages/admin/successfully.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/admin/response/successfully.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.successfully" />
