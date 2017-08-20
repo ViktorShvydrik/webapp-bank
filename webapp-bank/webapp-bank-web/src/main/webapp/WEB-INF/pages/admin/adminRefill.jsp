@@ -9,10 +9,10 @@
 		id="dataTables">
 		<thead>
 			<tr>
-				<th>Счет</th>
-				<th>Баланс</th>
-				<th>Владелец</th>
-				<th>Статус</th>
+				<th> <s:message code="page.table.thead.account" /></th>
+				<th> <s:message code="page.table.thead.balance" /></th>
+				<th> <s:message code="page.table.thead.owner" /></th>
+				<th> <s:message code="page.table.thead.status" /></th>
 
 			</tr>
 		</thead>
@@ -31,9 +31,9 @@
 					<td>${acc.money }</td>
 					<td>${acc.client.login }: ${acc.client.inf.secondName } ${acc.client.inf.name }</td>
 					<td>
-					<c:if test="${acc.status == 0 }">Активен</c:if> 
-					<c:if test="${acc.status == 1 }">Заблокирован</c:if>
-					<c:if test="${acc.status == 2 }">Удален</c:if>
+					<c:if test="${acc.status == 0 }"><s:message code="page.table.status.active" /></c:if> 
+					<c:if test="${acc.status == 1 }"><s:message code="page.table.status.block" /></c:if>
+					<c:if test="${acc.status == 2 }"><s:message code="page.table.status.del" /></c:if>
 					</td>
 					
 					
@@ -52,10 +52,10 @@
 	<div class="row">
 		<div class="col-xs-4 form-group">
 		<div class="form-group">
-		<label for="direction">Действие:</label>
+		<label for="direction"><s:message code="page.context.refill.action" />:</label>
 		<spring:select path="direction" class="form-control" id="sel">
-		<spring:option value="1" >Пополнить</spring:option>
-		<spring:option value="2" >Снять</spring:option>
+		<spring:option value="1" ><s:message code="page.context.refill.action.refill" /></spring:option>
+		<spring:option value="2" ><s:message code="page.context.refill.action.withdraw" /></spring:option>
 		</spring:select>
 		</div>	
 		
@@ -73,7 +73,7 @@
 			</div>
 		</div>
 	</div></div>
-		<button type="submit" class="btn btn-primary" id="btn">Пополнить</button>
+		<button type="submit" class="btn btn-primary" id="btn"><s:message code="page.context.button.refill" /></button>
 	</spring:form>
 
 

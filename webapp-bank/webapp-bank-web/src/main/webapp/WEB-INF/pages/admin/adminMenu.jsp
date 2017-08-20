@@ -40,7 +40,7 @@
 			<li><a href="${pageContext.request.contextPath}/admin/profil.html"><s:message code="page.menu.edit" /></a></li>
 			<li><a href="${pageContext.request.contextPath}/admin/newclient.html"><s:message code="page.menu.create" /></a></li>
 			<li><a href="${pageContext.request.contextPath}/logout.html"><i class="fa fa-sign-out fa-fw"></i> <s:message code="page.menu.logout" /></a></li>
-			<li><a href="${pageContext.request.contextPath}/user/home.html"><s:message code="page.menu.client" /></a></li>
+			<li><a href="${pageContext.request.contextPath}/client/home.html"><s:message code="page.menu.client" /></a></li>
 
 
 

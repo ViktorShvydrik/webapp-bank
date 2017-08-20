@@ -34,17 +34,16 @@
 					<td>${acc.money }</td>
 					<td>${acc.client.login }: ${acc.client.inf.secondName } ${acc.client.inf.name }</td>
 					<td>
-					<c:if test="${acc.status == 0 }">Активен</c:if> 
-					<c:if test="${acc.status == 1 }">Заблокирован</c:if>
-					<c:if test="${acc.status == 2 }">Удален</c:if>
+					<c:if test="${acc.status == 0 }"><s:message code="page.table.status.active" /></c:if> 
+					<c:if test="${acc.status == 1 }"><s:message code="page.table.status.block" /></c:if>
+					<c:if test="${acc.status == 2 }"><s:message code="page.table.status.del" /></c:if>
 					</td>
 					<td><a href="cardscl.html?login=${acc.client.login}" >${acc.countCards}</a></td>
 					<td>
-					<a href="${pageContext.request.contextPath}/admin/blockAcc.html?id=${acc.idAccount}" class="action" id="${user.client.idClient}">Заблокировать</a>
-					   <a href="${pageContext.request.contextPath}/admin/delAcc.html?id=${acc.idAccount}" class="action" id="${user.client.idClient}">Удалить</a>
-					   <a href="${pageContext.request.contextPath}/admin/unblockAcc.html?id=${acc.idAccount}" class="action" id="${user.client.idClient}">Разблокировать</a>
+					<a href="${pageContext.request.contextPath}/admin/blockAcc.html?id=${acc.idAccount}" class="action" id="${user.client.idClient}"><s:message code="page.table.actions.block" />Заблокировать</a>
+					   <a href="${pageContext.request.contextPath}/admin/delAcc.html?id=${acc.idAccount}" class="action" id="${user.client.idClient}"><s:message code="page.table.actions.del" /></a>
+					   <a href="${pageContext.request.contextPath}/admin/unblockAcc.html?id=${acc.idAccount}" class="action" id="${user.client.idClient}"><s:message code="page.table.actions.active" /></a>
 					</td>
-					
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -114,10 +113,10 @@ $(function() {
 		</div>
 		<div class="col-xs-4 form-group">
 			<div class="input-group">
-			Укажите логин клиента:
+			<s:message code="page.context.clientLogin" />:
 				<spring:input class="form-control" path="login" />
 			</div>
-			<button type="submit" class="btn btn-primary">Показать</button>
+			<button type="submit" class="btn btn-primary"><s:message code="page.context.button.show" /></button>
 		</div>
 	</div>
 
