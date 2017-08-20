@@ -18,4 +18,6 @@ public interface ClientInfService {
 
 	void editInf(ClientAllInfBean allInfBean);
 
+	ClientAllInfBean getAllInfByLogin(String login);
+
 }

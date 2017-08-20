@@ -54,20 +54,15 @@ public class UserControllers {
 
 	@RequestMapping("/home.html")
 	public String userController(HttpSession httpSession) {
-		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
-		if (allInfBean != null) {
-			reloadInf(httpSession);
-			return "user.page";
-		}
-		return "index.page";
+		reloadInf(httpSession);
+		return "user.page";
+		
 
 	}
 
 	@RequestMapping("/accounts")
 	public String userAccountsController(HttpSession httpSession) {
-		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
-		if (allInfBean != null) {
-			allInfBean = reloadInf(httpSession);
+			ClientAllInfBean allInfBean = reloadInf(httpSession);
 			ClientBean client = allInfBean.getClient();
 
 			List<AccountBean> list = accountsService.getAllByClient(client);
@@ -76,8 +71,6 @@ public class UserControllers {
 			return "accounts.page";
 		}
 
-		return "index.page";
-	}
 
 	@RequestMapping("/newAccountUser.html")
 	public String newAccountUser(HttpSession httpSession) {
@@ -93,22 +86,16 @@ public class UserControllers {
 
 	@RequestMapping("/cards")
 	public String userCards(HttpSession httpSession) {
-		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
-		if (allInfBean != null) {
-			allInfBean = reloadInf(httpSession);
+			ClientAllInfBean allInfBean = reloadInf(httpSession);
 			List<CardBean> list = cardsService.getAllByClientId(allInfBean.getClient().getIdClient());
 			httpSession.setAttribute("user_cards", list);
 
 			return "cards.page";
 		}
-		return "index.page";
-	}
 
 	@RequestMapping("/refill.html")
 	public String refill(HttpSession httpSession, RefillBean refill) {
-		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
-		if (allInfBean != null) {
-			allInfBean = reloadInf(httpSession);
+			ClientAllInfBean allInfBean = reloadInf(httpSession);
 			ClientBean client = allInfBean.getClient();
 
 			List<AccountBean> list = accountsService.getAllByClient(client);
@@ -116,9 +103,6 @@ public class UserControllers {
 			return "refill.page";
 		}
 
-		return "index.page";
-
-	}
 
 	@RequestMapping("transfers/transfers.html")
 	public String allTransfers(HttpSession httpSession) {
@@ -182,9 +166,10 @@ public class UserControllers {
 	}
 
 	private ClientAllInfBean reloadInf(HttpSession httpSession) {
-		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
-		ClientBean clientBean = allInfBean.getClient();
-		allInfBean = clientInfService.getAllInfByClient(clientBean);
+		SecurityLoginBean loginBean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String login = loginBean.getUsername();
+		ClientAllInfBean allInfBean = clientInfService.getAllInfByLogin(login);
 		httpSession.setAttribute("user", allInfBean);
 		return allInfBean;
 

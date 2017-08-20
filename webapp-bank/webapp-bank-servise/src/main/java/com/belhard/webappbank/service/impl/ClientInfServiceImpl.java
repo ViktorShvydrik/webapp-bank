@@ -80,8 +80,6 @@ public class ClientInfServiceImpl implements ClientInfService {
 
 	private ClientAllInfBean getTotalMoneyAndCountAcc(ClientAllInfBean allInfBean) {
 
-		// доработать до отбора только не удаленных данных
-
 		int id = allInfBean.getClient().getIdClient();
 		List<Accounts> list = accountsDao.accByIdClient(id);
 		int totalMoney = 0;
@@ -110,7 +108,7 @@ public class ClientInfServiceImpl implements ClientInfService {
 		return allInfBean;
 
 	}
-	@Transactional
+	
 	@Override
 	public void editInf(ClientAllInfBean allInfBean) {
 		ClientBean clientBean = allInfBean.getClient();
@@ -119,4 +117,11 @@ public class ClientInfServiceImpl implements ClientInfService {
 		
 	}
 
+	@Override
+	public ClientAllInfBean getAllInfByLogin(String login) {
+		Clients client = clientsDao.findByLogin(login);
+		ClientBean clientBean = converter.convertToBean(client, ClientBean.class);
+		ClientAllInfBean allInfByClient = getAllInfByClient(clientBean);
+		return allInfByClient;
+	}
 }
