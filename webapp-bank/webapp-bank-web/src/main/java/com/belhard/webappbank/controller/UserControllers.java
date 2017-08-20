@@ -26,7 +26,7 @@ import com.belhard.webappbank.service.ClientsService;
 import com.belhard.webappbank.service.TransfersService;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/client")
 public class UserControllers {
 
 	@Autowired
