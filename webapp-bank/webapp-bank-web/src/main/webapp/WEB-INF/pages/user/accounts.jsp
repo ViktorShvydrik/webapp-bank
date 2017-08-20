@@ -8,13 +8,13 @@
 
 <table class="table table-striped table-bordered table-hover" id="inf">
 	<tr>
-		<th>Имя</th>
-		<th>Фамилия</th>
-		<th>Логин</th>
-		<th>Емейл</th>
-		<th>Открыто счетов</th>
-		<th>Деньги на счетах</th>
-		<th>Пластиковые карточки</th>
+				<th> <s:message code="page.table.thead.name" /> </th>
+				<th> <s:message code="page.table.thead.secondName" /></th>
+				<th> <s:message code="page.table.thead.login" /></th>
+				<th> <s:message code="page.table.thead.email" /></th>
+				<th> <s:message code="page.table.thead.allAccounts" /></th>
+				<th> <s:message code="page.table.thead.money" /></th>
+				<th> <s:message code="page.table.thead.cards" /></th>
 	</tr>
 
 	<tr>
@@ -31,15 +31,14 @@
 
 <br />
 <c:if test="${user.countAcc > 0}">
-	<h2>Ваши счета:</h2>
+	<h2><s:message code="page.context.yourAccounts" />:</h2>
 	<table class="table table-striped table-bordered table-hover"
 		id="dataTables">
 		<thead>
 			<tr>
-				<th>Счет</th>
-				<th>Баланс</th>
-				<th>Статус</th>
-				<th>Действия</th>
+				<th><s:message code="page.table.thead.account" /></th>
+				<th><s:message code="page.table.thead.balance" /></th>
+				<th><s:message code="page.table.thead.status" /></th>
 
 			</tr>
 		</thead>
@@ -50,21 +49,18 @@
 					<td>${acc.account }</td>
 					<td>${acc.money }</td>
 					<td>
-					<c:if test="${acc.status == 0 }">Активен</c:if> 
-					<c:if test="${acc.status == 1 }">Заблокирован</c:if>
-					<td></td>
+					<c:if test="${acc.status == 0 }"><s:message code="page.table.status.active" /></c:if> 
+					<c:if test="${acc.status == 1 }"><s:message code="page.table.status.block" /></c:if>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	<br />
-	<button type="button" class="btn btn-primary btn-lg btn-block">Открыть
-		новый счет</button>
+	<button type="button" class="btn btn-primary btn-lg btn-block" id="new"><s:message code="page.context.button.newAccount" /></button>
 </c:if>
-<c:if test="${user.countAcc == 0}">У Вас нет открытых счетов. 
+<c:if test="${user.countAcc == 0}"><s:message code="page.error.accounts.no" />
 	<br />
-	<button type="button" class="btn btn-primary btn-sm">Открыть
-		новый счет</button>
+	<button type="button" class="btn btn-primary btn-sm" onclick="javascript:document.location.href='newAccountUser.html'"><s:message code="page.context.button.newAccount" /></button>
 	
 </c:if>
 
@@ -72,7 +68,7 @@
 	$(function() {
 		var id = ${user.client.idClient};
 		var url = '/webapp-bank-web/rest/users/' + id+ '/accounts/';
-		$('button').bind('click',function() {
+		$('button#new').bind('click',function() {
 							var id = ${user.client.idClient};
 							var url = '/webapp-bank-web/rest/users/' + id+ '/accounts/';
 							$
@@ -81,12 +77,13 @@
 										url : url,
 										dataType : "json",
 										success : function(data) {
-											newrow = document.all.dataTables.insertRow()
+											newrow = document.all.dataTables.insertRow();
 											newcell = newrow.insertCell(0);
 											newcell.innerText = data.account;
 											newcell = newrow.insertCell(1);
 											newcell.innerText = data.money;
 											newcell = newrow.insertCell(2);
+											newcell.innerText = "Активен"
 
 											var countAcc = Number(document.all.inf.rows[1].cells[4].innerText);
 											countAcc = countAcc + 1;

@@ -20,4 +20,8 @@ public interface ClientsService {
 
 	void setStatus(int id, int ststus);
 
+	void accessUp(int id);
+
+	int countClient();
+
 }

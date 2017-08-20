@@ -37,7 +37,8 @@
 <spring:form modelAttribute="transfer" id="form" action="">
 	<div class="row">
 		<div class="col-xs-4 form-group">
-			<label for="disabledSelect">Укажите откуда:</label> 
+			<label for="disabledSelect">Укажите откуда:</label>
+			 <div class="input-group">
 		<spring:select path="fromAcc" id="accA" class="form-control">
 		<c:forEach items="${user_accounts}" var="acc">
 		<spring:option value="${acc.account}">${acc.account} (${acc.money} руб.)</spring:option>
@@ -45,18 +46,13 @@
 		</spring:select>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-4 form-group">
 			<label for="exampleInputAmount">Укажите сумму:</label>
 			<div class="input-group">
 				<div class="input-group-addon"><span class="glyphicon glyphicon-rub" aria-hidden="true"></span></div>
 				<spring:input class="form-control" id="money" path="money" />
-			</div>
-		</div>
 	</div>
-	<div class="row">
-		<div class=" col-xs-4 form-group">
 			<label for="disabledSelect">Укажите куда:</label> 
+			<div class="input-group">
 				<spring:select path="toAcc" id="accB" class="form-control">
 		<c:forEach items="${user_accounts}" var="acc">
 		<spring:option value="${acc.account}">${acc.account} (${acc.money} руб.)</spring:option>
@@ -64,7 +60,7 @@
 		</spring:select>
 				
 		</div>
-	</div>
+	
 	
 	<div class="row">
 	<button type="submit" class="btn btn-primary">Перевести</button>

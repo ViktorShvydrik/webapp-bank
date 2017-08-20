@@ -7,37 +7,37 @@
 <tiles-definitions>
 
 	<definition name="user.page" extends="menuPage">
-		<put-attribute name="content" value="/WEB-INF/pages/userPage.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/user/home.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.home" />
 	</definition>
 	
 	<definition name="accounts.page" extends="menuPage">
-		<put-attribute name="content" value="/WEB-INF/pages/accounts.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/user/accounts.jsp" />
 		<put-attribute name="include" value="/WEB-INF/pages/common/blocks/include/withTables.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/pages/common/blocks/footer/TableFooter.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
-		<put-attribute name="pageTitle" value="page.title.accaunts" />
+		<put-attribute name="pageTitle" value="page.title.accounts" />
 	</definition>
 	
 	<definition name="refill.page" extends="menuPage">
-		<put-attribute name="content" value="/WEB-INF/pages/refill.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/user/refill.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.refill" />
 	</definition>
 	
 	<definition name="cards.page" extends="menuPage">
-		<put-attribute name="content" value="/WEB-INF/pages/cards.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/user/cards.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.cards" />
 	</definition>
 	
 	<definition name="transfers.page" extends="menuPage">
-		<put-attribute name="content" value="/WEB-INF/pages/transfers/transfers.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/user/transfers/transfers.jsp" />
 		<put-attribute name="include" value="/WEB-INF/pages/common/blocks/include/withTables.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/pages/common/blocks/footer/TableFooter.jsp" />
 
@@ -46,17 +46,24 @@
 	</definition>
 	
 	<definition name="betweenOwnAcc.page" extends="menuPage">
-		<put-attribute name="content" value="/WEB-INF/pages/transfers/betweenOwnAccounts.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/user/transfers/betweenOwnAccounts.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.refill" />
 	</definition>
 	
 		<definition name="transfersToAll.page" extends="menuPage">
-		<put-attribute name="content" value="/WEB-INF/pages/transfers/transfersToAll.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/user/transfers/transfersToAll.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.refill" />
+	</definition>
+	
+	<definition name="profil.page" extends="menuPage">
+		<put-attribute name="content" value="/WEB-INF/pages/user/profil.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.profil" />
 	</definition>
 	
 

@@ -32,7 +32,6 @@
 					<value>/WEB-INF/tiles/reg.xml</value>
 					<value>/WEB-INF/tiles/userLayer.xml</value>
 					<value>/WEB-INF/tiles/adminLayer.xml</value>
-					<value>/WEB-INF/tiles/operatorLayer.xml</value>
 				</list>
 			</property>
 		</bean>

@@ -5,9 +5,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.belhard.webappbank.beans.CardBean;
+import com.belhard.webappbank.dao.AccountsDao;
 import com.belhard.webappbank.dao.CardsDao;
+import com.belhard.webappbank.entity.Accounts;
 import com.belhard.webappbank.entity.Cards;
 import com.belhard.webappbank.service.CardsService;
 import com.belhard.webappbank.service.EntityBeanConverter;
@@ -23,6 +26,8 @@ public class CardsServiceImpl implements CardsService {
 
 	@Autowired
 	private CardsDao cardsDao;
+	@Autowired
+	private AccountsDao accountsDao;
 
 	public void setCardsDao(CardsDao cardsDao) {
 		this.cardsDao = cardsDao;
@@ -56,8 +61,43 @@ public class CardsServiceImpl implements CardsService {
 	@Override
 	public List<CardBean> getAll() {
 		Iterable<Cards> findAll = cardsDao.findAll();
-		List<CardBean> list = converter.convertToBeanList(findAll, CardBean.class);
+		List<CardBean> list = new ArrayList<>();
+		for (Cards card : findAll) {
+			CardBean cardBean = converter.convertToBean(card, CardBean.class);
+			list.add(cardBean);
+		}
 		return list;
 	}
-
+	@Transactional
+	@Override
+	public void createCard(CardBean cardBean) {
+		int numberCard = randomCardNumber();
+		cardBean.setNumberCard(numberCard);
+		Cards card = converter.convertToEntity(cardBean, Cards.class);
+		if (card.getClient() == null) {
+			throw new RuntimeException("Client == null");
+		}
+		card = cardsDao.save(card);
+		Accounts account = card.getAccount();
+		int countCards = account.getCards(); 
+		countCards++;
+		account.setCards(countCards);
+		accountsDao.save(account);
+	}
+	
+	
+	
+	private int randomCardNumber(){
+		int numberCard = 0;
+		Cards card = null;
+		do {
+			numberCard =  (int) (Math.random() * 90000001 + 10000000);
+			card = cardsDao.findByNumberCard(numberCard);
+		} while (card != null);
+		return numberCard;
+		
+	}
+	
+	
 }
+

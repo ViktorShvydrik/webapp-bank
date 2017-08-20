@@ -11,10 +11,11 @@
 	<thead>
 	<tr>
 	
-		<th width="25%">Номер перевода</th>
-		<th width="25%">С какого счета</th>
-		<th width="25%">Деньги</th>
-		<th width="25%">На какой счет</th>
+		<th width="20%">Номер перевода</th>
+		<th width="20%">С какого счета</th>
+		<th width="20%">Деньги</th>
+		<th width="20%">На какой счет</th>
+		<th width="20%">Кто перевел</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -24,6 +25,7 @@
 			<td>  <c:if test="${tr.fromAcc.account > 0}">  ${tr.fromAcc.account}  </c:if>  </td>
 			<td>${tr.money}</td>
 			<td>${tr.toAcc.account}</td>
+			<td>${tr.login }</td>
 
 		</tr>
 	</c:forEach>

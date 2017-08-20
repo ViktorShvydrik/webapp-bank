@@ -14,6 +14,7 @@ import com.belhard.webappbank.beans.ClientInfBean;
 import com.belhard.webappbank.beans.RefillBean;
 import com.belhard.webappbank.beans.TransferBean;
 import com.belhard.webappbank.dao.AccountsDao;
+import com.belhard.webappbank.dao.CardsDao;
 import com.belhard.webappbank.dao.ClientInfDao;
 import com.belhard.webappbank.dao.ClientsDao;
 import com.belhard.webappbank.entity.Accounts;
@@ -23,6 +24,8 @@ import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.ClientInfService;
 import com.belhard.webappbank.service.EntityBeanConverter;
 import com.belhard.webappbank.service.TransfersService;
+import com.belhard.webappbank.service.Exception.AccountsServiceException;
+import com.belhard.webappbank.service.Exception.RefillExeption;
 import com.belhard.webappbank.service.Exception.TransferException;
 
 @Service
@@ -35,18 +38,25 @@ public class AccountsServiceImpl implements AccountsService {
 	@Autowired
 	private ClientsDao clientsDao;
 	@Autowired
+	private CardsDao cardsDao;
+	@Autowired
 	private ClientInfService clientInfService;
 	@Autowired
 	private TransfersService transfersService;
 	@Autowired
 	private EntityBeanConverter converter;
 	
-	
+	private static final int STATUS_OK = 0;
+	private static final int STATUS_BLOCK = 1;
 	private static final int STATUS_DELETE = 2;
-	private static final int DEFAULT_ID_ACCOUNT = 1;
+	
 	private static final int ADMIN_ACCESS = 1;
 	private static final int OPERATOR_ACCESS = 2;
-	private static final int USER_ACCESS = 3;
+	
+	private static final int REFILL = 1;
+	private static final int WITHDRAW = 2;
+	
+	
 
 	@Override
 	@Transactional
@@ -112,6 +122,11 @@ public class AccountsServiceImpl implements AccountsService {
 	@Override
 	public List<AccountBean> getAllByClient(ClientBean client) {
 		int id = client.getIdClient();
+		return getAllByClient(id);
+	}
+	
+	@Override
+	public List<AccountBean> getAllByClient(int id) {
 		List<AccountBean> list = new ArrayList<>();
 		Iterable<Accounts> listBD = accountsDao.accByIdClient(id);
 		for (Accounts accounts : listBD) {
@@ -168,24 +183,56 @@ public class AccountsServiceImpl implements AccountsService {
 	}
 
 	@Override
-	public void setStatus(int id, int status) {
+	public AccountBean setStatus(int id, int status) throws AccountsServiceException {
 		Accounts accounts = accountsDao.findOne(id);
+		if(accounts.getMoney() > 0){
+			throw new AccountsServiceException();
+		}else{
 		accounts.setStatus(status);
-		accountsDao.save(accounts);
-		
+		accounts = accountsDao.save(accounts);
+		}
+		AccountBean accountBean = converter.convertToBean(accounts, AccountBean.class);
+		return accountBean;
 	}
+	
 	@Transactional
 	@Override
-	public void refillByAccount(RefillBean refill, String login) {
+	public void refillByAccount(RefillBean refill, String login) throws RefillExeption {
 		int acc = refill.getAccount();
 		Accounts accounts = accountsDao.findByAccount(acc);
-		int money = accounts.getMoney() + refill.getMoney();
+		int money = 0;
+		int moneyAcc = accounts.getMoney();
+		int moneyRef = refill.getMoney(); 
+		if (refill.getDirection() == REFILL ) {
+			money = moneyAcc  + moneyRef;
+		}
+		if (refill.getDirection() == WITHDRAW){
+			
+			if(moneyAcc>=moneyRef){
+			money = moneyAcc - moneyRef;
+			}else{
+				throw new RefillExeption("Insufficient funds");
+			}
+		}
 		accounts.setMoney(money);
 		accounts = accountsDao.save(accounts);
 		refill.setIdAccount(accounts.getIdAccount());
 		transfersService.addTransfer(refill, login);
 		
 	}
+
+	@Override
+	public void reloadInf() {
+		Iterable<Accounts> findAll = accountsDao.findAll();
+		for (Accounts account : findAll) {
+			int count = cardsDao.countByIdAccount(account.getIdAccount());
+			account.setCards(count);
+			accountsDao.save(account);
+		}
+		
+	}
+
+
 
 	
 

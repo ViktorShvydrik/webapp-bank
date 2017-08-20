@@ -16,4 +16,6 @@ public interface ClientInfService {
 
 	ClientAllInfBean getAllInfById(int id);
 
+	void editInf(ClientAllInfBean allInfBean);
+
 }

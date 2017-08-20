@@ -12,4 +12,6 @@ public interface CardsService {
 
 	List<CardBean> getAll();
 
+	void createCard(CardBean cardBean);
+
 }

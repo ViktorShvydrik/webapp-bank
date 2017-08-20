@@ -12,20 +12,22 @@
 		id="dataTables">
 		<thead>
 		<tr>
-			<th>Номер карточки</th>
-			<th>Статус</th>
-			<th>Действия</th>
+			<th width="25%">Номер карточки</th>
+			<td width="25%">Владелец</td>
+			<th width="25%">Статус</th>
+			<th width="25%">Действия</th>
 		</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${user_cards}" var="card">
+		<c:forEach items="${users_cards}" var="card">
 			<tr>
-				<td width="33%">${card.numberCard}</td>
-				<td width="33%">
+				<td >${card.numberCard}</td>
+				<td><a href="cardscl.html?login=${card.login}" >${card.login}</a></td>
+				<td >
 				<c:if test="${card.status == 1}">Заблокированна</c:if> 
 				<c:if test="${card.status == 0}">Доступна</c:if>
 				</td>
-				<td width="33%">
+				<td >
 				<c:if test="${card.status == 0}"><a href="#" class="action" id="${card.idCard}">Заблокировать</a></c:if>
 				 <c:if test="${card.status == 1}"><a href="#" class="action" id="${card.idCard}">Разблокировать</a></c:if>
 				</td>

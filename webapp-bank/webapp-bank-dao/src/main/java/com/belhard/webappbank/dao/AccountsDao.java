@@ -10,10 +10,12 @@ import com.belhard.webappbank.entity.Accounts;
 
 public interface AccountsDao extends CrudRepository<Accounts, Integer> {
 
+	
+	
 	@SuppressWarnings("unchecked")
 	Accounts save(Accounts account);
 
-	@Query("SELECT COUNT(a) FROM Accounts a WHERE a.client.idClient =:id")
+	@Query("SELECT COUNT(a) FROM Accounts a WHERE a.client.idClient =:id and a.status not like 2" )
 	int countAllByClient(@Param("id") int idClient);
 
 	@Query("SELECT SUM(a.money) FROM Accounts a WHERE a.client.idClient =:id")

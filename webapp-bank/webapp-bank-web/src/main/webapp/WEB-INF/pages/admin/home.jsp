@@ -6,15 +6,16 @@
 		<table class="table table-striped table-bordered table-hover" id="dataTables">
 				<thead>
 				<tr>
-				<th> Имя </th>
-				<th>Фамилия</th>
-				<th>Логин</th>
-				<th>Емейл</th>
-				<th>Открыто счетов</th>
-				<th>Деньги на счетах</th>
-				<th>Пластиковые карточки</th>
-				<th>Статус</th>
-				<th>Действия</th>
+				<th> <s:message code="page.table.thead.name" /> </th>
+				<th> <s:message code="page.table.thead.secondName" /></th>
+				<th> <s:message code="page.table.thead.login" /></th>
+				<th> <s:message code="page.table.thead.email" /></th>
+				<th> <s:message code="page.table.thead.allAccounts" /></th>
+				<th> <s:message code="page.table.thead.money" /></th>
+				<th> <s:message code="page.table.thead.cards" /></th>
+				<th> <s:message code="page.table.thead.access" /></th>
+				<th> <s:message code="page.table.thead.status" /></th>
+				<th> <s:message code="page.table.thead.actions" /></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -27,19 +28,24 @@
 				<tr class="timeline-badge danger"></c:if> 
 					<td>${user.client.inf.name}</td> 
 					<td>${user.client.inf.secondName}</td>
-					<td>${user.client.login}</td>
+					<td><a href="profilcl.html?client.login=${user.client.login}" >${user.client.login}</a></td>
 					<td>${user.client.inf.email}</td>
-					<td>${user.countAcc}</td>
+					<td><a href="accounts_client.html?login=${user.client.login}">${user.countAcc}</a></td>
 					<td>${user.totalMoney}</td>
-					<td>${user.countCards}</td>
+					<td><a href="cardscl.html?login=${user.client.login}" >${user.countCards}</a></td>
 					<td>
-					<c:if test="${user.client.status == 0 }">Активен</c:if> 
-					<c:if test="${user.client.status == 1 }">Заблокирован</c:if>
-					<c:if test="${user.client.status == 2 }">Удален</c:if>
+					<c:if test="${user.client.access == 1 }"><a href="acessUp.html?id=${user.client.idClient}">Администратор</a></c:if> 
+					<c:if test="${user.client.access == 2 }"><a href="acessUp.html?id=${user.client.idClient}">Оператор</a></c:if>
+					<c:if test="${user.client.access == 3 }"><a href="acessUp.html?id=${user.client.idClient}">Клиент</a></c:if> 
 					</td>
-					<td><a href="${pageContext.request.contextPath}/admin/blockUser.html?id=${user.client.idClient}" class="action" id="${user.client.idClient}">Заблокировать</a>
-					<br/> <a href="${pageContext.request.contextPath}/admin/delUser.html?id=${user.client.idClient}" class="action" id="${user.client.idClient}">Удалить</a>
-					<br/><a href="${pageContext.request.contextPath}/admin/unblock.html?id=${user.client.idClient}" class="action" id="${user.client.idClient}">Разблокировать</a>
+					<td>
+					<c:if test="${user.client.status == 0 }"><s:message code="page.table.status.active" /></c:if> 
+					<c:if test="${user.client.status == 1 }"><s:message code="page.table.status.block" /></c:if>
+					<c:if test="${user.client.status == 2 }"><s:message code="page.table.status.del" /></c:if>
+					</td>
+					<td><a href="${pageContext.request.contextPath}/admin/blockUser.html?id=${user.client.idClient}" class="action" id="${user.client.idClient}"><s:message code="page.table.actions.block" /></a>
+					<br/> <a href="${pageContext.request.contextPath}/admin/delUser.html?id=${user.client.idClient}" class="action" id="${user.client.idClient}"><s:message code="page.table.actions.del" /></a>
+					<br/><a href="${pageContext.request.contextPath}/admin/unblock.html?id=${user.client.idClient}" class="action" id="${user.client.idClient}"><s:message code="page.table.actions.active" /></a>
 					</td>
 					
 				</tr>

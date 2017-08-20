@@ -1,4 +1,4 @@
-=<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
@@ -8,45 +8,63 @@
         
         <table class="table table-striped table-bordered table-hover" id="inf">
 			<tr>
-				<th> Имя </th>
-				<th>Фамилия</th>
-				<th>Логин</th>
-				<th>Емейл</th>
-				<th>Открыто счетов</th>
-				<th>Деньги на счетах</th>
-				<th>Пластиковые карточки</th>
+				<th> <s:message code="page.table.thead.name" /> </th>
+				<th> <s:message code="page.table.thead.secondName" /></th>
+				<th> <s:message code="page.table.thead.login" /></th>
+				<th> <s:message code="page.table.thead.email" /></th>
+				<th> <s:message code="page.table.thead.allAccounts" /></th>
+				<th> <s:message code="page.table.thead.money" /></th>
+				<th> <s:message code="page.table.thead.cards" /></th>
 
 			</tr>
 
-				<tr>
-					<td>${user.client.inf.name}</td> 
-					<td>${user.client.inf.secondName}</td>
-					<td>${user.client.login}</td>
-					<td>${user.client.inf.email}</td>
-					<td>${user.countAcc}</td>
-					<td>${user.totalMoney}</td>
-					<td>${user.countCards}</td>
-				</tr>
+			<tr>
+				<td>${user.client.inf.name}</td> 
+				<td>${user.client.inf.secondName}</td>
+				<td>${user.client.login}</td>
+				<td>${user.client.inf.email}</td>
+				<td>${user.countAcc}</td>
+				<td>${user.totalMoney}</td>
+				<td>${user.countCards}</td>
+			</tr>
 		
 		</table >
 		
 			<br />
 		<br />
 
-	<c:if test="${user.countAcc == 0}">У Вас нет открытых счетов.  </c:if> 
-	<c:if test="${user.countAcc > 0}">
-	<spring:form modelAttribute="refill" method="POST" id="refill">
-		<spring:select path="idAccount" id="id">
-		<c:forEach items="${user_accounts}" var="acc">
-		<spring:option value="${acc.idAccount}">${acc.account} (${acc.money} руб.)</spring:option>
-		</c:forEach>
-		</spring:select>
-		
-		<spring:input path="money" id="money"/>
-		<input  type="submit" value="Пополнить">
+	<c:if test="${user.countAcc == 0}">У Вас нет открытых счетов.  </c:if>
+<c:if test="${user.countAcc > 0}">
+
+	<spring:form modelAttribute="refill" method="POST" id="refill"	action="addrefill.html">
+
+		<div class="row">
+			<div class="col-xs-4 form-group">
+			
+				<div class="form-group">
+					<label for="account">Выберите счет:</label>
+						<spring:select path="idAccount" id="id" class="form-control">
+							<c:forEach items="${user_accounts}" var="acc">
+								<spring:option value="${acc.idAccount}">${acc.account} (${acc.money} руб.)</spring:option>
+							</c:forEach>
+						</spring:select>
+				</div>
+
+				<div class="form-group">
+					<label for="exampleInputAmount">Укажите сумму:</label>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<span class="glyphicon glyphicon-rub" aria-hidden="true"></span>
+							</div>
+						<spring:input type="number" class="form-control" id="money"	path="money" min="0" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary" id="btn">Пополнить</button>
 	</spring:form>
-	
-	</c:if>
+
+</c:if>
 
 
 <script type="text/javascript">

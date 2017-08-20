@@ -5,13 +5,13 @@
 
 		<table class="table table-striped table-bordered table-hover">
 				<tr>
-				<th> Имя </th>
-				<th>Фамилия</th>
-				<th>Логин</th>
-				<th>Емейл</th>
-				<th>Открыто счетов</th>
-				<th>Деньги на счетах</th>
-				<th>Пластиковые карточки</th>
+				<th> <s:message code="page.table.thead.name" /> </th>
+				<th> <s:message code="page.table.thead.secondName" /></th>
+				<th> <s:message code="page.table.thead.login" /></th>
+				<th> <s:message code="page.table.thead.email" /></th>
+				<th> <s:message code="page.table.thead.allAccounts" /></th>
+				<th> <s:message code="page.table.thead.money" /></th>
+				<th> <s:message code="page.table.thead.cards" /></th>
 			</tr>
 
 				<tr>

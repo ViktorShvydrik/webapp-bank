@@ -12,7 +12,7 @@
  <legend class="m-b-1 text-xs-center">Регистрация</legend>
  <div class="form-group input-group">
  <span class="has-float-label">
- <spring:input class="form-control" type="text" path="name"/>
+ <spring:input class="form-control" type="text" path="name" />
  <label for="first">Имя</label>
  </span>
  <span class="has-float-label">

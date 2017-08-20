@@ -17,8 +17,8 @@ public class ClientsServiceImpl implements ClientsService {
 
 	private static final int NOT_SAVED = -1;
 	
-	private static final int STATUS_DELETE = 1;
-
+	
+	private static final int ADMIN_ACCESS = 1;
 	private static final int USER_ACCESS = 3;
 	private static final int NO_ENTRY = 9;
 
@@ -101,6 +101,27 @@ public class ClientsServiceImpl implements ClientsService {
 		clientsDao.save(clients);
 		
 		
+	}
+
+	@Override
+	public void accessUp(int id) {
+		Clients findOne = clientsDao.findOne(id);
+		int access = findOne.getAccess();
+		if (access> ADMIN_ACCESS){
+			access--;
+			findOne.setAccess(access);
+			clientsDao.save(findOne);
+		}else{
+			access = USER_ACCESS;
+			findOne.setAccess(access);
+			clientsDao.save(findOne);
+		}
+		
+	}
+
+	@Override
+	public int countClient() {
+		return (int)clientsDao.count();
 	}
 
 

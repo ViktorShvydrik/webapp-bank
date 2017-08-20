@@ -8,7 +8,7 @@
 <tiles-definitions>
 
 	<definition name="adminIndex.page" extends="adminPage">
-		<put-attribute name="content" value="/WEB-INF/pages/admin/AdminIndex.jsp" />
+		<put-attribute name="content" value="/WEB-INF/pages/admin/home.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
 		<put-attribute name="pageTitle" value="page.title.admin.index" />
@@ -18,21 +18,22 @@
 		<put-attribute name="content" value="/WEB-INF/pages/admin/adminAccounts.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
-		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+		<put-attribute name="pageTitle" value="page.title.accounts" />
 	</definition>
 	
-	<definition name="adminAcc2.page" extends="adminPage">
-		<put-attribute name="content" value="/WEB-INF/pages/admin/adminAccounts2.jsp" />
+		<definition name="adminAccClient.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/adminAccountsClient.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
-		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+		<put-attribute name="pageTitle" value="page.title.accounts" />
 	</definition>
+	
 	
 	<definition name="adminRefill.page" extends="adminPage">
 		<put-attribute name="content" value="/WEB-INF/pages/admin/adminRefill.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
-		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+		<put-attribute name="pageTitle" value="page.title.admin.refil" />
 	</definition>
 	
 
@@ -40,14 +41,50 @@
 		<put-attribute name="content" value="/WEB-INF/pages/admin/adminTransfers.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
-		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+		<put-attribute name="pageTitle" value="page.title.admin.transfers" />
 	</definition>
 	
 		<definition name="adminCards.page" extends="adminPage">
 		<put-attribute name="content" value="/WEB-INF/pages/admin/adminCards.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
-		<put-attribute name="pageTitle" value="page.title.admin.accounts" />
+		<put-attribute name="pageTitle" value="page.title.cards" />
 	</definition>
+	
+	<definition name="adminCardsClient.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/adminCardsClient.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.cards" />
+	</definition>
+	
+	<definition name="adminProfil.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/profil.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.profil" />
+	</definition>
+	
+		<definition name="adminCreateClient.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/createClient.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.profil" />
+	</definition>
+	
+	<definition name="error.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/error.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.error" />
+	</definition>
+	
+	<definition name="successfully.page" extends="adminPage">
+		<put-attribute name="content" value="/WEB-INF/pages/admin/successfully.jsp" />
+
+		<put-attribute name="appTitle" value="application.title" />
+		<put-attribute name="pageTitle" value="page.title.successfully" />
+	</definition>
+
 	
 </tiles-definitions>

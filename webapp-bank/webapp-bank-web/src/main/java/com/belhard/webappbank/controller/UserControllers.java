@@ -2,18 +2,13 @@ package com.belhard.webappbank.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.belhard.webappbank.beans.AccountBean;
@@ -23,7 +18,6 @@ import com.belhard.webappbank.beans.ClientBean;
 import com.belhard.webappbank.beans.ClientInfBean;
 import com.belhard.webappbank.beans.RefillBean;
 import com.belhard.webappbank.beans.TransferBean;
-import com.belhard.webappbank.security.authentication.BankAuthentication;
 import com.belhard.webappbank.security.bean.SecurityLoginBean;
 import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.CardsService;
@@ -32,7 +26,8 @@ import com.belhard.webappbank.service.ClientsService;
 import com.belhard.webappbank.service.TransfersService;
 
 @Controller
-public class Controllers {
+@RequestMapping("/user")
+public class UserControllers {
 
 	@Autowired
 	private ClientsService clientsService;
@@ -49,101 +44,15 @@ public class Controllers {
 	@Autowired
 	private TransfersService transfersService;
 
-	@Autowired
-	private BankAuthentication bankAuthentication;
-
-	private static final int NOT_SAVED = -1;
-
-	private static final int ADMIN_ACCESS = 1;
-	private static final int OPERATOR_ACCESS = 2;
-	private static final int USER_ACCESS = 3;
-	private static final int NO_ENTRY = 9;
-
-	@RequestMapping("/index.html")
-	public ModelAndView indexController(ClientBean client) {
-		ModelAndView model = new ModelAndView("index.page", "clients", client);
-		return model;
-	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null)
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		return "redirect:/index.html?logout";
-	}
-	@RequestMapping(value = "/access_denided.html", method = RequestMethod.GET)
-	public String accessDenided(HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null)
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		return "redirect:/index.html?access-denided";
-	}
 	
 
-	@RequestMapping(value = "/login.html")
-	public ModelAndView loginController(HttpSession httpSession, ClientBean clientBean, ClientInfBean clientInfBean) {
-		SecurityLoginBean bean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal();
-		String login = bean.getUsername();
-		clientBean = clientsService.getClient(login);
-		ModelAndView model = new ModelAndView("redirect:userPage.html");
-		// return model;
+	
+	
+	private static final int LAST_FEW = 5;
 
-		switch (clientBean.getAccess()) {
+	
 
-		case ADMIN_ACCESS:
-			// break;
-		case OPERATOR_ACCESS:
-			// break;
-		case USER_ACCESS:
-			if (clientBean.getInf() == null) {
-				int id = clientBean.getIdClient();
-				clientInfBean.setIdClient(id);
-				model = new ModelAndView("reg.page", "clientsInf", clientInfBean);
-
-				return model;
-			}
-			ClientAllInfBean allInfBean = clientInfService.getAllInfByClient(clientBean);
-			httpSession.setAttribute("user", allInfBean);
-			model = new ModelAndView("redirect:userPage.html");
-			return model;
-
-		case NO_ENTRY:
-
-		}
-
-		return new ModelAndView("index.page");
-	}
-
-	@RequestMapping(value = "/reg.html", method = RequestMethod.POST)
-	public ModelAndView regController(ClientBean client, ClientInfBean clientsInf) {
-
-		int id = clientsService.add(client);
-		if (id == NOT_SAVED) {
-			return new ModelAndView("index.page");
-		}
-
-		clientsInf.setIdClient(id);
-
-		ModelAndView model = new ModelAndView("reg.page", "clientsInf", clientsInf);
-
-		return model;
-	}
-
-	@RequestMapping(value = "/reginf.html", method = RequestMethod.POST)
-	public String regIngController(ClientInfBean clientInf, HttpSession httpSession) {
-		clientInfService.add(clientInf);
-		int id = clientInf.getIdClient();
-		ClientAllInfBean allInfBean = clientInfService.getAllInfById(id);
-		httpSession.setAttribute("user", allInfBean);
-		bankAuthentication.login(id);
-
-		return "user.page";
-
-	}
-
-	@RequestMapping("/userPage")
+	@RequestMapping("/home.html")
 	public String userController(HttpSession httpSession) {
 		ClientAllInfBean allInfBean = (ClientAllInfBean) httpSession.getAttribute("user");
 		if (allInfBean != null) {
@@ -222,7 +131,7 @@ public class Controllers {
 	@RequestMapping("transfers/betweenOwnAcc.html")
 	public String betweenOwnAcc(HttpSession httpSession) {
 		ClientBean clientBean = getClientBean();
-		List<TransferBean> list = transfersService.getLastFewByClient(clientBean, 5);
+		List<TransferBean> list = transfersService.getLastFewByClient(clientBean, LAST_FEW);
 		httpSession.setAttribute("transfers_list", list);
 		List<AccountBean> listAcc = accountsService.getAllByClient(clientBean);
 		httpSession.setAttribute("user_accounts", listAcc);
@@ -232,11 +141,44 @@ public class Controllers {
 	@RequestMapping("transfers/transfersToAll.html")
 	public String transfersToAll(HttpSession httpSession) {
 		ClientBean clientBean = getClientBean();
-		List<TransferBean> list = transfersService.getLastFewByClient(clientBean, 5);
+		List<TransferBean> list = transfersService.getLastFewByClient(clientBean, LAST_FEW);
 		httpSession.setAttribute("transfers_list", list);
 		List<AccountBean> listAcc = accountsService.getAllByClient(clientBean);
 		httpSession.setAttribute("user_accounts", listAcc);
 		return "transfersToAll.page";
+	}
+	
+	@RequestMapping ("/my_profil.html")
+	public ModelAndView myProfil (ClientAllInfBean allInfBean, HttpSession httpSession){
+		ClientBean clientBean = getClientBean();
+		allInfBean = clientInfService.getAllInfByClient(clientBean);
+		ModelAndView model = new ModelAndView("profil.page", "user", allInfBean);
+		return model;
+	}
+	
+	@RequestMapping ("/profiledit.html")
+	public ModelAndView profiledit (ClientAllInfBean allInfBean, HttpSession httpSession){
+		ClientBean clientAuth = getClientBean();
+		ClientBean clientBean = allInfBean.getClient();
+		if (clientBean.getPass().equals("") ){
+		}else{
+			String newPass = clientBean.getPass();
+			clientAuth.setPass(newPass);
+		}
+		String newLogin = clientBean.getLogin();
+		ClientInfBean inf = clientAuth.getInf();
+		String newEmail = clientBean.getInf().getEmail();
+		String newName = clientBean.getInf().getName();
+		String newSecondName = clientBean.getInf().getSecondName();
+		inf.setEmail(newEmail);
+		inf.setName(newName);
+		inf.setSecondName(newSecondName);
+		clientAuth.setInf(inf);
+		clientAuth.setLogin(newLogin);
+		allInfBean.setClient(clientAuth);
+		clientInfService.editInf(allInfBean);
+		ModelAndView model = new ModelAndView("adminProfil.page", "user", allInfBean);
+		return model;
 	}
 
 	private ClientAllInfBean reloadInf(HttpSession httpSession) {

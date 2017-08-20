@@ -16,9 +16,13 @@ public interface CardsDao extends CrudRepository<Cards, Integer> {
 
 	@Query("Select COUNT(c) FROM Cards c WHERE c.client.idClient= :id")
 	int countByIdClient(@Param("id") int idClient);
-
-	Cards findOne(Integer idCard);
+	
+	@Query("Select COUNT(c) FROM Cards c WHERE c.account.idAccount = :id")
+	int countByIdAccount(@Param("id") int idAccount);
 
 	List<Cards> findAllByClient(Clients client);
+	
+	Cards findByNumberCard (int numberCard);
+
 
 }

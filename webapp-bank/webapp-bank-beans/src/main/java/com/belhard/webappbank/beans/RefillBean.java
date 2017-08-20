@@ -5,6 +5,8 @@ public class RefillBean {
 	private int account;
 	private int idAccount;
 	private int money;
+	private int direction;
+	
 
 	public RefillBean() {
 		super();
@@ -40,11 +42,20 @@ public class RefillBean {
 		this.money = money;
 	}
 
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + account;
+		result = prime * result + direction;
 		result = prime * result + idAccount;
 		result = prime * result + money;
 		return result;
@@ -61,6 +72,8 @@ public class RefillBean {
 		RefillBean other = (RefillBean) obj;
 		if (account != other.account)
 			return false;
+		if (direction != other.direction)
+			return false;
 		if (idAccount != other.idAccount)
 			return false;
 		if (money != other.money)
@@ -70,9 +83,9 @@ public class RefillBean {
 
 	@Override
 	public String toString() {
-		return "RefillBean [account=" + account + ", idAccount=" + idAccount + ", money=" + money + "]";
+		return "RefillBean [account=" + account + ", idAccount=" + idAccount + ", money=" + money + ", direction="
+				+ direction + "]";
 	}
 
 	
-
 }

@@ -40,7 +40,6 @@ public class ClientInfServiceImpl implements ClientInfService {
 	@Autowired
 	private EntityBeanConverter converter;
 
-	private static final int DELETE = 1;
 
 	@Override
 	public void add(ClientInfBean clientInfBean) {
@@ -110,6 +109,14 @@ public class ClientInfServiceImpl implements ClientInfService {
 		allInfBean.setCountCards(count);
 		return allInfBean;
 
+	}
+	@Transactional
+	@Override
+	public void editInf(ClientAllInfBean allInfBean) {
+		ClientBean clientBean = allInfBean.getClient();
+		Clients client = converter.convertToEntity(clientBean, Clients.class);
+		clientsDao.save(client);
+		
 	}
 
 }
