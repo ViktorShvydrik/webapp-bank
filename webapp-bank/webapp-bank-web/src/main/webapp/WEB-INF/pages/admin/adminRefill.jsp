@@ -60,7 +60,7 @@
 		</div>	
 		
 		<div class="form-group">
-			<label for="account">Выберите счет:</label>
+			<label for="account"><s:message code="page.context.refill.select" />:</label>
 				<spring:input class="form-control" path="account" id="account" />
 		</div>	
 		
