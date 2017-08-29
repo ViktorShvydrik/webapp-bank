@@ -34,27 +34,27 @@
 <br />
 <br />
 <c:if test="${user.countCards == 0}">
-		У Вас нет активных пластиковых карточек. Обратитесь в банк.
+		<s:message code="page.error.cards.noCards" />
 		</c:if>
 <c:if test="${user.countCards > 0}">
-	<h2>Ваши карточки</h2>
+	<h2><s:message code="page.context.cards.your" /></h2>
 	<table class="table table-striped table-bordered table-hover"
 		id="dataTables">
 		<tr>
-			<th>Номер карточки</th>
-			<th>Статус</th>
-			<th>Действия</th>
+			<th><s:message code="page.table.thead.number" /></th>
+			<th><s:message code="page.table.thead.status" /></th>
+			<th><s:message code="page.table.thead.actions" /></th>
 		</tr>
 		<c:forEach items="${user_cards}" var="card">
 			<tr>
 				<td width="33%">${card.numberCard}</td>
 				<td width="33%">
-				<c:if test="${card.status == 1}">Заблокированна</c:if> 
-				<c:if test="${card.status == 0}">Доступна</c:if>
+				<c:if test="${card.status == 1}"><s:message code="page.table.card.status.blocked" /></c:if> 
+				<c:if test="${card.status == 0}"><s:message code="page.table.card.status.available" /></c:if>
 				</td>
 				<td width="33%">
-				<c:if test="${card.status == 0}"><a href="#" class="action" id="${card.idCard}">Заблокировать</a></c:if>
-				 <c:if test="${card.status == 1}"><a href="#" class="action" id="${card.idCard}">Разблокировать</a></c:if>
+				<c:if test="${card.status == 0}"><a href="#" class="action" id="${card.idCard}"><s:message code="page.table.actions.block" /></a></c:if>
+				 <c:if test="${card.status == 1}"><a href="#" class="action" id="${card.idCard}"><s:message code="page.table.actions.active" /></a></c:if>
 				</td>
 			</tr>
 		</c:forEach>
@@ -68,12 +68,15 @@
 				.on(
 						'click',
 						function(e) {
-							//отменяем стандартное действие при отправке формы
 							e.preventDefault();
 							var id = this.id;
 							var obj = this;
 							var numCell = obj.parentNode.cellIndex;
 							var numRow = obj.parentNode.parentNode.rowIndex;
+							var block = '<s:message code="page.table.actions.block" />';
+							var unblock = '<s:message code="page.table.actions.active" />';
+							var blocked = '<s:message code="page.table.card.status.blocked" />';
+							var available = '<s:message code="page.table.card.status.available" />';
 							var url = '/webapp-bank-web/rest/users/accounts/cards/'
 									+ id;
 							$
@@ -82,14 +85,14 @@
 										url : url,
 										dataType : "json",
 										success : function(data) {
-											if (obj.innerText == "Заблокировать") {
+											if (obj.innerText == block) {
 
-												obj.innerText = "Разблокировать";
-												document.all.dataTables.rows[numRow].cells[numCell - 1].innerText = "Заблокированна";
+												obj.innerText = unblock;
+												document.all.dataTables.rows[numRow].cells[numCell - 1].innerText = blocked;
 											} else {
 
-												obj.innerText = "Заблокировать";
-												document.all.dataTables.rows[numRow].cells[numCell - 1].innerText = "Доступна";
+												obj.innerText = block;
+												document.all.dataTables.rows[numRow].cells[numCell - 1].innerText = available;
 											}
 										}
 									});

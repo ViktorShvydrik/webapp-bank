@@ -283,12 +283,22 @@ public class AdminComtrollers {
 	
 	@RequestMapping ("/profilcl.html")
 	public ModelAndView profilCl (@RequestParam ("client.login") String login, ClientAllInfBean allInfBean){
-
-			ClientBean client = clientsService.getClient(login);
-			allInfBean = clientInfService.getAllInfByClient(client);
+		ClientBean client = null;
+		int id = allInfBean.getClient().getIdClient();
+		if (id == 0){
+			client = clientsService.getClient(login);
+		}else{
+			client = clientsService.getClient(id);
+		}
+		allInfBean = clientInfService.getAllInfByClient(client);
+		if(!allInfBean.getClient().getLogin().equals(login)){
+			client.setLogin(login);
+			allInfBean.setClient(client);
+			clientInfService.editInf(allInfBean);
+		}
 		if(allInfBean.getClient().getInf() == null){
 			ClientBean clientBean =  allInfBean.getClient();
-			int id = client.getIdClient();
+			id = client.getIdClient();
 			ClientInfBean infBean = new ClientInfBean();
 			infBean.setIdClient(id);
 			clientBean.setInf(infBean);
@@ -343,7 +353,8 @@ public class AdminComtrollers {
 		ClientBean clientBean = new ClientBean();
 		clientBean.setLogin(clientLogin);
 		clientBean.setPass(pass);
-		clientsService.add(clientBean);
+		int idClient = clientsService.add(clientBean);
+		clientBean.setIdClient(idClient);
 		allInfBean.setClient(clientBean);
 		ModelAndView model = new ModelAndView("adminCreateClient.page", "user", allInfBean);
 		return model;

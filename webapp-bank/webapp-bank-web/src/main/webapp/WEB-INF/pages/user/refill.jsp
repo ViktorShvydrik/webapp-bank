@@ -33,7 +33,7 @@
 			<br />
 		<br />
 
-	<c:if test="${user.countAcc == 0}">У Вас нет открытых счетов.  </c:if>
+	<c:if test="${user.countAcc == 0}"><s:message code="page.error.accounts.no" />  </c:if>
 <c:if test="${user.countAcc > 0}">
 
 	<spring:form modelAttribute="refill" method="POST" id="refill"	action="addrefill.html">
@@ -42,16 +42,16 @@
 			<div class="col-xs-4 form-group">
 			
 				<div class="form-group">
-					<label for="account">Выберите счет:</label>
+					<label for="account"><s:message code="page.context.refill.amount" />:</label>
 						<spring:select path="idAccount" id="id" class="form-control">
 							<c:forEach items="${user_accounts}" var="acc">
-								<spring:option value="${acc.idAccount}">${acc.account} (${acc.money} руб.)</spring:option>
+								<spring:option value="${acc.idAccount}">${acc.account} (${acc.money} <s:message code="page.context.rub" />)</spring:option>
 							</c:forEach>
 						</spring:select>
 				</div>
 
 				<div class="form-group">
-					<label for="exampleInputAmount">Укажите сумму:</label>
+					<label for="exampleInputAmount"><s:message code="page.context.refill.select" />:</label>
 						<div class="input-group">
 							<div class="input-group-addon">
 								<span class="glyphicon glyphicon-rub" aria-hidden="true"></span>
@@ -61,7 +61,7 @@
 				</div>
 			</div>
 		</div>
-		<button type="submit" class="btn btn-primary" id="btn">Пополнить</button>
+		<button type="submit" class="btn btn-primary" id="btn"><s:message code="page.context.button.refill" /></button>
 	</spring:form>
 
 </c:if>
@@ -70,18 +70,19 @@
 <script type="text/javascript">
 $(function(){ 
 	$('#refill').submit(function(e){
-		//отменяем стандартное действие при отправке формы
+		
 		e.preventDefault();
 		var select = document.getElementById('id');
 		var id = select.value;
 		var money = document.getElementById('money').value;
 		var url = '/webapp-bank-web/rest/users/accounts/'+id+'/'+ money;
+		var rub = ' <s:message code="page.context.rub" />';
 		$.ajax({
 			type: "POST",
 			url: url,
 			dataType: "json",
 			success: function(data){
-				select.options[select.selectedIndex].text = data.account + "(" + data.money + " руб.)";
+				select.options[select.selectedIndex].text = data.account + "(" + data.money + rub +")";
 				var totalMoney = Number(document.all.inf.rows[1].cells[5].innerText);
 				totalMoney = Number(totalMoney) + Number(money);
 				document.all.inf.rows[1].cells[5].innerText = totalMoney;

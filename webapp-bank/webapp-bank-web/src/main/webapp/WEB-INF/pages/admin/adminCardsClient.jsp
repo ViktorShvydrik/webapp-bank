@@ -12,7 +12,6 @@
 	
 
 <c:if test="${client.idClient != 0 }">
-<c:if test="${fn:length(user_cards) != 0}">
 <c:if test="${client.inf.countAccounts != 0 }">
 	<table class="table table-striped table-bordered table-hover"
 		id="dataTables">
@@ -104,14 +103,6 @@
 						});
 	});
 </script>
-</c:if>
-</c:if>
-</c:if>
-<c:if test="${fn:length(user_cards) == 0}"> 
-<c:if test="${client.idClient != 0 }">
-<s:message code="page.error.cards.no" />
-<br />
-<br />
 </c:if>
 </c:if>
 

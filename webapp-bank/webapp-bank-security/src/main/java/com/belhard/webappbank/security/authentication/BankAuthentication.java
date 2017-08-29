@@ -96,7 +96,7 @@ public class BankAuthentication implements AuthenticationProvider {
 		String userName = clientBean.getLogin();
 		String password = clientBean.getPass();
 		Authentication auth = null;
-		String role = "USER";
+		String role = "client";
 
 		Collection<GrantedAuthority> grantedAuths = new ArrayList<>();
 		grantedAuths.add(new SimpleGrantedAuthority(role));

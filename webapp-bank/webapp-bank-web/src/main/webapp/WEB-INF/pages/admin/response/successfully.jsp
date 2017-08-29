@@ -8,4 +8,4 @@
 
 
 <c:if test="${successfully.code == 11 }" >
-<span style="color:green;">Данные клиента ${successfully.bean.login} успешно изменены. </span><br /> </c:if>
+<span style="color:green;"><s:message code="page.context.success.profil" /> </span><br /> </c:if>

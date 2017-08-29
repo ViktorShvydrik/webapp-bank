@@ -97,7 +97,7 @@ public class LoginControllers {
 			}
 			ClientAllInfBean allInfBean = clientInfService.getAllInfByClient(clientBean);
 			httpSession.setAttribute("user", allInfBean);
-			model = new ModelAndView("redirect:user/home.html");
+			model = new ModelAndView("redirect:client/home.html");
 			return model;
 
 		case NO_ENTRY:
@@ -132,8 +132,9 @@ public class LoginControllers {
 		ClientAllInfBean allInfBean = clientInfService.getAllInfById(id);
 		httpSession.setAttribute("user", allInfBean);
 		bankAuthentication.login(id);
-
-		return "user.page";
+		SecurityLoginBean loginBean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		return "redirect:client/home.html";
 
 	}
 }

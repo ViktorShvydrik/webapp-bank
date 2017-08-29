@@ -49,14 +49,14 @@
 		<put-attribute name="content" value="/WEB-INF/pages/user/transfers/betweenOwnAccounts.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
-		<put-attribute name="pageTitle" value="page.title.refill" />
+		<put-attribute name="pageTitle" value="page.title.transfers.Own" />
 	</definition>
 	
 		<definition name="transfersToAll.page" extends="menuPage">
 		<put-attribute name="content" value="/WEB-INF/pages/user/transfers/transfersToAll.jsp" />
 
 		<put-attribute name="appTitle" value="application.title" />
-		<put-attribute name="pageTitle" value="page.title.refill" />
+		<put-attribute name="pageTitle" value="page.title.transfers.toAll" />
 	</definition>
 	
 	<definition name="profil.page" extends="menuPage">

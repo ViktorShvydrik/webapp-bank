@@ -5,15 +5,14 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 
 
-<h4> Последние 5 переводов:</h4>
+<h4> <s:message code="page.context.transfers.5" />:</h4>
 <table class="table table-striped table-bordered table-hover"	id="dataTables">
 	<thead>
 	<tr>
-	
-		<th width="25%">Номер перевода</th>
-		<th width="25%">С какого счета</th>
-		<th width="25%">Деньги</th>
-		<th width="25%">На какой счет</th>
+		<th width="25%"><s:message code="page.table.transfers.number" /></th>
+		<th width="25%"><s:message code="page.table.transfers.from" /></th>
+		<th width="25%"><s:message code="page.table.transfers.money" /></th>
+		<th width="25%"><s:message code="page.table.transfers.to" /></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -31,39 +30,40 @@
 
 <br /><br /><br />	
 		
-<c:if test="${user.countAcc == 0}">У Вас нет открытых счетов.  </c:if>
+<c:if test="${user.countAcc == 0}"><s:message code="page.error.accounts.no" />  </c:if>
 
 <c:if test="${user.countAcc > 0}">
 <spring:form modelAttribute="transfer" id="form" action="">
 	<div class="row">
 		<div class="col-xs-4 form-group">
-			<label for="disabledSelect">Укажите откуда:</label>
-			 <div class="input-group">
+			<label for="disabledSelect"><s:message code="page.context.accounts.whence" />:</label>
+			 <div class="form-group">
 		<spring:select path="fromAcc" id="accA" class="form-control">
 		<c:forEach items="${user_accounts}" var="acc">
-		<spring:option value="${acc.account}">${acc.account} (${acc.money} руб.)</spring:option>
+		<spring:option value="${acc.account}">${acc.account} (${acc.money} <s:message code="page.context.rub" />)</spring:option>
 		</c:forEach>
 		</spring:select>
 		</div>
-	</div>
-			<label for="exampleInputAmount">Укажите сумму:</label>
+	
+			<div class="form-group">
+			<label for="exampleInputAmount"><s:message code="page.context.accounts.sum" />:</label>
 			<div class="input-group">
 				<div class="input-group-addon"><span class="glyphicon glyphicon-rub" aria-hidden="true"></span></div>
 				<spring:input class="form-control" id="money" path="money" />
-	</div>
-			<label for="disabledSelect">Укажите куда:</label> 
-			<div class="input-group">
+			</div>
+			</div>
+			<label for="disabledSelect"><s:message code="page.context.accounts.whither" />:</label> 
+			<div class="form-group">
 				<spring:select path="toAcc" id="accB" class="form-control">
 		<c:forEach items="${user_accounts}" var="acc">
-		<spring:option value="${acc.account}">${acc.account} (${acc.money} руб.)</spring:option>
+		<spring:option value="${acc.account}">${acc.account} (${acc.money} <s:message code="page.context.rub" />)</spring:option>
 		</c:forEach>
 		</spring:select>
 				
 		</div>
 	
-	
-	<div class="row">
-	<button type="submit" class="btn btn-primary">Перевести</button>
+	<button type="submit" class="btn btn-primary"><s:message code="page.context.button.transfer" /></button>
+	</div>
 	</div>
 </spring:form>
 </c:if>
@@ -72,14 +72,13 @@
 <script type="text/javascript">
 $(function() {
 	$('#form').submit(function(e) {
-		//отменяем стандартное действие при отправке формы
 		e.preventDefault();
 		var objA = document.all.form.accA;
 		var objB = document.all.form.accB;
 		var accA = objA.value;
 		var accb = objB.value;
 		var money = document.all.form.money.value
-		
+		var rub = ' <s:message code="page.context.rub" />';
 		var url = '/webapp-bank-web/rest/users/accounts/'+accA+'/Transfer/'+accb+'/'+money;
 		$.ajax({
 					type : "POST",
@@ -99,11 +98,11 @@ $(function() {
 							newcell = newrow.insertCell(3);
 							newcell.innerText = data.toAcc.account;
 					
-							objA.options[objA.selectedIndex].text = data.fromAcc.account + "(" + data.fromAcc.money + " руб.)";
-							objB.options[objB.selectedIndex].text = data.toAcc.account + "(" + data.toAcc.money + " руб.)";
+							objA.options[objA.selectedIndex].text = data.fromAcc.account + "(" + data.fromAcc.money  + rub + ")";
+							objB.options[objB.selectedIndex].text = data.toAcc.account + "(" + data.toAcc.money  + rub + ")";
 							
-							objA.options[objB.selectedIndex].text = data.toAcc.account + "(" +  data.toAcc.money  + " руб.)";
-							objB.options[objA.selectedIndex].text = data.fromAcc.account + "(" + data.fromAcc.money + " руб.)";
+							objA.options[objB.selectedIndex].text = data.toAcc.account + "(" +  data.toAcc.money   + rub + ")";
+							objB.options[objA.selectedIndex].text = data.fromAcc.account + "(" + data.fromAcc.money  + rub +")";
 							
 				}
 	});

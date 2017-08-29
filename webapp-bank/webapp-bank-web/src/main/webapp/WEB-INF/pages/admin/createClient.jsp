@@ -4,7 +4,7 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 
 <c:if test="${user.client == null }">
-<button type="button" class="btn btn-primary btn-sm" onclick="javascript:document.location.href='createclient.html'">Создать клиента</button>
+<button type="button" class="btn btn-primary btn-sm" onclick="javascript:document.location.href='createclient.html'"><s:message code="page.context.button.create" /></button>
 
 </c:if>
 
@@ -18,7 +18,6 @@
 			 <label for="login">Логин клиента:</label>
 			<spring:input class="form-control" path="client.login" />
 			<spring:hidden path="client.idClient"/>
-			<spring:hidden path="client.inf.idClient"/>
 			</div>
 			<div class="form-group">
 			 <label for="client.pass">Пароль клиента:</label>
