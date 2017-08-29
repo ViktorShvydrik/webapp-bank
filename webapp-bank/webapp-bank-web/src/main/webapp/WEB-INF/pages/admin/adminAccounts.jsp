@@ -71,7 +71,7 @@
 			<label for="exampleInputAmount"><s:message code="page.context.accounts.sum" />:</label>
 			<div class="input-group">
 				<div class="input-group-addon"><span class="glyphicon glyphicon-rub" aria-hidden="true"></span></div>
-				<spring:input class="form-control" id="money" path="money" />
+				<spring:input class="form-control" id="money" path="money" type="number" min="0"/>
 			</div>
 			</div>
 			<div class="form-group">
