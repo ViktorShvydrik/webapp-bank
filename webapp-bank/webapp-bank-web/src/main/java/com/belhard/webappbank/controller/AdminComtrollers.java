@@ -177,9 +177,9 @@ public class AdminComtrollers {
 	//TRANSFERS
 	
 	@RequestMapping ("/refill.html")
-	public ModelAndView refillview (RefillBean refill, HttpServletRequest req){
+	public ModelAndView refillview (RefillBean refill,HttpSession httpSession){
 		List<AccountBean> list = accountService.getAll();
-		req.setAttribute("list_accounts", list);
+		httpSession.setAttribute("list_accounts", list);
 		return new ModelAndView("adminRefill.page", "refill", refill);
 	}
 	
