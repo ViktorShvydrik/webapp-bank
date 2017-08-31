@@ -9,15 +9,15 @@
 <div class="p-x-1 p-y-3">
  <spring:form class="card card-block m-x-auto bg-faded form-width" action="reginf.html" method="POST" modelAttribute="clientsInf">
  <spring:hidden path="idClient"/>
- <legend class="m-b-1 text-xs-center">Регистрация</legend>
+ <legend class="m-b-1 text-xs-center"><s:message code="page.reg.legend" /></legend>
  <div class="form-group input-group">
  <span class="has-float-label">
  <spring:input class="form-control" type="text" path="name" />
- <label for="first">Имя</label>
+ <label for="first"><s:message code="page.reg.name" /></label>
  </span>
  <span class="has-float-label">
  <spring:input class="form-control" type="text" path="secondName" />
- <label for="last">Фамилия</label>
+ <label for="last"><s:message code="page.reg.secondName" /></label>
  </span>
  </div>
  <div class="form-group input-group">
@@ -29,7 +29,7 @@
  </div>
  
  <div class="text-xs-center">
- <button class="btn btn-block btn-primary" type="submit">Регистрация</button>
+ <button class="btn btn-block btn-primary" type="submit"><s:message code="page.context.button.reg" /></button>
  </div>
  </spring:form>
 </div>

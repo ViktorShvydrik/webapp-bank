@@ -100,21 +100,21 @@ public class AccountsServiceImpl implements AccountsService {
 		Clients clients = clientsDao.findByLogin(transferBean.getLogin());
 		Accounts accounts = accountsDao.findByAccount(transferBean.getFromAcc().getAccount());
 		int access = clients.getAccess();
-		if( access == ADMIN_ACCESS || access == OPERATOR_ACCESS || accounts.getClient().equals(clients) ){
-		int money = accounts.getMoney() - transferBean.getMoney();
-		accounts.setMoney(money);
-		accounts = accountsDao.save(accounts);
-		AccountBean acc = converter.convertToBean(accounts, AccountBean.class);
-		transferBean.setFromAcc(acc);
-		accounts = accountsDao.findByAccount(transferBean.getToAcc().getAccount());
-		money = accounts.getMoney() + transferBean.getMoney();
-		accounts.setMoney(money);
-		accounts = accountsDao.save(accounts);
-		acc = converter.convertToBean(accounts, AccountBean.class);
-		transferBean.setToAcc(acc);
-		transferBean = transfersService.addTransfer(transferBean);
-		return transferBean;
-		}else {
+		if (access == ADMIN_ACCESS || access == OPERATOR_ACCESS || accounts.getClient().equals(clients)) {
+			int money = accounts.getMoney() - transferBean.getMoney();
+			accounts.setMoney(money);
+			accounts = accountsDao.save(accounts);
+			AccountBean acc = converter.convertToBean(accounts, AccountBean.class);
+			transferBean.setFromAcc(acc);
+			accounts = accountsDao.findByAccount(transferBean.getToAcc().getAccount());
+			money = accounts.getMoney() + transferBean.getMoney();
+			accounts.setMoney(money);
+			accounts = accountsDao.save(accounts);
+			acc = converter.convertToBean(accounts, AccountBean.class);
+			transferBean.setToAcc(acc);
+			transferBean = transfersService.addTransfer(transferBean);
+			return transferBean;
+		} else {
 			throw new TransferException("Access is denied");
 		}
 	}

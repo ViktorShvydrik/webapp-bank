@@ -132,6 +132,9 @@ public class UserControllers {
 		return "transfersToAll.page";
 	}
 	
+	
+	//PROFIL
+	
 	@RequestMapping ("/my_profil.html")
 	public ModelAndView myProfil (ClientAllInfBean allInfBean, HttpSession httpSession){
 		ClientBean clientBean = getClientBean();
@@ -164,6 +167,8 @@ public class UserControllers {
 		ModelAndView model = new ModelAndView("adminProfil.page", "user", allInfBean);
 		return model;
 	}
+	
+	//END PROFIL
 
 	private ClientAllInfBean reloadInf(HttpSession httpSession) {
 		SecurityLoginBean loginBean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()

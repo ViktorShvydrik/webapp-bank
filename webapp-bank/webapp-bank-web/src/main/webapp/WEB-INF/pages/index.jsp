@@ -20,21 +20,22 @@
 
 <c:if test="${not empty error}">
 <div style="  margin: 0 auto; width: 36%;  ">
-    <span style="color:red; font-size:30px ">    <c:out value="${error}"/> </span></div>
+    <span style="color:red; font-size:30px ">    <s:message code="page.index.error.signIn" /> </span></div>
       </c:if>
 <c:if test="${not empty logout}">
 <div style="  margin: 0 auto; width: 18%;  ">
-    <span style="color:blue; font-size:30px ">    <c:out value="${logout}"/> </span></div>
+    <span style="color:blue; font-size:30px ">    <s:message code="page.index.error.logout" /> </span></div>
       </c:if>
       
 <c:if test="${not empty errorReg}">
-<div style="  margin: 0 auto; width: 30%;  ">
-    <span style="color:red; font-size:30px ">    <c:out value="${errorReg}"/> </span></div>
-      </c:if>     
-
+<div style="  margin: 0 auto; width: 20%;  ">
+    <span style="color:red; font-size:20px ">    <s:message code="page.index.error.errorReg" /> </span></div>
+      </c:if>  
+      
 <div class="form">
   <div class="front-sign-in">
   <spring:form  action="${pageContext.request.contextPath}/login" method="post" modelAttribute="clients">
+  <spring:errors  cssClass="label label-important" />
     <spring:input type="text" placeholder="Login" path="login" />
     <spring:input type="password" placeholder="Password" path="pass" />
     <input class="signin-submit" type="submit"  value="<s:message code="page.index.btn.signIn" />">

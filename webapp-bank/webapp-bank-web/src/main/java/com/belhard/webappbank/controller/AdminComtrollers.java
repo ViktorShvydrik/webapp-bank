@@ -30,8 +30,10 @@ import com.belhard.webappbank.service.CardsService;
 import com.belhard.webappbank.service.ClientInfService;
 import com.belhard.webappbank.service.ClientsService;
 import com.belhard.webappbank.service.TransfersService;
+import com.belhard.webappbank.service.Valid;
 import com.belhard.webappbank.service.Exception.AccountsServiceException;
 import com.belhard.webappbank.service.Exception.RefillExeption;
+import com.belhard.webappbank.service.Exception.ValidException;
 
 @Controller
 @RequestMapping ("/admin")
@@ -56,6 +58,8 @@ public class AdminComtrollers {
 	private TransfersService transfersService;
 	@Autowired
 	private CardsService cardsService;
+	@Autowired
+	private Valid valid;
 	
 	//INDEX
 	
@@ -191,21 +195,32 @@ public class AdminComtrollers {
 	}
 	
 	@RequestMapping ("/addrefill.html")
-	public String refill (RefillBean refill, HttpServletRequest req){
+	public String refill (RefillBean refill, HttpServletRequest req) {
 		SecurityLoginBean bean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
 		String username = bean.getUsername();
-		try{
-			accountService.refillByAccount(refill, username);
-		}catch (RefillExeption e) {
-			String msg = e.getMessage();
-			int code = ERROR_REFILL;
-			ResponseCodeBean codeBean = new ResponseCodeBean(code, msg, refill);
-			req.setAttribute("error", codeBean);
-			return "error.page";
+		try {
+			valid.refillByAccount(refill);
+			try{
+				accountService.refillByAccount(refill, username);
+			}catch (RefillExeption e) {
+				String msg = e.getMessage();
+				int code = ERROR_REFILL;
+				ResponseCodeBean codeBean = new ResponseCodeBean(code, msg, refill);
+				req.setAttribute("error", codeBean);
+				return "error.page";
+			}
+		} catch (ValidException e1) {
+			/////!!!!!!!
 		}
 		
+		
 		return "redirect:refill.html";
+		
+			
+	
+		
+		
 	}
 	
 	@RequestMapping ("/transfers.html")

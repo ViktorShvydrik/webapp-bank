@@ -19,6 +19,8 @@ import com.belhard.webappbank.beans.TransferBean;
 import com.belhard.webappbank.security.bean.SecurityLoginBean;
 import com.belhard.webappbank.service.AccountsService;
 import com.belhard.webappbank.service.ClientsService;
+import com.belhard.webappbank.service.Valid;
+import com.belhard.webappbank.service.Exception.ValidException;
 
 @RestController
 @RequestMapping(value = "/rest/users", produces = "application/json")
@@ -29,6 +31,9 @@ public class AccountAPI {
 
 	@Autowired
 	private ClientsService clientsService;
+	
+	@Autowired
+	private Valid valid;
 
 	@ResponseBody
 	@RequestMapping(value = "/{id}/accounts", method = RequestMethod.GET)
@@ -58,6 +63,11 @@ public class AccountAPI {
 	@RequestMapping(value = "/accounts/{id}/{money}", method = RequestMethod.POST)
 	public ResponseEntity<AccountBean> putRefill(@PathVariable(name = "id") Integer id,
 			@PathVariable(name = "money") Integer money) {
+		try {
+			valid.refillMoney(money);
+		} catch (ValidException e) {
+			return new ResponseEntity<AccountBean>(HttpStatus.BAD_REQUEST);
+		}
 		RefillBean refillBean = new RefillBean(id, money);
 		SecurityLoginBean loginBean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
@@ -74,8 +84,15 @@ public class AccountAPI {
 		SecurityLoginBean loginBean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
 		String login = loginBean.getUsername();
-		TransferBean transferBean = new TransferBean(accA, money, accB, login);
-		transferBean = accountsService.transfer(transferBean);
+		TransferBean transferBean = null;
+		try {
+			valid.refillMoney(money);
+			transferBean = new TransferBean(accA, money, accB, login);
+			transferBean = accountsService.transfer(transferBean);
+		} catch (ValidException e) {
+			return new ResponseEntity<TransferBean>(HttpStatus.BAD_REQUEST);
+		}
+		
 		
 		return new ResponseEntity<TransferBean>(transferBean, HttpStatus.OK);
 	}

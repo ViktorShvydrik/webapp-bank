@@ -1,7 +1,6 @@
 package com.belhard.webappbank.beans;
 
 public class ClientBean {
-
 	private int idClient;
 	private String login;
 	private String pass;

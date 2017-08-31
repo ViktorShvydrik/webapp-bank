@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,7 @@ import com.belhard.webappbank.security.authentication.BankAuthentication;
 import com.belhard.webappbank.security.bean.SecurityLoginBean;
 import com.belhard.webappbank.service.ClientInfService;
 import com.belhard.webappbank.service.ClientsService;
+import com.belhard.webappbank.service.impl.ClientValidator;
 
 @Controller
 public class LoginControllers {
@@ -33,6 +36,9 @@ public class LoginControllers {
 	
 	@Autowired
 	private BankAuthentication bankAuthentication;
+	
+	@Autowired
+	private ClientValidator validator;
 	
 	private static final int NOT_SAVED = -1;
 
@@ -109,8 +115,8 @@ public class LoginControllers {
 	}
 
 	@RequestMapping(value = "/reg.html", method = RequestMethod.POST)
-	public ModelAndView regController(ClientBean client, ClientInfBean clientsInf) {
-
+	public ModelAndView regController(@ModelAttribute ("clients") ClientBean client, ClientInfBean clientsInf, HttpServletRequest req, BindingResult result) {
+		
 		int id = clientsService.add(client);
 		if (id == NOT_SAVED) {
 			ModelAndView model = new ModelAndView("index.page");
@@ -132,8 +138,6 @@ public class LoginControllers {
 		ClientAllInfBean allInfBean = clientInfService.getAllInfById(id);
 		httpSession.setAttribute("user", allInfBean);
 		bankAuthentication.login(id);
-		SecurityLoginBean loginBean = (SecurityLoginBean) SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal();
 		return "redirect:client/home.html";
 
 	}
